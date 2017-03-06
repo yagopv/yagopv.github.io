@@ -38,7 +38,7 @@ Almacenamos las direcciones ip que no nos interesa que accedan al servidor separ
 
 Creamos una clase repositorio para leer el fichero
 
-```language-javascript
+{% highlight javascript %}
 namespace MyApp.Helpers
 {
     public class BlackListRepository
@@ -52,7 +52,7 @@ namespace MyApp.Helpers
         }
     }
 }
-```
+{% endhighlight %}
 
 Esta clase contiene simplemente un método que retorna una lista de ips que se almacena en memoria para que sea accesible entre peticiones y sólo se cargue una vez (static).
 
@@ -60,7 +60,7 @@ Esta clase contiene simplemente un método que retorna una lista de ips que se a
 
 A continuación añadimos una nueva clase que será nuestro filtro ASP MVC
 
-```language-javascript
+{% highlight javascript %}
 namespace MyApp.Filters
 {
     public class IPHostValidationAttribute : ActionFilterAttribute
@@ -77,7 +77,7 @@ namespace MyApp.Filters
         }
     }
 }
-```
+{% endhighlight %}
 
 El filtro es muy sencillo. Simplemente comprueba en nuestra clase estática si la dirección ip se encuentra en el fichero y en ese caso lanza una excepción.
 
@@ -87,15 +87,15 @@ Por último, vamos a manipular el ***Global.asax*** para que el filtro sea globa
 
 Registramos el filtro como global
 
-```language-javascript
+{% highlight javascript %}
 filters.Add(new IPHostValidationAttribute());
-```
+{% endhighlight %}
 
 En *<span class="nf">Application_Start</span><span class="p">()</span>* añadimos la siguiente linea para leer el fichero y almacenar su contenido en memoria
 
-```language-javascript
+{% highlight javascript %}
 BlackListRepository.GetAllIpsInBlackList(this.Server);
-```
+{% endhighlight %}
 
 Con esto tendríamos un filtro de ip preparado y aplicándose en todas las acciones y controladores de nuestra aplicación web.
 

@@ -25,12 +25,12 @@ Una acción con parámetros simples es aquella cuyos tipos **no son objetos comp
 
 Una acción con parámetros simples podría ser la siguiente:
 
-```language-javascript
+{% highlight javascript %}
 public ActionResult RecuperaProducto(int id,  bool recuperacategoriaasociada)
 {
       return View(Services.RecuperaProducto(id, recuperacategoriaasociada))
 }
-```
+{% endhighlight %}
 
 Esta acción recibe dos parámetros simples, ***id*** y ***recuperacategoriaasociada*** que representarían por ejemplo el identificador del producto a recuperar y un *bool* indicando si se recupera la categoría asociada con el producto o no.
 
@@ -46,17 +46,17 @@ En este caso hemos pasado los parámetros por **querystring**, pero como comenta
 
 Tal y como está definida nuestra acción de ejemplo *RecuperaProducto()*, si omitimos alguno de los parámetros se produciría un error que nos indicaría que no se permiten nulos en los parámetros definidos. La solución es sencilla, lo que podemos hacer es definir los parámetros de manera que puedan aceptar nulos o bien inicializarlos con un valor por defecto.
 
-```language-javascript
+{% highlight javascript %}
 public ActionResult RecuperaProducto(int id=1, bool? recuperacategoriaasociada)
-```
+{% endhighlight %}
 
 Tal y como hemos definido ahora la acción, el parámetro ***id*** recuperaría siempre el producto con ***id = 1*** en el caso de que no se enviara ninguno en la petición y además ***recuperacategoriaasociada*** puede no estar incluido en la petición ya que lo hemos definido como *nullable* mediante *bool?*.
 
 También existe otra posibilidad, utilizar el atributo *DefaultParameterValue* aunque el resultado sería el mismo que utilizando la asignación de un valor por defecto como veíamos en el ejemplo anterior en el caso del parámetro ***id.***
 
-```language-javascript
+{% highlight javascript %}
 public ActionResult RecuperaProducto([DefaultParameterValue(1)]int id, bool? recuperacategoriaasociada)
-```
+{% endhighlight %}
 
 El mecanismo de binding está haciendo un gran trabajo por nosotros y como se puede apreciar incluso está convirtiendo los valores a los tipos de los parámetros de manera automática ya que en la petición del cliente son todo cadenas de texto.
 
@@ -67,24 +67,24 @@ Por supuesto, los valores se podrían obtener directamente de la petición (acce
 
 Además de la capacidad de enlazar parámetros simples, también podemos hacerlo con objetos.
 
-```language-javascript
+{% highlight javascript %}
 public JsonResult GuardarProducto(Producto producto)
 {
             Services.GuardarProducto(producto);
             return Json(true);
 }
-```
+{% endhighlight %}
 
 Cuyo parámetro es un objeto de la clase
 
-```language-javascript
+{% highlight javascript %}
 public class Producto
 {
     public  int  Id { get; set; }
     public  string  Nombre { get; set; }
     public  string  Descripcion { get; set; }
 }
-```
+{% endhighlight %}
 
 En este caso, el sistema de binding analiza el tipo del parámetro, *Producto*, y recorre sus propiedades (*Id, Nombre y Descripción*) asignándole valores en caso de encontrarlos en (como venimos comentando desde el inicio y en el mismo orden) los campos de formularios, parámetros de ruta, parámetros de la petición o archivos adjuntos. 
 
@@ -92,7 +92,7 @@ Cuando encuentra una coincidencia en alguno de los nombres, instancia un objeto 
 
 El siguiente formulario haría una petición contra nuestra acción *GuardarProducto* proporcionandole los valores necesarios para que el sistema de binding instancie un objeto de tipo *Producto *y haga el enlace de manera automática.
 
-```language-javascript
+{% highlight javascript %}
 <form method="post" action="Productos/GuardarProducto">
     <label for="nombre">Nombre:</label>
     <input  type="text" name="nombre"  />
@@ -101,7 +101,7 @@ El siguiente formulario haría una petición contra nuestra acción *GuardarProd
     <input  type="hidden" name="id" value="5"  />
     <input type="submit" value="Guardar" />
 </form>
-```
+{% endhighlight %}
 
 En este ejemplo hemos creado un formulario pero el paso de valores se podría hacer hecho mediante parámetros de ruta o en un querystring, es indiferente.
 
@@ -110,7 +110,7 @@ En este ejemplo hemos creado un formulario pero el paso de valores se podría ha
 
 Por supuesto también se permitirá el enlace de objetos un poco más complicados y que puedan contener otros objetos en su interior. Añadamos a nuestra clase de ejemplo *Producto, una clase de *Caracteristicas*.
 
-```language-javascript
+{% highlight javascript %}
 public class Producto
 {
     public  int  Id { get; set; }
@@ -125,13 +125,13 @@ public class Caracteristicas
     public  int   AnhoFabricacion { get; set; }
     public  int  Peso { get; set; } 
 }
-```
+{% endhighlight %}
 
 En este caso, el sistema de binding tratará igualmente de enlazar las propiedades de *Caracteristicas* buscando por convención en la petición los parámetros *Caracteristicas.LugarFabricacion*,  *Caracteristicas.AnhoFabricacion* y *Caracteristicas.Peso*. En caso de encontrar alguno, instanciará un objeto de tipo *Caracteristicas* y rellenará sus propiedades con los valores obtenidos.
 
 Vamos a modificar el formulario de ejemplo que habíamos usado para el caso anterior y añadimos las *Caracteristicas* del *Producto*
 
-```language-javascript
+{% highlight javascript %}
 <form method="post" action="Productos/GuardarProducto">
     <label for="nombre">Nombre:</label>
     <input  type="text" name="nombre"  />
@@ -146,7 +146,7 @@ Vamos a modificar el formulario de ejemplo que habíamos usado para el caso ante
     <input  type="text" name="Caracteristicas.Peso"  />
     <input type="submit" value="Guardar" />
 </form>
-```
+{% endhighlight %}
 
 Añadimos las *Caracteristicas* del *Producto* de manera que al enviar el formulario se instanciará un objeto Producto y un objeto *Caracteristicas* y enlazará sus propiedades con las que lleguen en la petición.
 
@@ -157,19 +157,19 @@ Además de las opciones anteriores también es posible enlazar automáticamente 
 
 Por ejemplo, si queremos guardar en lugar de un *Producto*, una `List<Producto>`, tendríamos una accion de este tipo
 
-```language-javascript
+{% highlight javascript %}
 public JsonResult GuardarProductos(List<Producto> productos)
 {
             Services.GuardarProductos(productos);
             return Json(true);
 }
-```
+{% endhighlight %}
 
 En este caso, podríamos desde el cliente y usando un poco más de código enlazar automáticamente los productos que se envíen en la petición para que se cree una `List<producto>` de forma automática.
 
 El formulario sería algo así
 
-```language-javascript
+{% highlight javascript %}
 <form method="post" action="Productos/GuardarProductos">
     <input  type="text" name="producto[0].nombre"  />
     <input  type="text" name="producto[0].descripcion"  />
@@ -182,7 +182,7 @@ El formulario sería algo así
     <input  type="text" name="producto[n].descripcion"  />
     <input type="submit" value="Guardar" />
 </form>
-```
+{% endhighlight %}
 
 Con este sencillo código, estaríamos indicando al sistema de binding que tiene que instanciar una *
 `List<Producto>` y además **N** *Producto* con los que rellenarla de datos.
@@ -205,13 +205,13 @@ Es muy típico querer enlazar una lista de *checkboxes* de manera que sólo se e
 
 Este formulario lo podríamos enlazar de manera sencilla mediante la siguiente accion
 
-```language-javascript
+{% highlight javascript %}
 public JsonResult GuardarProductos(int[] idproducto, int  idusuario)
 {
             Services.EnlazaProductos(idproducto, idusuario );
             return Json(true);
 }
-```
+{% endhighlight %}
 
 El array de enteros *idproducto* contendrá los *id* de cada producto que se haya marcado en el formulario y que están representados por el *value* de cada `<input>`.
 
@@ -224,21 +224,21 @@ Otro tipo de datos que se puede enlazar automáticamente y que es de mucha utili
 
 Dado un formulario para subir un fichero
 
-```language-javascript
+{% highlight javascript %}
 <form method="post" action="Productos/GuardaFichero" enctype="multipart/form-data">
            <input  type="file" name="ficheroaguardar" />
            <input type="submit" value="Guardar Archivo" />
 </form>
-```
+{% endhighlight %}
 
 Podemos enlazarlo y salvarlo de manera sencilla mediante una acción como esta
 
-```language-javascript
+{% highlight javascript %}
 public ActionResult GuardarFichero(HttpPostedFileBase ficheroaguardar)
 {
     Ficheroaguardar.SaveAs(rutadondequieroguardarlo);
 }
-```
+{% endhighlight %}
 
 El fichero a de ser un parámetro de tipo *HttpPostedFileBase* y el nombre del parámetro, como siempre, el mismo que el name en el formulario. Después para guardarlo en el sistema de archivos del servidor, uso el método *SaveAs* de *HttpPostedFileBase* y le paso la ruta donde quiero almacenarlo.
 
@@ -259,17 +259,17 @@ Con *Prefix* puedo indicar al mecanismo de binding que los nombres de los parám
 
 Por ejemplo podríamos modificar nuestro primer ejemplo del post para indicar que
 
-```language-javascript
+{% highlight javascript %}
 public JsonResult GuardarProducto([Bind(Preffix="prd")]Producto producto)
 {
             Services.GuardarProducto(producto);
             return Json(true);
 }
-```
+{% endhighlight %}
 
 Estaríamos indicando que el producto se encontrará en la petición con sus propiedades prefijadas con ***prd***. Por tanto el formulario sería como algo como
 
-```language-javascript
+{% highlight javascript %}
 <form method="post" action="Productos/GuardarProducto">
     <label for="prd.nombre">Nombre:</label>
     <input  type="text" name="prd.nombre"  />
@@ -278,19 +278,19 @@ Estaríamos indicando que el producto se encontrará en la petición con sus pro
     <input  type="hidden" name="prd.id" value="5"  />
     <input type="submit" value="Guardar" />
 </form>
-```
+{% endhighlight %}
 
 ***Include***
 
 Permite definir las propiedades que se quieren enlazar. Con este parámetro del atributo *Bind* puedo evitar que se enlacen propiedades que no estoy interesado en tratar y que podrían encontrarse en el contexto de la petición. Sería por ejemplo típico excluir las claves de las propiedades que se quieren enlazar como mecanismo de seguridad ante posibles ataques. Si quiesiéramos excluir en el ejemplo anterior la propiedad *id*, lo haríamos incluyendo el resto de propiedades
 
-```language-javascript
+{% highlight javascript %}
 public JsonResult GuardarProducto([Bind(Include="Nombre, Descripcion")]Producto producto)
 {
             Services.GuardarProducto(producto);
             return Json(true);
 }
-```
+{% endhighlight %}
 
 Con esta sintaxis en la acción *GuardarProducto* no se enlazaría la propiedad *id* aunque se estuviese enviando.
 
@@ -298,13 +298,13 @@ Con esta sintaxis en la acción *GuardarProducto* no se enlazaría la propiedad 
 
 Como contrapunto a *Include* tenemos *Exclude*, que evita el enlace de las propiedades que se indiquen como parámetro. Por tanto otra manera de excluir la propiedad *id* sería
 
-```language-javascript
+{% highlight javascript %}
 public JsonResult GuardarProducto([Bind(Exclude="Id")]Producto producto)
 {
             Services.GuardarProducto(producto);
             return Json(true);
 }
-```
+{% endhighlight %}
 
 ### ***Creación de Binders personalizados***
 
@@ -312,7 +312,7 @@ También es posible personalizar el binding, y ahora ya proporcionando control t
 
 Por ejemplo, podríamos incluir un campo en nuestra clase *Producto* que concatenase el resto de campos y los separase con “;”. Vamos a llamar a la nueva propiedad *ProductoCompleto*
 
-```language-javascript
+{% highlight javascript %}
 public class Producto
 {
     public  int  Id { get; set; }
@@ -320,11 +320,11 @@ public class Producto
     public  string  Descripcion { get; set; }
     public string ProductoCompleto { get; set; }
 }
-```
+{% endhighlight %}
 
 La clase que haría el bind personalizado sería algo como lo siguiente
 
-```language-javascript
+{% highlight javascript %}
 public class ProductoBinder : DefaultModelBinder
 {
     public override object BindModel(ControllerContext controllercontext, ModelBindingContext bindingContext)
@@ -350,7 +350,7 @@ Catch (Exception ex)
             return producto          
    }
 }
-```
+{% endhighlight %}
 
 En los comentarios del snippet se explica paso a paso lo que se hace para obtener la propiedad *ProductoCompleto*. Básicamente hay que sobreescribir el método *BindModel()* que se encarga de ejecutar el bind por defecto, extraer los valores, concatenarlos y devolver el producto para que la accion del controlador lo procese.
 
@@ -366,7 +366,7 @@ public JsonResult GuardarProducto([ModelBinder(typeof(ProductoBinder))]Producto 
 
 también podríamos usarla a nivel de entidad,
 
-```language-javascript
+{% highlight javascript %}
 [ModelBinder(typeof(ProductoBinder))]
 public class Producto
 {
@@ -375,18 +375,18 @@ public class Producto
     public  string  Descripcion { get; set; }
     public string ProductoCompleto { get; set; }
 }
-```
+{% endhighlight %}
 
 o bien a nivel de aplicación en el *Global_asax,*
 
-```language-javascript
+{% highlight javascript %}
 protected void Application_Start()
 {
    ...
             ModelBinders.Binders.Add(typeof(Producto), new ProductoBinder());
    ...
 }
-```
+{% endhighlight %}
 
 dependiendo del alcance que quiero que tenga el binder personalizado
 
@@ -401,7 +401,7 @@ La única diferencia entre los métodos *TryUpdateModel* y *UpdateModel* reside 
 
 A ambos métodos se les pueden pasar una serie de parámetros que permiten hacer lo mismo que vimos hasta ahora para personalizar el binding, pasándole propiedades a incluir, a excluir … etc.
 
-```language-javascript
+{% highlight javascript %}
 public JsonResult GuardarProducto(int idproducto, FormCollection propiedades)
 {
             Producto producto = Services.ObtenerProducto(idproducto);
@@ -412,7 +412,7 @@ public JsonResult GuardarProducto(int idproducto, FormCollection propiedades)
 }
             return Json(true);
 }
-```
+{% endhighlight %}
 
 Con el código anterior estoy recuperando el producto de la base de datos y estoy actualizando las propiedades *Nombre* y *Descripcion* del producto recuperado según indico en la lista de inclusión propiedades a incluir y mediante los datos contenidos en* propiedades.
 

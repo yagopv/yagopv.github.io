@@ -50,12 +50,12 @@ Sometimes a link isn't enough, you want to quote someone on what they've said. P
 
 Got a streak of geek? We've got you covered there, too. You can write inline `<code>` blocks really easily with back ticks. Want to show off something more comprehensive? 4 spaces of indentation gets you there.
 
-```language-javascript
+{% highlight javascript %}
     .awesome-thing {
         display: block;
         width: 100%;
     }
-```
+{% endhighlight %}
 ### Ready for a Break? 
 
 Throw 3 or more dashes down on any new line and you've got yourself a fancy new divider. Aw yeah.

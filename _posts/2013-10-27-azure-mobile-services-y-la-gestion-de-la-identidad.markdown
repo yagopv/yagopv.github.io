@@ -33,7 +33,7 @@ Lo que habría que hacer es crear una nueva tabla en el portal de Azure llamada 
 
 Sustituimos el script por defecto por este otro:
 
-```language-javascript
+{% highlight javascript %}
 function insert(item, user, request) {    
     
     // Node Requires
@@ -172,7 +172,7 @@ function insert(item, user, request) {
         return identity;      
     }           
 }
-```
+{% endhighlight %}
 
 El script está bastante comentado. Básicamente lo que hace es llamar a las url que expone cada proveedor para recuperar los datos del usuario. Vemos que en el caso de Twitter varía un poco por estar usando oAuth 1.0.
 
@@ -180,7 +180,7 @@ Una vez recuperados los datos se *colocan* en un objeto común para insertar en 
 
 Con esto ya podríamos obtener los datos que necesitamos desde el lado cliente. En un cliente HTML/JavaScript podríamos autenticar a nuestros usuarios de la siguiente forma:
 
-```language-javascript
+{% highlight javascript %}
 var socialLogin = function(provider) {
     azureClient.login(provider)
         .then(function(user) {                  
@@ -194,7 +194,7 @@ var socialLogin = function(provider) {
             console.log(error);                    
      });
 }
-```
+{% endhighlight %}
 
 Pues esto es todo. A partir de ahora ya podemos mostrar un mejorarado mensaje al autenticarse un usuario como podría ser “Bienvenido José Pérez Pérez !!”.
 

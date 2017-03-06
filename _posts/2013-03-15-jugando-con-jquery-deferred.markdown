@@ -17,11 +17,11 @@ El objeto deferred se introdujo en jQuery a partir de la versión 1.5 y provocó
 
 Cuando creamos un objeto deferred mediante …
 
-```language-javascript
+{% highlight javascript %}
 var deferred = new $.Deferred(); 
 //o bien 
 var deferred = $.Deferred();
-```
+{% endhighlight %}
 
 … tendremos disponible un objeto sobre el que podemos aplicar una serie de métodos que vamos a ver de forma general. Si se quieren repasar uno por uno se pueden revisar [en el api de jQuery](http://api.jquery.com/category/deferred-object/ "jQuery Deferred").
 
@@ -63,19 +63,19 @@ Comentar además que tanto *reject()* como *resolve()* admiten una lista de argu
 
 <span style="font-size: 1em; line-height: 1.6em;">Si hemos trabajado algo con ajax a partir de la versión 1.5, habremos comprobado que ahora las llamadas se pueden hacer de una manera un poco diferente a lo que estábamos acostumbrados. Por ejemplo, si antes hacíamos …</span>
 
-```language-javascript
+{% highlight javascript %}
 $.getJSON("url", function() { 
     alert("Datos descargados!!") 
 });
-```
+{% endhighlight %}
 
 … ahora, aunque esto sigue funcionando, podemos hacer lo mismo de una forma más limpia mediante:
 
-```language-javascript
+{% highlight javascript %}
 $.getJSON("url").done(function() { 
     alert("Datos descargados!!") 
 });
-```
+{% endhighlight %}
 
 *done()* veíamos que era uno de los varios métodos que nos ofrece la interfaz del objeto $.Deferred y tiene como objetivo ejecutar el callback definido cuando el objeto $.Deferred se ha resuelto correctamente (resolved).
 
@@ -83,7 +83,7 @@ $.getJSON("url").done(function() {
 
 Comentar también que puedo asociar callbacks cuando quiera y no concatenarlos directamente en la llamada asíncrona, es decir
 
-```language-javascript
+{% highlight javascript %}
 var async = $.get("url"); 
 async.done(function() { 
     alert("Todo bien!!"); 
@@ -91,11 +91,11 @@ async.done(function() {
 async.fail(function() { 
     alert("Todo mal!!"); 
 });
-```
+{% endhighlight %}
 
 Hay otro método de gran utilidad en el api del objeto $.Deferred() y no es otro que ***$.when() ***que permite sincronizar la resolución o rechazo de varias deferred. Es decir, aplicandolo usando ajax:
 
-```language-javascript
+{% highlight javascript %}
 $.when($.get("url1"), $.get("url2"), $.get("url3"))  
     .done(function() { 
         alert("Todo bien!!"); 
@@ -103,7 +103,7 @@ $.when($.get("url1"), $.get("url2"), $.get("url3"))
     .fail(function() { 
          alert("Todo mal!!");
     });
-```
+{% endhighlight %}
 
 Lo que hace este código es ejecutar las tres peticiones ajax y cuando se resuelvan los deferreds de cada petición, si todos están “resolved” ejecutará el callback de *done()* y si alguno se rechaza el de *fail().*
 
@@ -111,15 +111,15 @@ Lo que hace este código es ejecutar las tres peticiones ajax y cuando se resuel
 
 Las deferred no sólo valen para usar con ajax. El api que nos ofrece el objeto $.Deferred no es otra cosa que la implementación de un patrón que podremos usar de la manera que mejor nos convenga. Por ejemplo, supongamos que quiero enviar datos contenidos en tres controles de tipo *input* que pertenecen a un formulario ajax cuando han pasado una validación y son todos correctos. Podríamos definir tres deferreds suponiendo que los campos sean *nombre, apellidos y direccion:*
 
-```language-javascript
+{% highlight javascript %}
 var nombre = $.Deferred(); 
 var apellidos = $.Deferred(); 
 var direccion = $.Deferred();
-```
+{% endhighlight %}
 
 Después podríamos asociarles un callback para enviar el formulario mediante un $.post() cuando las tres deferreds pasen a “resolved” debido a que la validación de cada campo es correcta o bien asociarle que lance una alerta si alguna falla:
 
-```language-javascript
+{% highlight javascript %}
 // Defino callback 
 var enviarFormulario = function() { 
     $.post("miurl", {
@@ -133,29 +133,29 @@ var tratarError = function() {
 // Asocio el callback con las deferred mediante $.when() $.when(nombre, apellidos, direccion) 
     .done(enviarFormulario)
     .fail(tratarError);
-```
+{% endhighlight %}
 
 Si paso las tres deferreds a “resolved” se enviará el formulario
 
-```language-javascript
+{% highlight javascript %}
 nombre.resolve(); 
 apellidos.resolve(); 
 direccion.resolve();
-```
+{% endhighlight %}
 
 por el contrario, si rechazo alguna de ellas se mostrará la alerta en cuanto la rechazo y nunca se enviará el formulario ya que aunque las otras deferreds pasen a “resolved” la condición expresada mediante *$.when()* nunca podrá ser cierta:
 
-```language-javascript
+{% highlight javascript %}
 nombre.resolve(); 
 apellidos.reject(); 
 direccion.resolve();
-```
+{% endhighlight %}
 
 ### Retornando promises 
 
  Comentábamos anteriormente que las llamadas ajax de jquery retornaban objetos promise en lugar de deferreds y que estos eran interfaces de sólo lectura de un objeto deferred. El objetivo no es otro que “capar” la manipulación en el exterior del objeto deferred. Vamos a ver un ejemplo que lo ilustre:
 
-```language-javascript
+{% highlight javascript %}
 function wait() { 
     var deferred = $.Deferred(); 
     setTimeout(function() { 
@@ -166,7 +166,7 @@ function wait() {
 wait().done(function() { 
     alert("He esperado 5 segundos!!"); 
 });
-```
+{% endhighlight %}
 
 Lo que estoy haciendo aquí es crear una función *wait()* que retorna una interfaz de sólo lectura de una deferred. En la función *wait()* espero 5 segundos y resuelvo la deferred. En el exterior, no puedo acceder a los métodos resolve y reject ya que se trata de una promise pero sí que puedo asociar callbacks de la manera habitual ya vista. Por tanto, si ejecutamos este código veremos una bonita alerta a los 5 segundos que nos muestra el texto “He esperado 5 segundos!!”.
 

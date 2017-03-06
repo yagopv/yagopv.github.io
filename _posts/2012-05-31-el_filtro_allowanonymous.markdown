@@ -24,12 +24,12 @@ Supongamos, como comentábamos anteriormente, que quiero hacer que mi aplicació
 
 La manera más lógica sería incluir el filtro* [Authorize]* en el *global.asax* como filtro global y así no tener que estar recordando continuamente que tengo que añadirlo a mis acciones o a los controladores cada vez que añado funcionalidades a mi aplicación. Lo haría de esta forma
 
-```language-javascript
+{% highlight javascript %}
 RegisterGlobalFilters(GlobalFilterCollection filters) {
   filters.Add(new HandleErrorAttribute());
   filters.Add(new System.Web.Mvc.AuthorizeAttribute());
 }
-```
+{% endhighlight %}
 ```
 Comentar que hay que añadir el ensamblado por delante del nombre del filtro  porque ya existe en System.Web.Http otro AuthorizeFilter para la Web API.
 ```
@@ -38,7 +38,7 @@ Una vez hecho esto y securizada mi aplicación, añadiré el atributo *[AllowAno
 
 Si miramos la plantilla de aplicación de **ASP MVC 4** que viene con la nueva versión de **Visual Studio 2011**, precisamente se utiliza esta estrategia con el controlador *AccountController*.
 
-```language-javascript
+{% highlight javascript %}
     [Authorize]
     public class AccountController : Controller
     {
@@ -103,7 +103,7 @@ Si miramos la plantilla de aplicación de **ASP MVC 4** que viene con la nueva v
              ...
         }
     }
-```
+{% endhighlight %}
 
 
 En este escenario en el que se securiza la aplicación al completo se ven claramente las ventajas de *[AllowAnonymous], *pero bien es cierto que se puede usar en cualquier otro con el objetivo simplemente de negar al filtro * [Authorize] *que**se estará aplicando en un nivel superior.
@@ -114,7 +114,7 @@ Hasta pronto!!
 
 La implementación de [AllowAnonymous] en ASP MVC 4 es curiosa … En realidad el filtro es una clase vacía
 
-```language-javascript
+{% highlight javascript %}
 namespace System.Web.Mvc
 {
     /// <summary>
@@ -126,11 +126,11 @@ namespace System.Web.Mvc
     {
     }
 }
-```
+{% endhighlight %}
 
 La validación real de si se han de permitir accesos no autenticados está en el propio filtro [Authorize] en el interior del método OnAuthorization()
 
-```language-javascript
+{% highlight javascript %}
 public virtual void OnAuthorization(AuthorizationContext filterContext)
         {
             . . .
@@ -145,7 +145,7 @@ public virtual void OnAuthorization(AuthorizationContext filterContext)
 
             . . .
         }
-```
+{% endhighlight %}
 
 Como se puede ver, lo que se está haciendo es mirar si el controlador o la acción tienen el filtro [AllowAnonymous] definido, y en caso afirmativo no sigue adelante …
 

@@ -14,7 +14,7 @@ En la creación de modelos de Dominio normalmente además de **Entidades** neces
 
 Por ejemplo, en la entidad ***Comentario*** definida a continuación podriamos incluir un **Objeto Valor** ***UsuarioAnonimo*** que se crease cuando el comentario es escrito por un usuario anónimo. Este ***UsuarioAnonimo*** no tiene identidad por lo que en nuestro modelo vamos a tratarlo como un **Objeto Valor**
 
-```language-javascript
+{% highlight javascript %}
 public class Comentario
 {
     public int IdComentario { get; set; }
@@ -30,11 +30,11 @@ public class UsuarioAnonimo
     public string Email { get; set; }
     public string Web { get; set; }
 }
-```
+{% endhighlight %}
 
 El problema que nos vamos a encontrar al crear un objeto de tipo ***Comentario*** y guardar los cambios de la siguiente manera
 
-```language-javascript
+{% highlight javascript %}
 using (var context = new ComentariosContext())
 {
     Comentario  comentario = new Comentario()
@@ -46,7 +46,7 @@ using (var context = new ComentariosContext())
     context.Comentarios.Add(comentario);
     context.SaveChanges();   
 }
-```
+{% endhighlight %}
 
 es que de manera sorprendente este código va a generar una ***Exception***
 
@@ -58,7 +58,7 @@ Esta ***Exception*** se produce debido a que los **Objetos Valor** (***ComplexTy
 
 Por tanto, para solucionar el problema lo único que hemos de hacer es instanciar el **Objeto Valor**
 
-```language-javascript
+{% highlight javascript %}
 using (var context = new ComentariosContext())
 {
     Comentario  comentario = new Comentario()
@@ -71,7 +71,7 @@ using (var context = new ComentariosContext())
     context.Comentarios.Add(comentario);
     context.SaveChanges();   
 }
-```
+{% endhighlight %}
 
 Con la inicialización del ***UsuarioAnonimo***, *SaveChanges()* ya no fallaría y se grabaría un registro en la tabla de ***Comentarios*** con los campos del ***UsuarioAnonimo*** a *null*
 
@@ -79,7 +79,7 @@ Cuando leemos este campo, Entity Framework instacia el **Objeto Valor** y lo ret
 
 Para chequear si el **Objeto Valor** existe, una forma común de hacerlo es añadir una propiedad al **Objeto Valor** que haga este trabajo por nosotros ya que como podemos comprobar, sean los campos *null* o no el objeto estará siempre iniciado.
 
-```language-javascript
+{% highlight javascript %}
 public class UsuarioAnonimo
 {
     public string Nombre { get; set; }
@@ -92,7 +92,7 @@ public class UsuarioAnonimo
         }
     }
 }
-```
+{% endhighlight %}
 
 Por tanto, añadimos una propiedad de solo lectura ***TieneValor*** que nos indicará *true* o *false* en función de si el objeto tiene algún campo distinto de *null* o no.
 

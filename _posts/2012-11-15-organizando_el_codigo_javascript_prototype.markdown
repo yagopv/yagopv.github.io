@@ -17,23 +17,23 @@ Vamos a ver otra forma de hacer lo mismo, pero en este caso usando el *prototype
 
 En primer lugar habíamos definido una clase *Cuenta* …
 
-```language-javascript
+{% highlight javascript %}
 function Cuenta(numerocuenta, saldo) {
     this.numerocuenta = numerocuenta;
     this.saldo = saldo;
 };
-```
+{% endhighlight %}
 
 … para instanciar objetos de tipo *Cuenta* y manipularlos en el módulo de *Contabilidad*.
 
 La estructura de nuestro código, en esta ocasión, seguirá el siguiente esquema.
 
-```language-javascript
+{% highlight javascript %}
 function Cuenta(numerocuenta, saldo) {
     this.numerocuenta = numerocuenta;
     this.saldo = saldo;
 };
-```
+{% endhighlight %}
 
 Definimos en primer lugar un clase *Contabilidad* instanciable mediante *new Contabilidad()* a la que además pasaremos un array de cuentas de tipo Cuenta. En este constructor incluiremos las propiedades públicas de Contabilidad.
 
@@ -43,7 +43,7 @@ Por último, mediante el uso de los paréntesis al final “()”, auto instanci
 
 Con esto ya tendríamos la estructura preparada y sólo sería necesario añadir las mismas variables y métodos que habíamos añadido en el post anterior, de manera que el código quedaría defintívamente así:
 
-```language-javascript
+{% highlight javascript %}
 var Contabilidad = function(cuentas) {
     //Propiedades públicas
     this.Cuentas = cuentas || new Array();
@@ -95,19 +95,19 @@ Contabilidad.prototype = function () {
         calcularSaldoTotal : _calcularSaldoTotal
     }
 }();
-```
+{% endhighlight %}
 
 Observad que las variables públicas se exponen ahora en la definición de la clase y no como en el [ejemplo de los módulos](http://www.yagoperez.com/Post/GetPostByCode/organizando_el_codigo_javascript_modulos) en el que se hacía en el *return {}* mediante invocación a *getters.*
 
 Ahora ya podríamos en nuestro código hacer cosas como**
 
-```language-javascript
+{% highlight javascript %}
 var contabilidad = new Contabilidad(new Array()); contabilidad.nuevaCuenta(111111, 100.00); contabilidad.nuevaCuenta(222222, 200.00); contabilidad.modificarSaldo(111111, 100.00); contabilidad.eliminarCuenta(111111); contabilidad.calcularSaldoTotal(); var contabilidad2 = new Contabilidad(new Array()); contabilidad2.nuevaCuenta(111111, 100.00); contabilidad2.nuevaCuenta(222222, 200.00); contabilidad2.nuevaCuenta(333333, 200.00); contabilidad2.nuevaCuenta(444444, 200.00); contabilidad2.modificarSaldo(111111, 1000.00); contabilidad2.eliminarCuenta(333333); contabilidad2.calcularSaldoTotal(); var contabilidad3 = new Contabilidad(new Array(new Cuenta(111111, 100.00), new Cuenta(222222, 200.00))); contabilidad3.nuevaCuenta(333333, 100.00); contabilidad3.calcularSaldoTotal();
-```
+{% endhighlight %}
 
 Una ventaja de este modelo de estructuración del código es que es fácilmente extensible ya que podemos en cualquier parte sobreescribir un método expuesto de manera tan sencilla como ...
 
-```language-javascript
+{% highlight javascript %}
 Contabilidad.prototype.calcularSaldoTotal = function () {
     var j = 0;
     this.SaldoTotal = 0;
@@ -117,21 +117,21 @@ Contabilidad.prototype.calcularSaldoTotal = function () {
     }
     alert("Metodo extendido")
 }
-```
+{% endhighlight %}
 
 e incluso añadir nuevos métodos al módulo
 
-```language-javascript
+{% highlight javascript %}
 Contabilidad.prototype.iniciarSaldo = function () {    
     this.SaldoTotal = 0;
 }
-```
+{% endhighlight %}
 
 Con lo que ahora podemos usar cualquier objeto anteriormente creado (contabilidad, contabilidad2 o contabilidad3) para llamar a los nuevos métodos ...
 
-```language-javascript
+{% highlight javascript %}
 contabilidad.calcularSaldoTotal(); contabilidad.iniciarSaldo();
-```
+{% endhighlight %}
 
 El primer método hará lo mismo que el original pero lanzará una alerta ya que ahora está usando el método extendido con el que hemos sobreescrito el original. El segundo iniciará el saldo total tal y como indicamos
 

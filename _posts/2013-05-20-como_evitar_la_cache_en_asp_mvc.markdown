@@ -17,7 +17,7 @@ Vamos a ver una forma de evitar la cache mediante el uso de un atributo.
 
 Este filtro lo podemos implementar de la siguiente forma
 
-```language-javascript
+{% highlight javascript %}
 public class NoCacheAttribute : ActionFilterAttribute
 {
     public override void OnResultExecuting(ResultExecutingContext filterContext)
@@ -31,7 +31,7 @@ public class NoCacheAttribute : ActionFilterAttribute
         base.OnResultExecuting(filterContext);
     }
 }
-```
+{% endhighlight %}
 
 Y con esto ya estaría el “problema” resuelto
 

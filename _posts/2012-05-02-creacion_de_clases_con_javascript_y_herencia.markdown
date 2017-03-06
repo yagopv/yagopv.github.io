@@ -19,13 +19,13 @@ Las funciones javascript, entre otras muchas características, se pueden instanc
 
 Podemos crear una clase **Animal** de la siguiente forma
 
-```language-javascript
+{% highlight javascript %}
 function Animal() { }
-```
+{% endhighlight %}
 
 Lo primero en lo que pensamos cuando definimos una clase en cualquier lenguaje orientado a objetos es en cual será el constructor de la clase. Este es otro punto más en el que la definición de una clase en javascript difiere de lo acostumbrado en cualquier otra plataforma, ya que no crearemos un método como constructor, sino que lo que haremos es pasarle una serie de parámetros a la función y asignarlos inmediatamente después en el cuerpo de la misma.
 
-```language-javascript
+{% highlight javascript %}
 function Animal(nombre, especie, numerodepatas, tienecola) { 
     //Propiedades
     this.Nombre = nombre;
@@ -33,21 +33,21 @@ function Animal(nombre, especie, numerodepatas, tienecola) {
     this.NumeroDePatas = numerodepatas;
     this.TieneCola = tienecola;
 }
-```
+{% endhighlight %}
 
 En el código anterior vemos que hemos pasado una serie de parámetros a la función y hemos asignado sus valores a propiedades del objeto ***this***, ***this*** en este ámbito hace referencia a nuestra función y ¿qué deciamos que era nuestra función?, pues será nuestra clase, por lo tanto al asignar los parámetros utilizando ***this.Propiedad*** estamos asignando valores a las propiedades de la clase **Animal**.
 
 Cuando instanciamos una función, se ejecuta todo el código que hay en su interior exceptuando otras funciones contenidas, que sólo se ejecutarán si las llamamos de forma explícita. Por tanto si instanciamos a nuestra clase **Animal.**
 
-```language-javascript
+{% highlight javascript %}
 var animal = new Animal("Tigre","Felino", 4, true);
-```
+{% endhighlight %}
 
 lo que en el fondo estamos haciendo es ejecutar el contenido de la clase **Animal** exceptuando otras funciones contenidas en su interior. Por tanto **hemos creado un constructor para la clase**.
 
 Podemos también crear variables privadas para dicha clase, que sólo sean accesibles desde esta. Vamos a añadir una variable *_nombreCompleto* y otra *_color*
 
-```language-javascript
+{% highlight javascript %}
 function Animal(nombre, especie, numerodepatas, tienecola) {
     //Variables privadas 
     var _nombreCompleto; 
@@ -58,13 +58,13 @@ function Animal(nombre, especie, numerodepatas, tienecola) {
     this.NumeroDePatas = numerodepatas; 
     this.TieneCola = tienecola; 
 }
-```
+{% endhighlight %}
 
 De manera que las variables definidas en el interior de la clase sólo son accesibles desde el interior. Con esto tengo definido un atributo que puedo usar para operaciones internas de la clase. Vemos que lo he definido con **“_”** porque por convención suele hacerse así para *variables privadas*.
 
 Por último nos falta definir métodos. Vamos a definir un par para manipular el nombre completo y el color.
 
-```language-javascript
+{% highlight javascript %}
 function Animal(nombre, especie, numerodepatas, tienecola) { 
     //Variables privadas 
     var _nombreCompleto; var _color; 
@@ -88,7 +88,7 @@ function Animal(nombre, especie, numerodepatas, tienecola) {
         return _nombreCompleto; 
     } 
 }
-```
+{% endhighlight %}
 
 ***setColor()*** nos permite modificar el color de nuestro animal. Recibe un parámetro, el color.
 
@@ -103,7 +103,7 @@ function Animal(nombre, especie, numerodepatas, tienecola) {
 
 Ahora que tengo definida mi clase **Animal** genérica, voy a derivarla en dos clases hijas, **Vaca** y **Tigre**. En primer lugar vamos a mostrar el código y a continuación lo explicamos.
 
-```language-javascript
+{% highlight javascript %}
 function Vaca(nombre, especie, numerodepatas, tienecola, lecherestante) {   
     Animal.call(this,nombre, especie, numerodepatas, tienecola); 
     this.LecheRestante = lecherestante; 
@@ -123,7 +123,7 @@ function Tigre(nombre, especie, numerodepatas, tienecola, victimas) {
     } 
 } 
 Tigre.prototype = new Animal();
-```
+{% endhighlight %}
 
 Para llevar a cabo la herencia he hecho principalmente dos cosas:
 
@@ -147,7 +147,7 @@ Creo una página web *test_inheritance.html* e incluyo en el mismo directorio un
 
 La página creada quedaría así
 
-```language-html
+{% highlight html %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -193,7 +193,7 @@ La página creada quedaría así
 	</script>
   </body>
 </html>
-```
+{% endhighlight %}
 
 Como podemos observar lo que estoy haciendo es crear objetos de las clases hijas y comprobando que tengo acceso a las propiedades y métodos tanto de la clase padre como de las clases hijas.
 

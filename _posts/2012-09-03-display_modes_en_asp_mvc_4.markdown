@@ -19,7 +19,7 @@ Supongamos que en nuestra aplicación queremos crear vistas personalizables para
 
 Vamos a usar el ***UserAgent***para realizar esta distinción. En el método *Application_Start()* añadimos el siguiente código
 
-```language-javascript
+{% highlight javascript %}
 using System.Web.WebPages;
 
 protected void Application_Start() { 
@@ -66,7 +66,7 @@ protected void Application_Start() {
 			)) 
 		}); 
 }
-```
+{% endhighlight %}
 
 Hemos añadido dos nuevas entradas en ***DisplayModeProvider*** que se corresponden con los modos de visualización para teléfonos móviles y tablets. Simplemente con esto estamos indicando cómo se debe formatear una respuesta ante una petición. Si alguna de las condiciones evaluadas se cumple, se inserta el nombre del Display Mode en la vista a retornar.
 

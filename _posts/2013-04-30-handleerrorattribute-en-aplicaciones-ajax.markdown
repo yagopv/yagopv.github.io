@@ -18,7 +18,7 @@ Una forma de hacer frente a este problema es extender el filtro de error que nos
 
 La mejor forma que he encontrado para hacerlo es [ir al código fuente de ASP MVC y buscar el archivo HandleErrorAttribute.cs](http://aspnetwebstack.codeplex.com/SourceControl/latest#src/System.Web.Mvc/HandleErrorAttribute.cs "HandleError"). A partir de este código, trato de derivarlo de la siguiente forma en un nuevo *CustomHandleErrorAttributte* realizando una pequeña modificación:
 
-```language-javascript
+{% highlight javascript %}
 public class CustomHandleErrorAttribute : HandleErrorAttribute
 {
     public override void OnException(ExceptionContext filterContext)
@@ -84,11 +84,11 @@ public class CustomHandleErrorAttribute : HandleErrorAttribute
         filterContext.HttpContext.Response.TrySkipIisCustomErrors = true;		
     }
 }
-```
+{% endhighlight %}
 
 <span style="font-size: 1em; line-height: 1.6em;">El punto clave que se ha cambiado respecto al original es el momento en el que se retorna la vista de error. en lugar de lo que hace el filtro por defecto, se comprobará si la petición realizada es una petición AJAX y en caso afirmativo retornar un **JsonResult** en lugar de la vista de error.</span>
 
-```language-javascript
+{% highlight javascript %}
 // Si la petición es AJAX => JSON. Si no lo es => Vista por defecto
 if (filterContext.HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
 {
@@ -101,19 +101,19 @@ if (filterContext.HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpReq
                 } 
     };
 }
-```
+{% endhighlight %}
 
 Como se puede ver, lo que estamos haciendo es pasar el mensaje de excepción en el resultado JSON y un flag *error = true* que podemos gestionar desde el cliente con un poco de javascript y así mostrar el error de forma correcta.
 
 Es también importante reseñar que el filtro por defecto sólo gestiona errores 500 …
 
-```language-javascript
+{% highlight javascript %}
 // Si no es HTTP 500 (por ejemplo, si alguien lanza un  HTTP 404 desde una acción), ignórarlo
 if (new HttpException(null, exception).GetHttpCode() != 500)
 {
       return;
 }
-```
+{% endhighlight %}
 
 … por lo que si nos ponemos a disparar excepciones HTTP … etc, esto no va a funcionar. Sí que funcionará si explícitamente añado los códigos que quiero gestionar a mayores del 500.
 

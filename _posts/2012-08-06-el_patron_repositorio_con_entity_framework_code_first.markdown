@@ -19,7 +19,7 @@ La técnica que vamos a usar, consistirá en la creación de un repositorio gen�
 
 En primer lugar crearemos una interfaz genérica
 
-```language-javascript
+{% highlight javascript %}
 namespace MyApp.Domain.RepositoryContracts
 {
     /// <summary>
@@ -43,7 +43,7 @@ namespace MyApp.Domain.RepositoryContracts
         int ExecuteInDatabaseByQuery(string sqlCommand, params object[] parameters);
     }
 }
-```
+{% endhighlight %}
 
 En esta interfaz hemos definido los métodos genéricos que deberían ser comunes a cualquier Repositorio creado en nuestra aplicación. Podemos observar (según el namespace definido) que este contrato se crea en la capa de Dominio de nuestra aplicación y por tanto será el contacto con la capa de acceso a datos específica. La implementación posterior se podría hacer usando Entity Framework como mecanismo de persistencia o cualquier otro como NHibernate, ADO.NET …
 
@@ -51,7 +51,7 @@ En la misma capa, vamos a crear interfaces específicas para las entidades que f
 
 Para la entidad Post definimos el siguiente contrato
 
-```language-javascript
+{% highlight javascript %}
 namespace MyApp.Domain.RepositoryContracts
 {
     /// <summary>
@@ -62,7 +62,7 @@ namespace MyApp.Domain.RepositoryContracts
         ICollection<Post> GetPostsByCategory(string category)
     }
 }
-```
+{% endhighlight %}
 
 Como se puede apreciar, nuestro contrato específico, deriva de IRepository<Post> por lo que hereda todas las operaciones del repositorio genérico. A mayores se incluyen las operaciones específicas que queremos implementar para la entidad Post y que no guardarán relación con las demás. En este caso incluimos GetPostsByCategory() que recupera los Posts agrupados por categoría.
 
@@ -70,7 +70,7 @@ Hacemos el mismo ejercicio para el resto de entidades …
 
 Category, que no incluirá métodos específicos …
 
-```language-javascript
+{% highlight javascript %}
 using MyApp.Domain.EntityModel;
 
 namespace BgEngine.Domain.RepositoryContracts
@@ -83,11 +83,11 @@ namespace BgEngine.Domain.RepositoryContracts
         
     }
 }
-```
+{% endhighlight %}
 
 … y Comment, en el que añadimos un método para recuperar el total de Comentarios …
 
-```language-javascript
+{% highlight javascript %}
 using Myapp.Domain.EntityModel;
 
 namespace BgEngine.Domain.RepositoryContracts
@@ -100,14 +100,14 @@ namespace BgEngine.Domain.RepositoryContracts
          int GetCount();
     }
 }
-```
+{% endhighlight %}
 
 
 ### La capa de Infraestructura
 
 En la capa de Infraestructura implementaremos los Repositorios, tanto el genérico como los específicos. La implementación genérica sería algo así
 
-```language-javascript
+{% highlight javascript %}
 namespace MyApp.Infraestructure.Repositories
 {
     /// <summary>
@@ -312,11 +312,11 @@ namespace MyApp.Infraestructure.Repositories
         {            
             return this.unitofwork.ExecuteCommand(sqlCommand,parameters);
         }
-```
+{% endhighlight %}
 
 Una vez tenemos la implementación genérica, vamos con las específicas. En primer lugar para la entidad Post
 
-```language-javascript
+{% highlight javascript %}
 namespace MyApp.Infraestructure.Repositories
 {
     /// <summary>
@@ -355,7 +355,7 @@ namespace MyApp.Infraestructure.Repositories
         }
     }
 }
-```
+{% endhighlight %}
 
 Como se puede observar, además de implementar el método GetPostsByCategory(), hemos sobreescrito el método genérico Insert() para informar siempre la fecha de creación de un Post.
 
@@ -363,7 +363,7 @@ No vamos a crear ninguna implementación específica para ICategoryRepository, y
 
 Para la entidad Comment sí que habíamos definido un método, por tanto la implementación sería así …
 
-```language-javascript
+{% highlight javascript %}
 namespace MyApp.Infraestructure.Repositories
 {
     /// <summary>
@@ -386,7 +386,7 @@ namespace MyApp.Infraestructure.Repositories
         }
     }
 }
-```
+{% endhighlight %}
 
 Con esto hemos finalizado la implementación genérica y específica de nuestros contratos de la capa del Dominio en la capa de Infraestructura.
 

@@ -11,19 +11,19 @@ En ASP MVC la gestión del mecanismo de protección contra ataque CSRF es muy se
 
 En las aplicaciones ASP MVC, el mecanismo de protección contra ataques CSRF (Cross Site Request Forgery) es muy fácil de utilizar. Únicamente hemos de incluir en los formularios un HTML helper que genera el token …
 
-```language-clike
+{% highlight c %}
 @Html.AntiForgeryToken()
-```
+{% endhighlight %}
 
 <span style="font-size: 1em; line-height: 1.6em;">… y a continuación decorar el método que gestiona el POST del formulario con:</span>
 
-```language-clike
+{% highlight c %}
 [ValidateAntiForgeryToken] public ActionResult MiAccion() { }
-``` 
+{% endhighlight %}
 
 En la web api la cosa no es tan sencilla. Aquí no hay HTML helpers ni atributos predefinidos. Además el uso que se le dará al api REST será principalmente AJAX. Por tanto no nos queda otra que definir un filtro que valide la inclusión del token y además enviar dicho token desde el cliente Javascript. Una forma de implementar el filtro sería esta:</span>
 
-```language-clike
+{% highlight c %}
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
 public class AntiForgeryTokenAttribute : System.Web.Http.Filters.ActionFilterAttribute
 {
@@ -81,7 +81,7 @@ public class AntiForgeryTokenAttribute : System.Web.Http.Filters.ActionFilterAtt
         base.OnActionExecuting(actionContext);
     }
 }
-```
+{% endhighlight %}
 
 Listo, ahora obviamente hemos de enviar el token desde nuestro cliente Javascript. Aquí podríamos seguir diversas estrategias dependiendo de nuestro tipo de cliente. Por ejemplo, si estamos desarrollando una SPA cuya página principal es una vista MVC, podemos incluir el token mediante el helper @Html.AntiForgeryToken() y posteriormente incluirlo en todas las peticiones que lo necesiten accediento al valor del tag `input` generado por el helper.
 
@@ -89,7 +89,7 @@ Hay un problema con esta estrategia y es que la generación del token tiene en c
 
 La otra estrategia sería solicitar el token directamente mediante una llamada ajax e incluirlo en las peticiones que se necesite. Esta operación la repetiremos en cada cambio de usuario que se produzca. Por ejemplo, creamos un función que obtenga el token y lo incluya en cada petición.
 
-```language-clike
+{% highlight c %}
 function addAntiForgeryTokenToAjaxRequests() {
 	$.get("api/getantiforgerytokens").then(function (token) {				
 		$(document).ajaxSend(function (event, request, options) {
@@ -99,13 +99,13 @@ function addAntiForgeryTokenToAjaxRequests() {
 		});
 	});
 }
-```
+{% endhighlight %}
 
 Esta función la llamaremos con cada cambio de estado de autenticación para recuperar el nuevo token asociado al nuevo usuario autenticado.
 
 El método de la Web API encargado de obtener el token sería:
 
-```language-clike
+{% highlight c %}
 [HttpGet]
 [AllowAnonymous]
 public string GetAntiForgeryTokens()
@@ -115,10 +115,10 @@ public string GetAntiForgeryTokens()
     HttpContext.Current.Response.Cookies[AntiForgeryConfig.CookieName].Value = cookieToken;
     return formToken;
 }
-```
+{% endhighlight %}
 Otro detalle importante, es que en cada cambio de usuario, debido a que el mecanismo de autenticación puede tardar más en establecer el nuevo **Principal** de lo que tardamos nosotros en hacer el cambio de usuario, hace necesario que aseguremos que el cambio en el estado de autenticación se ha producido antes de obtener el nuevo token.
 
-```language-clike
+{% highlight c %}
 // Login
 IPrincipal principal = new GenericPrincipal(new GenericIdentity("username"), null);
 Thread.CurrentPrincipal = principal;
@@ -127,7 +127,7 @@ HttpContext.Current.User = principal;
 // Logout
 Thread.CurrentPrincipal = null;
 HttpContext.Current.User = null;
-```
+{% endhighlight %}
 Bueno, pues hasta aquí este post … Ahora a ver si funciona
 
 Hasta pronto!!

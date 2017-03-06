@@ -40,7 +40,7 @@ Los controladores dela Web API NO heredan de *Controller*, lo harán de *ApiCont
 
 El enrutado es un poco diferente a cómo estábamos acostumbrados. Ahora se añade una **nueva ruta** a la tabla de rutas. Si estamos tratando con un proyecto **ASP MVC 4** además de la ruta de la **Web API** aparecerá la ruta de los controladres “normales” como venía sucediendo.
 
-```language-javascript
+{% highlight javascript %}
 routes.MapHttpRoute(
 
     name: "DefaultAPIRoute",
@@ -50,7 +50,7 @@ routes.MapHttpRoute(
     defaults: new { id = RouteParameter.Optional }
 
 );
-```
+{% endhighlight %}
 
 Comentar que en la última revisión de los proyectos ASP MVC 4 RC se ha movido la configuración de la tabla de rutas a una clase de la carpeta *App_Start*. Hasta ahora esta definición residía en el *global.asax*.
 
@@ -86,9 +86,9 @@ buscará acciones del tipo *GetXXXX()* como *GetAllProducts()* ya que la petici�
 
 En la ruta por defecto estamos indicando que el parámetro *id* es opcional, pero si aparece en la petición, en la acción el nombre del parámetro ha de ser también *id*, es decir, si tengo un método de acción
 
-```language-javascript
+{% highlight javascript %}
 public Product GetProduct(int productid)
-```
+{% endhighlight %}
 
 y efectúo una llamada a la api como esta
 
@@ -115,7 +115,7 @@ Por supuesto también se puede configurar el uso de otros verbos personalizados 
 
 Decíamos anteriormente que también podíamos usar el sistema de rutas clásico de **ASP MVC** (o cualquier otro personalizado). Si quisiéramos usar este sistema de rutas podríamos incluir el parámetro de acción *({action})* en la tabla de rutas en lugar de la que viene por defecto.
 
-```language-javascript
+{% highlight javascript %}
 routes.MapHttpRoute(
 
     name: "APIDefault",
@@ -125,7 +125,7 @@ routes.MapHttpRoute(
     defaults: new { id = RouteParameter.Optional }
 
 );
-```
+{% endhighlight %}
 
 En este caso tenemos que tener en cuenta que hay que incluir siempre como atributo el tipo de verbo a la acción *[HttpGet], [HttpPost]* ya que estamos eliminando la convención de rastreo de acciones de la **Web API**.
 
