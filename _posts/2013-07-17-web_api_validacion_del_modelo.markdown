@@ -3,7 +3,9 @@ layout: post
 title: Web API. Validación del modelo
 date: '2013-07-17 03:17:05'
 tags:
-- web-api
+- ASP MVC
+categories:
+- .NET
 ---
 
 
@@ -56,17 +58,17 @@ public class ModelValidationAttribute : ActionFilterAttribute
 {% highlight javascript %}
 $.post("api/", credential)
 	.done(function (result) {
-		// Todo ha ido bien
+        // Todo ha ido bien
 	})
 	.fail(function (errors) {
-		// Se han producido errores de validación y se ha retornado un 400. Bad request con los errores
-             if (errors.responseText != "") {
-                 $.each($.parseJSON(errors.responseText), function (key, value) {
-                    console.log(value);
-                 });
-             } else {
-                   console.log(errors.statusText);
-             }			
+	    // Se han producido errores de validación y se ha retornado un 400. Bad request con los errores
+        if (errors.responseText != "") {
+             $.each($.parseJSON(errors.responseText), function (key, value) {
+                console.log(value);
+             });
+        } else {
+             console.log(errors.statusText);
+        }
 	});
 {% endhighlight %}
 

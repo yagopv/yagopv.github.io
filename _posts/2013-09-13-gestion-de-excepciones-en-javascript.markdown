@@ -3,7 +3,9 @@ layout: post
 title: Gestión de excepciones en JavaScript
 date: '2013-09-13 04:45:16'
 tags:
-- errores-y-excepciones
+- Exception handling
+categories:
+- JavaScript
 ---
 
 
@@ -18,9 +20,11 @@ Cuando se produce un error en una sentencia, se lanza una excepción y comienza 
 
 Cuando ocurre una excepción, se crea un objeto representando dicho error y se lanza la excepción. El objeto creado es de tipo **Error**y se usa frecuentemente para la gestión de excepciones de usuario. Podemos crear un objeto de tipo error de la siguiente forma:
 
-```language-javascript
+
+{% highlight javascript %}
 var error = new Error("Se ha producido un error");
-```
+{% endhighlight %}
+
 
 Dicho objeto contendrá <span>principalmente</span>dos propiedades, *name* y *message, que se*corresponden con el nombre del tipo de excepción (“Error”) y el mensaje incluido en la instanciación (“Se ha producido un error”) respectivamente.
 
@@ -30,9 +34,10 @@ Además de la clase *Error*, tenemos otra serie de clases derivadas que hacen re
 
 Errores generados por números fuera de rango, por ejemplo, con la siguiente sentencia:
 
-```language-javascript
+{% highlight javascript %}
 var array = new Array(10000000000);
-```
+{% endhighlight %}
+
 
 obtendremos como resultado el lanzamiento de una excepción con el error:
 
@@ -42,9 +47,10 @@ obtendremos como resultado el lanzamiento de una excepción con el error:
 
 Se produce cuando referenciamos variables que no existen:
 
-```language-javascript
+{% highlight javascript %}
 var x = y;
-```
+{% endhighlight %}
+
 
 <span style="font-size: 1em; line-height: 1.6em;">Tendrá como consecuencia la generación de un error:</span>
 
@@ -54,9 +60,11 @@ var x = y;
 
 Se lanza al no cumplirse las reglas del lenguaje:
 
-```language-javascript
+
+{% highlight javascript %}
 fnction myFunc() { }
-```
+{% endhighlight %}
+
 
 Genera la excepción:
 
@@ -66,9 +74,10 @@ Genera la excepción:
 
 Se producen cuando un valor no es de un tipo esperado, por ejemplo al llamar a un método no existente de un objeto:
 
-```language-javascript
+{% highlight javascript %}
 var x= {}; x.y(); // TypeError
-```
+{% endhighlight %}
+
 
 “y” no existe como función en “x” y por tanto se producirá un:
 
@@ -76,11 +85,11 @@ var x= {}; x.y(); // TypeError
 
 ### URIError
 
-<span>Se lanza cuando métodos propios del lenguaje como</span>*encodeURI()* o * decodeURI()* se invocan con URIs no válidas:
+Se lanza cuando métodos propios del lenguaje como*encodeURI()* o *decodeURI()* se invocan con URIs no válidas:
 
-```language-javascript
+{% highlight javascript %}
 decodeURIComponent("http://%ominio.com"); // URIError
-```
+{% endhighlight %}
 
 Produce la excepción:
 
@@ -93,15 +102,16 @@ Comentábamos que la gestión de excepciones en JavaScript es similar a la de ot
 
 El típico bloque ***try…catch…finally*** será el encargado de permitirnos dicha gestión.
 
-```language-javascript
-try { 
-    // Intentamos ejecutar el código 
-} catch (exception) { 
-    // Gestionamos la excepción si es que se produce 
-} finally { 
-    // Se ejecuta siempre 
+{% highlight javascript %}
+try {
+    // Intentamos ejecutar el código
+} catch (exception) {
+    // Gestionamos la excepción si es que se produce
+} finally {
+    // Se ejecuta siempre
 }
-```
+{% endhighlight %}
+
 
 La única parte obligatoria del bloque es ***try***. Podemos seguirlo con ***catch***, con ***finally***o bien con ambos.
 
@@ -109,28 +119,34 @@ La única parte obligatoria del bloque es ***try***. Podemos seguirlo con ***cat
 
 En cuanto la excepción se produce, el control pasa a la sentencia **catch** y  tendremos disponible la información acerca de la misma en la variable </span>***exception***<span style="font-size: 1em; line-height: 1.6em;">. Por tanto si hacemos lo siguiente:</span>
 
-```language-javascript
-try { 
-    var x = y; // ReferenceError 
-} catch (exception) { 
-    console.log(exception.message);     
-    console.log(exception.name); 
+{% highlight javascript %}
+try {
+    var x = y; // ReferenceError
+} catch (exception) {
+    console.log(exception.message);
+    console.log(exception.name);
 }
-```
+{% endhighlight %}
+
 Veremos en la consola JavaScript los mensajes:
 
-<div class="console-message console-log-level"><span class="console-message-text source-code" style="color: #ff0000;">y is not defined</span></div><div class="console-message console-log-level"><span class="console-message-text source-code" style="color: #ff0000;">ReferenceError</span></div><div class="console-message console-log-level"><span class="console-message-text source-code">  
-</span></div><span>Por supuesto, podríamos necesitar distinguir entre diferentes tipos de excepciones para gestionar los errores de diversas maneras. Para esto, podemos usar *instanceOf* dentro del bloque ***catch***</span>
+<span style="color: #ff0000;">y is not defined</span>
 
-```language-javascript
-if (exception instanceof TypeError) { 
-    ... 
-} else if (exception instanceof ReferenceError) { 
-    ... 
-} else { 
-    ... El resto ... 
+<span style="color: #ff0000;">ReferenceError</span>
+
+Por supuesto, podríamos necesitar distinguir entre diferentes tipos de excepciones para gestionar los errores de diversas maneras. Para esto, podemos usar *instanceOf* dentro del bloque ***catch***
+
+
+{% highlight javascript %}
+if (exception instanceof TypeError) {
+    ...
+} else if (exception instanceof ReferenceError) {
+    ...
+} else {
+    ... El resto ...
 }
-```
+
+{% endhighlight %}
 
 Por último, el bloque ***finally*** se ejecuta siempre haya o no haya excepción. Hay que tener en cuenta, que incluso se ejecutará aunque se haga un *return* en el bloque ***catch***.
 
@@ -140,13 +156,14 @@ También por supuesto podemos lanzar nuestras propias excepciones a través de l
 
 <span style="font-size: 1em; line-height: 1.6em;">Algunos ejemplos del uso de ***throw*** serían.</span>
 
-```language-javascript
-throw true; 
-throw "Mensaje"; 
-throw undefined; 
-throw { error : "Error", mensaje : "Mensaje de error" }; 
+{% highlight javascript %}
+throw true;
+throw "Mensaje";
+throw undefined;
+throw { error : "Error", mensaje : "Mensaje de error" };
 throw new SyntaxError("Mensaje de error");
-```
+{% endhighlight %}
+
 <span style="font-size: 1em; line-height: 1.6em;">Como se puede apreciar, no hay ningún tipo de restricción en el tipo de datos de la excepción. Pese a no existir esta restricción, el usar los tipos nativos de error puede darnos algún bonus en forma de tratamiento especial en herramientas de depuración como ***Google Dev Tools*** o ***Firebug.***Este tratamiento especial podría venir en forma de nombre de fichero en el que se produce la excepción, línea en la que se produce, … etc.</span>
 
 
@@ -154,22 +171,23 @@ throw new SyntaxError("Mensaje de error");
 
 <span style="font-size: 1em; line-height: 1.6em;">Además de los tipos nativos que nos ofrece JavaScript, podemos crear nuestros propios tipos de error. La forma en la que podemos hacerlo es aplicando herencia. Por ejemplo, suponiendo que tenemos un servicio web con el que se puede perder la conexión, podríamos crear una excepción personalizada a la que podemos llamar ***ConnectionLostError***</span>
 
-```language-javascript
-function ConnectionLostError(message) { 
-    this.name = "ConnectionLostError"; 
-    this.message = (message || ""); 
-} 
+{% highlight javascript %}
+function ConnectionLostError(message) {
+    this.name = "ConnectionLostError";
+    this.message = (message || "");
+}
 ConnectionLostError.prototype = new Error(); ConnectionLostError.prototype.constructor = ConnectionLostError;
+{% endhighlight %}
 
-```
 
 Ahora ya podríamos usarla cuando nuestra aplicación pierda la conexión con el servicio
 
-```language-javascript
-if (connection.lost() == true) { 
-    throw new ConnectionLostError("Se ha producido una perdida de conexión en la aplicación"); 
+{% highlight javascript %}
+if (connection.lost() == true) {
+    throw new ConnectionLostError("Se ha producido una perdida de conexión en la aplicación");
 }
-```
+{% endhighlight %}
+
 
 Viendo por la consola JavaScript que se lanza la excepción
 
@@ -177,14 +195,16 @@ Viendo por la consola JavaScript que se lanza la excepción
 
 <span style="font-size: 1em; line-height: 1.6em;">Ahora lo lógico sería que la controlásemos en un nivel superior de la pila de llamadas:</span>
 
-```language-javascript
-try { 
-    insertarAlgo(); 
-} catch (exception) { 
-    if (exception instanceof ConnectionLostError) { reconectar() 
-    } 
+
+{% highlight javascript %}
+try {
+    insertarAlgo();
+} catch (exception) {
+    if (exception instanceof ConnectionLostError) { reconectar()
+    }
 }
-```
+{% endhighlight %}
+
 
 ## Resumen
 

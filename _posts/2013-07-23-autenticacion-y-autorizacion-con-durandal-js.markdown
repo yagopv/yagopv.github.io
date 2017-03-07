@@ -3,7 +3,9 @@ layout: post
 title: Autenticación y autorización con Durandal JS
 date: '2013-07-23 07:32:07'
 tags:
-- seguridad
+- Durandal
+categories:
+- JavaScript
 ---
 
 

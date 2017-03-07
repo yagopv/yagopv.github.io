@@ -1,11 +1,13 @@
 ---
 layout: post
-title: DurandalAuth 2
+title: 'DurandalAuth 2'
 date: '2013-12-07 14:34:28'
+tags:
+- ASP MVC
+categories:
+- .NET
 ---
 
-
-
 
 Finalmente he acabado de actualizar mi proyecto [DurandalAuth](https://github.com/yagopv/durandalauth) a su versión 2.
 
