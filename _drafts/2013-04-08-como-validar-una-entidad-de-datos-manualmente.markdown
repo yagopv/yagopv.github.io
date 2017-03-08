@@ -19,7 +19,7 @@ Nuestras entidades de datos normalmente se validarán usando **DataAnnotations**
 
 Esta clase podría ser algo así
 
-{% highlight javascript %}
+```javascript
 public class MyEntityValidator     
 {
     void SetValidatableObjectErrors<TEntity>(TEntity item, List<string> errors) where TEntity : class
@@ -66,7 +66,7 @@ public class MyEntityValidator
          return validationErrors;
     }
 }
-{% endhighlight %}
+```
 
 De esta forma, cada vez que quisiéramos validar una entidad, no tendríamos nada más que crear la clase, llamar al método *IsValid()* para comprobar si la clase es válida o no, y en caso de que no lo sea llamar a *GetInvalidMessages()* y recuperar todos los errores que se hayan producido en la validación de la entidad.
 

@@ -38,9 +38,9 @@ Tal y como en el caso de **html5shiv**, **Respond.js** funciona simplemente aña
 
 No voy a descubrir [**Modernizr**](http://modernizr.com/ "Modernizr")aquí porque su uso es sin duda ya generalizado. No hay más que ver su inclusión por defecto en los proyectos web de las últimas versiones de **Visual Studio.** **Modernizr** permite detectar características de HTML5 y CSS3 en el navedagor que abre la página web y actuar en consecuencia. Además hay múltiples plugins que permiten solucionar la situación cuando un navegador no soporta una característica (*polyfills*). [En este enlace](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills "Polyfills") se puede acceder a una lista y además comprobar que el resto de scripts aqui comentados se incluyen en la misma para paliar la falta de las características HTML5 o CSS3 comentadas y se permiten cargar mediante la sencilla instruccion
 
-{% highlight javascript %}
+```javascript
 Modernizr.load({ test: Modernizr.history, nope: 'History.js' });
-{% endhighlight %}
+```
 
 con esta instrucción estamos evaluando la existencia de la característica *history API* en el navegador y en caso de que no exista (*nope*) cargamos el script de **History.js**. *load()* tiene otras muchas opcciones para aplicar en caso de que sí detecte la caraccterística (*yep*), una vez cargada (*complete*)… etc.
 

@@ -14,7 +14,7 @@ Cuando trabajamos en una arquitectura multicapa usando Entity Framework y aplica
 
 Normalmente el filtrado de entidades lo haremos desde un repositorio genérico en el que podríamos tener un método como el siguiente …
 
-{% highlight javascript %}
+```javascript
 public virtual IEnumerable<TEntity> GetFiltered(System.Linq.Expressions.Expression<Func<TEntity, bool>> filter)
 {
     return GetSet().Where(filter);
@@ -24,7 +24,7 @@ IDbSet<TEntity> GetSet()
 {
     return _UnitOfWork.CreateSet<TEntity>();
 }
-{% endhighlight %}
+```
 
 … que tiene cómo parámetro un filtro cualquiera y retorna las entidades que cumplan la condición del filtro.
 
@@ -34,7 +34,7 @@ Técnicamente es posible hacerlo. Simplemente tenemos que crear un método de ex
 
 El método de extensión sería así …
 
-{% highlight javascript %}
+```javascript
 public static IQueryable<T> IncludeMultiple<T>(this IQueryable<T> query, params Expression<Func<T, object>>[] includes)
     where T : class
 {
@@ -46,24 +46,24 @@ public static IQueryable<T> IncludeMultiple<T>(this IQueryable<T> query, params 
  
     return query;
 }
-{% endhighlight %}
+```
 
 … una vez definido ya lo podríamos usar en nuestro repositorio genérico y redefinir GetFiltered de la siguiente forma:
 
-{% highlight javascript %}
+```javascript
 public virtual IEnumerable<TEntity> GetFiltered(System.Linq.Expressions.Expression<Func<TEntity, bool>> filter, params Expression<Func<T, object>>[] includes)
 {
     return GetSet().Where(filter).IncludeMultiple(includes);
 }
-{% endhighlight %}
+```
 
 Con esto ya está listo y podemos recuperar las entidades relacionadas de una forma muy sencilla desde las capas superiores de nuestra aplicación.
 
 Por ejemplo, podríamos llamar a GetFiltered así …
 
-{% highlight javascript %}
+```javascript
 MyOrderRepository.GetFiltered(o => o.Id == id, o => o.OrderLines, o => o.ShipAddress, o => o.Customer)
-{% endhighlight %}
+```
 
 En esta llamada estaríamos recuperando una colección de “Order” junto con sus propiedades de navegación “OrderLines”, “ShipAddress” y “Customer”
 

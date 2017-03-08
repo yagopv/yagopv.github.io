@@ -17,7 +17,7 @@ En este artículo vamos a ver como realizar una abstracción de un DbContext de 
 
 La siguiente interfaz representa el contrato para la implementación del patrón Unit of Work. Normalmente se colocará en la capa de Dominio de nuestra aplicación, facilitando de esta forma la labor de aislar el mecanismo de persistencia utilizado de las operaciones que debe cumplir.
 
-{% highlight javascript %}
+```javascript
 namespace MyApp.Domain.UnitOfWork
 {
     public interface IUnitOfWork:IDisposable
@@ -30,13 +30,13 @@ namespace MyApp.Domain.UnitOfWork
         void Rollback();
     }
 }
-{% endhighlight %}
+```
 
 Los tres métodos principales de la interfaz, crean el contexto común que se debería implementar sea cual sea el mecanismo de persistencia utilizado, sea Entity Framework o cualquier otro.
 
 Ahora vamos a crear las entidades que formarán nuestro modelo de datos simulando un sistema de Blogging. La definición de estas entidades también se ubicaría en la capa de Dominio.
 
-{% highlight javascript %}
+```javascript
 namespace MyApp.Domain.EntityModel
 {
     public class Post
@@ -77,13 +77,13 @@ namespace MyApp.Domain.EntityModel
         public virtual Post Post { get; set; }
     }
 }
-{% endhighlight %}
+```
 
 Hasta ahora, en realidad no tenemos ningún componente ligado a Entity Framework. Lo que hemos definido son simplemente interfaces a cumplir por nuestro mecanismo de persistencia y clases POCO que representarán a nuestras entidades.
 
 Como siguiente paso crearemos otra interfaz que sí que representará el contrato que ha de cumplir una implementación concreta de Entity Framework.
 
-{% highlight javascript %}
+```javascript
 namespace MyApp.Infraestructure.UnitOfWork
 {
     public interface IEntityFrameworkUnitOfWork: IUnitOfWork
@@ -95,7 +95,7 @@ namespace MyApp.Infraestructure.UnitOfWork
         int ExecuteCommand(string sqlCommand, params object[] parameters);
     }
 }
-{% endhighlight %}
+```
 
 Esta interfaz hereda de IUnitOfWork y añade los métodos necesarios para el trabajo con Entity Framework. Si eligiésemos cualquier otro mecanismo de persistencia, añadiríamos aquí los métodos propios de dicho mecanismo. A este componente ya la ubicaríamos en la capa de Infraestructura de nuestra aplicación.
 
@@ -103,7 +103,7 @@ Una vez tenemos la interfaz con las operaciones necesarias de Entity Framework, 
 
 Esta última interfaz podemos usarla para crear mocks para testeo, implementar la dependencia con el ORM seleccionado, … etc.
 
-{% highlight javascript %}
+```javascript
 namespace MyApp.Infraestructure.UnitOfWork
 {
     public interface IBlogUnitOfWork : IEntityFrameworkUnitOfWork
@@ -113,11 +113,11 @@ namespace MyApp.Infraestructure.UnitOfWork
         IDbSet<Comment> Comments { get; }
     }
 }
-{% endhighlight %}
+```
 
 Ya casi estamos. Por último, implementemos la UoW ligada a Entity Framework y que heredará de DbContext e implementará todo lo definido en IBlogUnitOfWork
 
-{% highlight javascript %}
+```javascript
 namespace MyApp.Infraestructure.UnitOfWork
 {
     public class BlogUnitOfWork : DbContext, IBlogUnitOfWork
@@ -248,7 +248,7 @@ namespace MyApp.Infraestructure.UnitOfWork
 		}
     }
 }
-{% endhighlight %}
+```
 
 Y ya estamos!!
 

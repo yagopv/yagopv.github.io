@@ -30,9 +30,9 @@ animate.css is a bunch of cool, fun, and cross-browser animations for you to use
 
 … efectivamente, este proyecto nos ofrece una hoja de estilos que simplemente define una colección de clases que nos proporcionan diferentes efectos tan solo con aplicarlos a un elemento HTML.
 
-{% highlight javascript %}
+```javascript
 $('#tuelemento).addClass('animated bounceOutLeft');
-{% endhighlight %}
+```
 
 <span style="font-size: 1em; line-height: 1.6em;">La clase .animated define la duración de la animación. Puedo añadir también la clase .hinge para definir una mayor duración. La clase .bounceOutLeft simplemente es una de las muchas animaciones que nos da por defecto la librería.
 
@@ -47,16 +47,16 @@ Esta librería javascript trae las transformaciones y transiciones de CSS3 a jQu
 
 Las transformaciones nos las permite realizar usando la función css() de jQuery
 
-{% highlight javascript %}
+```javascript
 $('.box').css({ transform: 'rotate(40deg)' }); 
 $('.box').css({ x: '90px', y: '10px', rotate: '-10deg' });
-{% endhighlight %}
+```
 
 Las transiciones, las podemos lanzar de forma muy sencilla mediante la función ***transition()***
 
-{% highlight javascript %}
+```javascript
 $('...').transition(options, [duration], [easing], [complete])
-{% endhighlight %}
+```
 Como se puede apreciar, es muy sencillo de usar
 
 Otra de las cosas que me gusta de ambas librerías es lo bien documentadas que están, indicándonos todas las posibilidades que tenemos con sus respectivos ejemplos. Esto hace que la curva de aprendizaje sea muy pequeña. Simplemente añadimos los componentes a nuestra página y cuando queremos usar algo, abrimos la página del producto, buscamos lo que pretendemos hacer, y lo escribimos en nuestro código.

@@ -33,26 +33,26 @@ Por tanto creamos un archivo de script llamado *carsViewModel.js*
 
 Vamos a añadir una clase *carsViewModel *al nuevo archivo que representará el viewmodel que vamos a usar para asociar a la vista que crearemos a continuación
 
-{% highlight javascript %}
+```javascript
 function carsViewModel() {
     var self = this;
 }
-{% endhighlight %}
+```
 
 Ahora vamos a añadir una serie de propiedades a dicha clase
 
-{% highlight javascript %}
+```javascript
 self.id = ko.observable();
 self.concesionario = ko.observable();
 self.cif = ko.observable();                               
 self.coches = ko.observableArray();   
-{% endhighlight %}
+```
 
 El truco para el enlace de datos está en las funciones *observable()* y *observableArray()* que se encargan de comprobar los cambios que se puedan producir en el modelo de datos para propagarlos a la interfaz de usuario. Por tanto, definiremos aquí todas las propiedades que necesitemos, en este caso un ***id***para identificar al concesionario, que a su vez tendrá un nombre (***concesionario***) y un ***cif***. Además añadimos una propiedad ***coches***que será un array en el que almacenará una lista de coches.
 
 Definimos a continuación una función que tendrá como responsabilidad mostrar los datos de un concesionario en concreto.
 
-{% highlight javascript %}
+```javascript
 self.mostrarconcesionario =  function (id) {
     var model = getModel(id);
     self.id(model.id);
@@ -60,13 +60,13 @@ self.mostrarconcesionario =  function (id) {
     self.cif(model.cif);
     self.coches(model.coches);
 };
-{% endhighlight %}
+```
 
 En el cuerpo de la función estamos recuperando el modelo llamando a *getModel(id)* siendo ***id*** el identificador del concesionario. Una vez recuperado asignamos a las propiedades del viewmodel los valores obtenidos.
 
 La recuperación de datos que hace *getModel()* normalmente se hará contra una base de datos, pero nosotros vamos a hacerlo obteniendo los datos de un objeto en memoria. La implementación de *getModel()* se hace fuera del viewmodel y quedaría así.
 
-{% highlight javascript %}
+```javascript
 function getModel(id) {
     if (id == "1") {
         var object =
@@ -120,21 +120,21 @@ function getModel(id) {
     }         
     return object;              
 }
-{% endhighlight %}
+```
 
 Esta función no hace nada especial. Lo único a comentar es que pese a que coches es un *observableArray(),* podemos pasarle un array con subarrays (colores) y no hay ningún problema, **knockout** lo mapeará correctamente y podremos acceder a los subarray de *colores* desde la vista.
 
 También querremos añadir y eliminar coches por lo que crearemos un par de funciones para hacerlo.
 
-{% highlight javascript %}
+```javascript
 self.removeCoche = function(data) {
     self.coches.remove(data); 
 };
-{% endhighlight %}
+```
 
 Simplemente elimina un objeto (*data*) del *observableArray()*
 
-{% highlight javascript %}
+```javascript
 self.addCoche = function(data) {
     var serializedForm = $(data).serializeArray();
     var newcar = [ ];
@@ -153,13 +153,13 @@ self.addCoche = function(data) {
             });
            self.coches.push(new Coche(newcar.marca, newcar.modelo, newcar.colores ));
 };
-{% endhighlight %}
+```
 
 Un poco más compleja porque vamos a hacer un *POST *ficticio mediante el *submit* de un formulario que colocaremos en la vista y por tanto la función *addCoche()* recibirá dicho *form* como parámetro (*data*). Lo que hace la función es serializar el formulario (*serializeArray*) y recorrer el objeto *JSON* generado para obtener otro objeto con el formato correcto y así añadir al array de coches.
 
 Como observación, se están instanciando dos clases para crear objetos de tipo ***Coche***y ***Color***por lo que habrá que definirlas. La definición se hace también fuera del viewmodel.
 
-{% highlight javascript %}
+```javascript
 function Color(color) {
     this.color = color;
 }
@@ -169,13 +169,13 @@ function Coche(marca, modelo, colores) {
     this.modelo = modelo;
     this.colores = colores;
 }
-{% endhighlight %}
+```
 
 Por último, en el viewmodel, se llamará a *mostrarconcesionario()* para mostrar uno por defecto al cargar la página, por ejemplo, el “1”.
 
-{% highlight javascript %}
+```javascript
 self.mostrarconcesionario("1");
-{% endhighlight %}
+```
 
 Con esto ya tenemos el viewmodel listo así que pasamos a la vista
 
@@ -183,7 +183,7 @@ Con esto ya tenemos el viewmodel listo así que pasamos a la vista
 
 En primer lugar vamos a añadir el esqueleto de la página
 
-{% highlight javascript %}
+```javascript
 <!DOCTYPE html>
 <meta charset=utf-8>
 <html>
@@ -216,7 +216,7 @@ En primer lugar vamos a añadir el esqueleto de la página
      </footer>
 </body>
 </html>
-{% endhighlight %}
+```
 
 Nada especial hasta aquí. Hemos incluido los scripts de *jquery.js*, *knockout.js* y *carsViewModel.js*. **jquery** y **knockout** tendremos que descargar las últimas versiones de las páginas del producto ([jquery](http://docs.jquery.com/Downloading_jQuery "Descarga de jquery"), [knockout](http://knockoutjs.com/documentation/installation.html "Descarga de knockout")) y añadirlas a la carpeta ***js***(o referenciarlas de un CDN). El viewmodel *carsVieWModel.js* ya lo tengo en dicha carpeta.
 
@@ -230,17 +230,17 @@ Por último añadimos un footer que no sirve para nada :).
 
 En la sección *datos-concesionario* vamos a añadir unos párrafos cuyo contenido estar á enlazado con algunas de las propiedades de nuestro viewmodel. Se hace de la siguiente forma
 
-{% highlight javascript %}
+```javascript
 <p data-bind="text:id"></p>
 <p data-bind="text:concesionario"></p>
 <p data-bind="text:cif"></p>                          
-{% endhighlight %}
+```
 
 Se usa el atributo de *HTML5 data* para establecer el enlace (también conocido como *binding*). En primer lugar se indica el tipo de enlace ([*text*](http://knockoutjs.com/documentation/text-binding.html "Enlace text")) y a continuación la propiedad a enlazar (*id, concesionario, cif*). Hay bastantes tipos de enlaces predefinidos. Además podemos crear enlaces personalizados. Para información acerca de las posibilidades de binding y tipos por defecto que trae el script os remito a la [documentación del producto](http://knockoutjs.com/documentation/introduction.html "Documentación Knockout") que es muy buena.
 
 Debajo de los párrafos vamos a añadir un formulario para añádir coches al concesionario
 
-{% highlight javascript %}
+```javascript
 <div>
     <form data-bind="submit:addCoche">
         <label style="display:block" for="marca">Marca</label>
@@ -266,7 +266,7 @@ Debajo de los párrafos vamos a añadir un formulario para añádir coches al co
       <input type="submit"  value="Añadir Coche"/>
     <form>
 </div>
-{% endhighlight %}
+```
 
 Aquí la novedad es que aplicamos el tipo de enlace [*submit*](http://knockoutjs.com/documentation/submit-binding.html "Enlace submit"), que gestionará la ejecución del evento submit del formulario e invocará a la función *addCoche()* que definimos en el viewmodel. Esto debería añadir un coche nuevo al viewmodel y como vamos a enlazarlo a continuación en la sección *coches*, debería aparecer un nuevo coche representando al viewmodel de manera automática cada vez que hagamos un *submit* al formulario.
 
@@ -277,7 +277,7 @@ La magia de knockout está en que cualquier modificación en los datos del viewm
 
 En la sección *coches* vamos a añadir el siguiente código
 
-{% highlight javascript %}
+```javascript
 <div id="contenedor-coches" data-bind="foreach:coches">
     <div class="datos-coche">
         <h2 data-bind="text:marca"></h2>
@@ -290,7 +290,7 @@ En la sección *coches* vamos a añadir el siguiente código
      </div>
 </div>
 <div class="reset-float"></div>
-{% endhighlight %}
+```
 
 En este código hay un par de novedades. La primera es el enlace [*foreach*](http://knockoutjs.com/documentation/foreach-binding.html "Enlace foreach"), que itera sobre el array de coches almacenado en el viewmodel. Más abajo hay otro *foreach* que itera sobre los colores del array de colores de cada coche.
 
@@ -307,7 +307,7 @@ Lo más destacado de este tipo de enlace es el uso de *$parent* que indica que l
 
 Por último, hay que enlazar todos estos componentes con el viewmodel creado para que se muestren los datos. Eso lo haremos incluyendo un script en el que aplicaremos el modelo de datos. Lo añadiremos al final de ** después del resto de scripts.
 
-{% highlight javascript %}
+```javascript
 <script type="text/javascript">
     $(document).ready(function() {                          
          ko.applyBindings(new carsViewModel());
@@ -317,24 +317,24 @@ Por último, hay que enlazar todos estos componentes con el viewmodel creado par
          });
     });
 </script>
-{% endhighlight %}
+```
 
 En este script estamos instanciando nuestro viewmodel y aplicando los datos recuperados sobre los enlaces que hemos hecho en la vista mediante *ko.applyBindings(viewmodel)*.
 
 Además modificamos el concesionario mostrado enlazando el evento *click* de los links de la barra de navegación para que ejecute la función *mostrarconcesionario().*
 
-{% highlight javascript %}
+```javascript
     $("nav a").click(function(e){
         viewmodel.mostrarconcesionario($(this).attr("id"));
         return false;
     });
-{% endhighlight %}
+```
 
 ## Añadiendo estilos
 
 Vamos a añadir una hoja de estilos sencilla para darle un poco de forma a la aplicación. Creamos una hoja *mystyles.css* en la carpeta **css** e incluimos el siguiente código
 
-{% highlight javascript %}
+```javascript
 body { padding:3%; }
 
 header { width: 100%; height:100px; position:relative;}
@@ -368,7 +368,7 @@ width:100%;
 .reset-float { clear:left;}
 
 .color { width:15px; height:10px; margin-left:2px; border:1px solid #888888; display:inline-block;}
-{% endhighlight %}
+```
 
 con estos estilos, es suficiente …
 
@@ -376,7 +376,7 @@ con estos estilos, es suficiente …
 
 Qué os parece si os digo que el viewmodel anterior se puede simplificar hasta quedar la siguiente forma
 
-{% highlight javascript %}
+```javascript
             var self = this;          
             self.mostrarconcesionario =  function (id) {
                    ko.mapping.fromJS(getModel(id),{},self);
@@ -403,14 +403,14 @@ Qué os parece si os digo que el viewmodel anterior se puede simplificar hasta q
                      self.coches.push(new Coche(newcar.marca, newcar.modelo, newcar.colores ));
             };                    
             self.mostrarconcesionario("1");
-{% endhighlight %}
+```
 
 
 Pues también funciona. La magia aquí la pone …
 
-{% highlight javascript %}
+```javascript
  ko.mapping.fromJS(getModel(id),{},self);
-{% endhighlight %}
+```
 
 … que genera un viewmodel mapeando el *JSON* recuperado por *getModel()* que contiene las mismas propiedades que habiamos definido y nos ahorra la creación de las propiedades y su asignación.
 

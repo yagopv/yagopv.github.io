@@ -15,7 +15,7 @@ Esto sucede porque jquery mobile añade sus propios elementos y clases al html q
 
 Para arreglar esto, lo que finalmente hice es crear un custom binding de texto muy simple que lo único que hace es esto
 
-{% highlight javascript %}
+```javascript
 ko.bindingHandlers.jqmtext = {
     update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
         var value = valueAccessor();
@@ -23,11 +23,11 @@ ko.bindingHandlers.jqmtext = {
         $(element).find(".ui-btn-text").text(valueUnwrapped);
     }
 };
-{% endhighlight %}
+```
 
 Una vez que tengo el binding definido, ya puedo utilizarlo en mi código html sin problemas y mi interfaz dejará de “romperse” …
 
-{% highlight javascript %}
+```javascript
 //Collapsibles
 <div data-role="collapsible">
     <h2 data-bind="jqmtext : mitexto"></h2>
@@ -36,7 +36,7 @@ Una vez que tengo el binding definido, ya puedo utilizarlo en mi código html si
 
 //Buttons
 <a href="#" data-role="button" data-bind="jqmtext : mitexto"></a>	
-{% endhighlight %}
+```
 
 
 Hasta pronto!!

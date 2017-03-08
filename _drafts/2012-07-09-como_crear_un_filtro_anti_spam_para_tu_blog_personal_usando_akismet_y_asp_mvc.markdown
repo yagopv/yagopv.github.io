@@ -39,7 +39,7 @@ El proyecto que nos estamos descargando, contiene principalmente dos clases en e
 
 Una vez incorporado este componente, lo que vamos a hacer es crear un filtro **ASP MVC** que podamos aplicar en las acciones “conflictivas”. El código de nuestro filtro será algo así:
 
-{% highlight javascript %}
+```javascript
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -111,7 +111,7 @@ namespace MyApp.Filters
         }
     }
 }
-{% endhighlight %}
+```
 
 Necesitamos una **clave del API** para poder trabajar con Akismet . Para obtenerla, la tenemos que [solicitar en la propia web del producto](https://akismet.com/signup/ "API key"). Hasta hace poco tiempo Akismet era totalmente gratuito pero lo han modificado. De todas maneras para páginas personales sigue siendo gratuito y para profesionales el coste no es muy elevado para lo que ofrece.
 
@@ -134,19 +134,19 @@ Según hemos indicado en la anotación de nuestro atributo personalizado, los ca
 
 En el interior de la acción haré la gestión necesaria para tratar los comentarios que nuestro ***AkismetFilterAttribute*** haya categorizado como spam
 
-{% highlight javascript %}
+```javascript
 if (ModelState["isspam"] != null)
 {
     // Lo que sea que quiero hacer con los comentarios que sean spam ... 
     // Por ejemplo, marcar en mi tabla de comentarios el comentario como spam mediante una columna de tipo bool IsSpam
 }
-{% endhighlight %}
+```
 
 Hasta aquí la implementación del filtro de Akismet. Ahora tendríamos que gestionar lo que hacer con los comentarios marcados como válidos y que no lo son o bien como spam y que sean válidos (falsos positivos), porque haber seguro que los habrá. Aquí ya cada uno lo hará como crea conveniente, el punto común será que se han de llamar a los métodos ***SubmitSpam()*** y ***SubmitHam()*** de la librería que nos hemos descargado para informar a Akismet y que actualice en su base de datos esta información.
 
 Por ejemplo, si hemos decidido almacenar el comentario en nuestra base de datos junto al resto y diferenciándo los correctos de los incorrectos mediante una columna *IsSpam*, podríamos crear una acción como la siguiente para modificar la marca de spam de nuestra entidad Comentario y que de esta manera se muestre o no en el foro
 
-{% highlight javascript %}
+```javascript
 [Authorize]
 public JsonResult ChangeSpamMark(int id)
 {
@@ -193,7 +193,7 @@ public JsonResult ChangeSpamMark(int id)
         return Json(new { result = "ok" });
     }
 }
-{% endhighlight %}
+```
 
 Podríamos llamar a esta acción cada vez que pulsemos por ejemplo un botón asociado a cada comentario desde el panel de control de las páginas de administración en nuestro sitio web.
 

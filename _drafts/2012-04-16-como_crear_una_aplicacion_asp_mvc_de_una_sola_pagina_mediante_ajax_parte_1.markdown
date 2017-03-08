@@ -27,7 +27,7 @@ El post lo he dividido en dos partes … en esta primera veremos la implementaci
 
 El código del widget será el siguiente:
 
-{% highlight javascript %}
+```javascript
 (function ($, window) {
     $.widget("ui.spalinks", {
         //Options passed to the widget
@@ -126,7 +126,7 @@ El código del widget será el siguiente:
         }
     });
 })(jQuery, window);
-{% endhighlight %}
+```
 
 Si no sabes como crear widget con jquery, puedes echarle un ojo a la [documentación del producto](http://wiki.jqueryui.com/w/page/12138135/Widget%20factory "jquery widget factory"), o bien leer [este post](../../../Post/GetPostByCode/creando_widgets_con_jquery "Creando widget con jquery") escrito en esta misma web.
 

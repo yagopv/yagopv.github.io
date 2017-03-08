@@ -43,7 +43,7 @@ Para crear una nueva imagen Web podemos hacerlo a través de los tres métodos c
 
 ***Marcas de agua***
 
-{% highlight javascript %}
+```javascript
 WebImage AddImageWatermark(
     string watermarkImageFilePath (o WebImage watermarkImage), 
     int width, 
@@ -52,7 +52,7 @@ WebImage AddImageWatermark(
     string verticalAlign, 
     int opacity, 
     int padding)
-{% endhighlight %}
+```
 
 Añade una marca de agua a una imagen. Los parámetros representan la localización del fichero con la marca de agua (*watermarkImageFilePath)*, la anchura (*width*), y altura (*height*) de la marca de agua en pixels.
 
@@ -66,82 +66,82 @@ Se permite orientar la marca de agua sobre la imagen mediante *horizontalAlign (
 
 Este método devuelve la imagen con la marca de agua incorporada.
 
-{% highlight javascript %}
+```javascript
 WebImage AddTextWatermark(string text, string fontColor, int fontSize, string fontStyle, string fontFamily, string horizontalAlign, string verticalAlign, int opacity, int padding )
-{% endhighlight %}
+```
 
 Este método es similar a la marca de agua, pero en lugar de un imagen se creará un texto. Los parámetros son bastante autoexplicativos y similares a los de la marca de agua
 
 ***Duplicidad de imágenes***
 
-{% highlight javascript %}
+```javascript
 WebImage Clone()
-{% endhighlight %}
+```
 
 *Clone()* copia y devuelve una *WebImage* con las mismas características que la original
 
 ***Recorte de imágenes***
 
-{% highlight javascript %}
+```javascript
 WebImage Crop(int top, int left, int bottom, int right )
-{% endhighlight %}
+```
 
 *Crop()* nos permite recortar un área de la imagen lo que es de gran utilidad. Los parámetros del método representan los pixeles a recortar por cada lado de la imagen.
 
 Existe un bug en esta clase ya que al crear una nueva *WebImage* se crear un borde en la parte de arriba e izquierda de la imagen con anchura de un pixel. Es por tanto necesario usar este método para recortar dicho borde.
 
-{% highlight javascript %}
+```javascript
 var image = new WebImage(path).Crop(1,1);
-{% endhighlight %}
+```
 
 ***Girar imágenes***
 
-{% highlight javascript %}
+```javascript
 WebImage FlipHorizontal() 
 WebImage FlipVertical() 
 WebImage RotateLeft() 
 WebImage RotateRight()
-{% endhighlight %}
+```
 
 Estos cuatro métodos pemiten voltear o rotar las imágenes retornando una nueva *WebImage* volteada hacia abajo, hacia arriba, rotada a la derecho o a la izquierda.
 
 ***Obtener la imágen en bytes***
 
-{% highlight javascript %}
+```javascript
 byte[] GetBytes(string requestedFormat )
-{% endhighlight %}
+```
 
 Este método es interesante ya que me devuelve un array de bytes representando la imagen que puedo usar en multitud de situaciones. El parámetro representa el formato de la imagen (jpg, png, …etc.)
 
 ***Obtener la imágen del contexto de la petición***
 
-{% highlight javascript %}
+```javascript
 static WebImage GetImageFromRequest( string postedFileName )
-{% endhighlight %}
+```
 
 Este método permite obtener una instancia de *WebImage* del contexto de la petición si es que se ha hecho un post de un fichero. Opcionalmente como parámetros se puede pasar el nombre del fichero (*postedFileName*). Si no se especifica se toma como válido el primero que se carga.
 
 ***Almacenamiento o envío de respuestas al navegador***
 
-{% highlight javascript %}
+```javascript
 WebImage Save( string filePath, string imageFormat, bool forceCorrectExtension )
-{% endhighlight %}
+```
 
 El método *Save()* nos permitirá guardar una *WebImage* en el *filePath* indicado. *imageFormat* sirve para indicar el formato de la imagen.
 
 *forceCorrectExtension*, cuando es *true* hace que se corrija la extensión de la imagen en caso de detectar que es incorrecta. Es decir, una imagen llamada *imagen.zip* que sea en realidad .jpg, se guardará como *imagen.zip.jpg.*
 
-{% highlight javascript %}
+```javascript
 WebImage Write(string requestedFormat )
-{% endhighlight %}
+```
 
 *Write()* renderiza directamente una imágen al servidor por lo que es ideal para crear imágenes al vuelo y enviarlas al servidor como veremos un poco más adelante. El parámetro es simplemente el formato de la imagen.
 
 ***Reescalado***
 
-{% highlight javascript %}
+```javascript
 WebImage Resize( int width, int height, bool preserveAspectRatio, bool preventEnlarge )
-{% endhighlight %}
+```
 
 Sin duda uno de los métodos que más utilizaremos será *Resize()*, ya sea para crear y almacenar thumbnails o diferentes versiones de tamaños de una imagen o directamente para devolver al vuelo este tipo de versiones de menor tamaño.
 
@@ -153,7 +153,7 @@ Por último *preventEnlarge* que evita el alargamiento y deformación de la imag
 
 Uno de los usos más interesantes de Resize es crear imágenes al vuelo
 
-{% highlight javascript %}
+```javascript
 public void GetThumbnail(int imageId, int width, int height)
 {
       // Obtengo la imágen de la base de datos. DomainImage será una clase con dos propiedades Path y ImageId
@@ -176,13 +176,13 @@ public void GetThumbnail(int imageId, int width, int height)
                  new WebImage(Server.MapPath("~/Content/images/no-photo100x100.png")).Write();		
         }
 }
-{% endhighlight %}
+```
 
 que usaremos de la siguiente forma en nuestra vista
 
-{% highlight javascript %}
+```javascript
 <img src="@Url.Action("GetThumbnail", new { imageId= item.Id, width = 100, height = 100 })" />
-{% endhighlight %}
+```
 
 ## Resumen
 

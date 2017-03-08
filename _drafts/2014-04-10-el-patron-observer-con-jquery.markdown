@@ -15,7 +15,7 @@ Realmente jQuery ya está preparado para este tipo de gestión desde hace tiempo
 
 <span style="line-height: 1.5em;">Pero aquí vamos a ver otra forma muy sencilla de implementar este mecanismo usando nuestras propias funciones y el objeto **callbacks**</span>
 
-{% highlight javascript %}
+```javascript
 var gestor = {}; 
 jQuery.Gestor = function( id ) { 
     var callbacks, 
@@ -34,11 +34,11 @@ jQuery.Gestor = function( id ) {
     } 
     return tarea; 
 };
-{% endhighlight %}
+```
 
 Con esto hemos creado un sencillo gestor de tareas que podemos usar de la siguiente forma … Nos suscribimos a cierto evento …
 
-{% highlight javascript %}
+```javascript
 $.Gestor("sumaNumeros").subscribe(function(a,b) {    
     console.log(a + b); 
 }); 
@@ -46,12 +46,12 @@ $.Gestor("sumaNumeros").subscribe(function(a,b) {
 $.Gestor("sumaNumeros").subscribe(function(a,b) {
     alert(a + b); 
 });
-{% endhighlight %}
+```
 … y a continuación podemos publicar la tarea a realizar cuando ocurra ese evento:
 
-{% highlight javascript %}
+```javascript
 $.Gestor("sumaNumeros").publish(3,4);
-{% endhighlight %}
+```
 
 Esto haría que se escribiese en la consola y se lanzase una alerta mostrando un 7
 

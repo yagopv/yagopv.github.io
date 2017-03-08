@@ -17,7 +17,7 @@ Crearemos una clase para añadir las especificaciones a un Móvil y de esta mane
 
 El móvil será como este…
 
-{% highlight javascript %}
+```javascript
 public class Movil
 {
     public string Dimensiones { get; set; }
@@ -28,13 +28,13 @@ public class Movil
     public string SistemaOperativo { get; set; }
     public int MegapixelsCamara { get; set; }
 }
-{% endhighlight %}
+```
 
 ### Método 1. Retornando this
 
 En este primer ejemplo vamos a construir el móvil retornando *this* …
 
-{% highlight javascript %}
+```javascript
 public class MovilSpecsBuilderThis
     {
         Movil Movil;
@@ -85,13 +85,13 @@ public class MovilSpecsBuilderThis
             return this.Movil;
         }
     }
-{% endhighlight %}
+```
 
 … como podemos ver, tenemos un constructor al que le pasamos un Móvil. Aquí podríamos tener una interfaz e inyectar dependencias, usar una Factoría o algo así … También podemos instanciar un objeto y ya está :). Después tenemos una serie de métodos que añaden características al Móvil y devuelven el propio objeto. Retornando el objeto conseguimos poder encadenar las llamadas. Finalmente añadimos un método para recuperar el propio objeto.
 
 Ahora ya podemos hacer algo como esto …
 
-{% highlight javascript %}
+```javascript
 MovilSpecsBuilderThis msb = new MovilSpecsBuilderThis(new Movil());
 msb.ConPantallaDeTipo("Amoled")
    .ConConectividadARedes("4G")
@@ -99,7 +99,7 @@ msb.ConPantallaDeTipo("Amoled")
    .ConMemoriaInternaEnGb(2)
    .ConSistemaOperativo("Android")
    .DeColor("blanco");
-{% endhighlight %}
+```
 
 Vamos con el método 2
 
@@ -107,7 +107,7 @@ Vamos con el método 2
 
 Vamos a construir otra clase que use [extensions methods](http://msdn.microsoft.com/en-us/library/vstudio/bb383977.aspx "Extensions Methods") sobre el tipo Movil
 
-{% highlight javascript %}
+```javascript
 public static class MovilSpecsBuilderExtensions
     {
         public static Movil ConDimensiones(this Movil movil, string dimensiones)
@@ -147,16 +147,16 @@ public static class MovilSpecsBuilderExtensions
         }
 
     }
-{% endhighlight %}
+```
 
 … en esta ocasión hemos creado una clase estática que contiene una serie de métodos de extensión. Usamos *this Movil param* para indicar que estamos añadiendo el método al tipo Móvil.
 
 Ya podemos hacer esto …
 
-{% highlight javascript %}
+```javascript
 Movil m = new Movil(); 
 m.ConPantallaDeTipo("Amoled") .ConConectividadARedes("4G") .ConDimensiones("163x45x10").ConMemoriaInternaEnGb(2) .ConSistemaOperativo("Android").DeColor("blanco");
-{% endhighlight %}
+```
 
 Pues ya está, tenemos un par de *fluent clases* listas para probar …
 

@@ -18,23 +18,23 @@ En este post vamos a ver una de las muchas maneras de escribir un plugin utiliza
 
 La manera más básica de construir un plugin es añadiendo propiedades al propio objeto jQuery
 
-{% highlight javascript %}
+```javascript
 (function( $ ) { 
     $.miPlugin = function(var1,var2,...,varN) { 
        // Añade la funcionalidad de tu plugin 
     }; 
 })( jQuery );
-{% endhighlight %}
+```
 
 Con esto ya tenemos un plugin listo para ser usado de la siguiente forma:
 
-{% highlight javascript %}
+```javascript
 <script src="MiPluginPath" type="text/javascript"></script> 
 
 $(document).ready(function() {    
     $.miPlugin(var1,var2,...,varN); 
 });
-{% endhighlight %}
+```
 
 ## Creando un plugin que itere sobre los elementos seleccionados del DOM
 
@@ -42,7 +42,7 @@ La forma de crear un plugin anterior es la más básica y desde luego no la más
 
 Esto lo podemos hacer fácilmente añadiendo una nueva propiedad al objeto jquery.fn, en el que el nombre de la propiedad será mi plugin jquery:
 
-{% highlight javascript %}
+```javascript
 (function ($) { 
     $.fn.miPlugin= function () { 
         return this.each(function () { 
@@ -51,30 +51,30 @@ Esto lo podemos hacer fácilmente añadiendo una nueva propiedad al objeto jquer
         }); 
     }; 
 })(jQuery);
-{% endhighlight %}`
+````
 
 Con el código anterior ya tenemos un plugin que iterará sobre los N elementos que se seleccionen con el selector. Lo usaremos así …
 
-{% highlight javascript %}
+```javascript
 <script src="MiPluginPath" type="text/javascript"></script> 
 $(document).ready(function() {   
     $(".elemento").miPlugin(); 
 });
-{% endhighlight %}
+```
 
 ## Encadenando llamadas a métodos
 
 Escribiendo el plugin de esta forma se mantiene la capacidad de jquery de encadenar llamadas a métodos. Lo único que faltaría sería devolver el objeto mediante *return*. Si no lo hago, entonces no puedo encadenar las llamadas, pero si devuelvo el objeto puedo hacer cosas como:
 
-{% highlight javascript %}
+```javascript
 $(".elemento").miPlugin().fadeIn();
-{% endhighlight %}
+```
 
 ## Pasando opciones a mi nuevo plugin
 
 Lo normal cuando creas un nuevo plugin es que necesites pasarle parámetros que se usarán en el interior del mismo para . Lo normal en estos casos es establecer las opciones por defecto en el propio plugin y en la llamada al mismo pasarle las opciones de usuario. Un vez el plugin esté ejecutándose se “mezclarán” las opciones del usuario con las por defecto:
 
-{% highlight javascript %}
+```javascript
 (function ($) {
     $.fn.miPlugin = function (opciones_usuario) {
         var opciones_por_defecto = {Texto: 'Opción de texto', ForeColor: 'red', BackColor: 'gray'};
@@ -96,7 +96,7 @@ Lo normal cuando creas un nuevo plugin es que necesites pasarle parámetros que 
         });
     }
 })(jQuery);
-{% endhighlight %}
+```
 
 Con el código anterior, hemos creado un plugin que modifica el texto, color y fondo de los elementos que hayamos seleccionado al hacer *hover* sobre el elemento. Cuando abandonamos el elemento, este volvera a tener su apariencia original.
 

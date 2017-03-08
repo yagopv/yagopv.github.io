@@ -23,18 +23,18 @@ La tabla de rutas de una aplicación ASP MVC 3 se define en el fichero Global.as
 
 En primer lugar se añadirá la llamada a un método en el Application_Start()
 
-{% highlight c %}
+```c
 protected void Application_Start() {
     //Iniciar la tabla de rutas
     RegisterRoutes(RouteTable.Routes);
 }
-{% endhighlight %}
+```
 
 Como se puede observar lo único que se hace es llamar al método RegisterRoutes() pasándole como parámetro la tabla de rutas del sistema.
 
 El método RegisterRoutes() se define de la siguiente manera (Tal y como se puede ver por defecto cuando creamos un nuevo proyecto ASP MVC 3 con Visual Studio)
 
-{% highlight c %}
+```c
 public static void RegisterRoutes(RouteCollection routes) {
     routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
     // Importante!! => Las rutas definidas en la tabla de rutas se procesan secuencialmente
@@ -47,7 +47,7 @@ public static void RegisterRoutes(RouteCollection routes) {
     // Parameter
     defaults );
 }
-{% endhighlight %}
+```
 
 
 En el código anterior se están haciendo dos cosas:
@@ -60,7 +60,7 @@ En el código anterior se están haciendo dos cosas:
 
 ***Nombre de la ruta***. El nombre de la ruta será aquel que nos permitirá identificarla de manera única. Por tanto no admite duplicados y el nombre ha de ser único para cada uno de los MapRoute() que incluyamos. Esto nos permitirá obtener direcciones URL para, por ejemplo, utilizar con helpers como Html.RouteLink().
 
-{% highlight c %}
+```c
 routes.MapRoute(
     "Default",
 // Nombre de la ruta
@@ -69,7 +69,7 @@ routes.MapRoute(
     new { controller = "Home", action = "Index", id = UrlParameter.Optional }
     // Parametros por defecto
 );
-{% endhighlight %}
+```
 
 
 

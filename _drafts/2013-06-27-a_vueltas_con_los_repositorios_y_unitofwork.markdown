@@ -24,7 +24,7 @@ En el dominio de nuestra aplicación, como siempre, comenzamos definiendo nuestr
 
 Por ejemplo, definamos una entidad Artículo …
 
-{% highlight c %}
+```c
 public class Article
 {
     [Key]
@@ -42,11 +42,11 @@ public class Article
     [DataType(DataType.Html)]
     public string Text { get; set; }
 }
-{% endhighlight %}
+```
 
 … y una entidad perfil de usuario.
 
-{% highlight c %}
+```c
 public class UserProfile
 {
     [Key]
@@ -62,11 +62,11 @@ public class UserProfile
     [StringLength(200)]
     public string Email { get; set; }
 }
-{% endhighlight %}
+```
 
 A continuación vamos a definir el contrato que debe cumplir cada repositorio de nuestro dominio. Cada uno de nosotros definirá las operaciones que más le convengan.
 
-{% highlight c %}
+```c
 public interface IRepository<T> where T : class
 {
     IQueryable<T> AsQueryable();
@@ -80,11 +80,11 @@ public interface IRepository<T> where T : class
     void Delete(T entity);
     void Attach(T entity);                   
 }
-{% endhighlight %}
+```
 
 Ahora el contrato que debe cumplir nuestra unidad de trabajo y que usaremos para inyectar como dependencia en donde se requiera.
 
-{% highlight c %}
+```c
 public interface IUnitOfWork
 {
     IRepository<Article> ArticleRepository { get; }
@@ -92,7 +92,7 @@ public interface IUnitOfWork
 	
     void Commit();
 }
-{% endhighlight %}
+```
 
 Con esto tenemos la capa de dominio lista, a continuación creamos otra nueva capa (nuevo proyecto) que implementará estos contratos usando Entity Framework como dependencia.
 
@@ -101,7 +101,7 @@ Con esto tenemos la capa de dominio lista, a continuación creamos otra nueva ca
 
 Por una parte implementaremos el repositorio genérico definido en el dominio en el paso anterior.
 
-{% highlight c %}
+```c
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
     private readonly DbSet<TEntity> dbSet;
@@ -156,11 +156,11 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         this.dbSet.Attach(entity);
     }
 }
-{% endhighlight %}
+```
 
 y a continuación la implementación de la unidad de trabajo.
 
-{% highlight c %}
+```c
 public class EFUnitOfWork : DbContext, IUnitOfWork
 {
     private readonly Repository<Article> articleRepository;
@@ -200,7 +200,7 @@ public class EFUnitOfWork : DbContext, IUnitOfWork
         modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
     }
 }
-{% endhighlight %}
+```
 
 Con esto, ya esta lista nuestra implementación usando Entity Framework.
 
@@ -208,7 +208,7 @@ Con toda seguridad necesitaremos en cualquier aplicación medianamente seria, ut
 
 #### *Métodos de extensión*
 
-{% highlight c %}
+```c
 public static class ArticleRepositoryExtension
 {
     public static IEnumerable<Article> GetArticlesMatchingParams(this IRepository<Article>, int param1, string param2)
@@ -216,13 +216,13 @@ public static class ArticleRepositoryExtension
         // La query y devolver el resultado
     }
 }
-{% endhighlight %}
+```
 
 Crearemos tantos métodos como operaciones complejas necesitemos.
 
 #### *Nueva Implementación del repositorio genérico*
 
-{% highlight c %}
+```c
 public class ArticleRepository : Repository<Article>
 {
     public IEnumerable<Article> GetArticlesMatchingParams(int param1, string param2)
@@ -235,13 +235,13 @@ public class ArticleRepository : Repository<Article>
         // Sobreescribimos Add() de la clase base Repository<Article>
     }
 }
-{% endhighlight %}
+```
 
 Esta nueva implementación será la que inyecte en la unidad de trabajo en lugar del repositorio genérico ***Repository<article></article>***
 
-{% highlight c %}
+```c
 this.articleRepository = new ArticleRepository(Articles);
-{% endhighlight %}
+```
 
 También podría crear un contrato *IArticleRepository* que heredase de *IRepository<article></article>* en el dominio y obligar a *ArticleRepository* a implementarlo … o lo que prefiera. Se puede complicar tanto como se desee :)
 
@@ -250,7 +250,7 @@ También podría crear un contrato *IArticleRepository* que heredase de *IReposi
 
 Ahora será muy fácil inyectar nuestra unidad de trabajo en, por ejemplo, los controladores ASP MVC. Usando nuestro framework de inyección de dependencias favorito, el código en el controlador quedaría algo así (El ejemplo viene a ser una modificación del controlador *AccountController* que viene con la plantilla por defecto de ASP MVC 4 en VS2012 y que usaría nuestra implementación).
 
-{% highlight c %}
+```c
 [Authorize]
 public class AccountController : Controller
 {
@@ -306,7 +306,7 @@ public class AccountController : Controller
 	}
 	... Resto acciones ...
 }
-{% endhighlight %}
+```
 
 Como podemos ver, inyectando IUnitOfWork ya nos daría acceso a todos los repositorios y a la operación *Save() *para persistir los cambios en el contexto de trabajo. En la implementación que mostré en los post que comento al principio, se inyectarían cada uno de los repositorios necesarios, que a su vez tendrían acceso a la unidad de trabajo definidida en su interior.
 

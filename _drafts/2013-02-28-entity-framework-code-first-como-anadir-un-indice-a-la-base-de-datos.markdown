@@ -29,7 +29,7 @@ PM> Add-Migration CrearIndices
 
 <span>Con lo que se añadiría una nueva clase *XXXX_CrearIndices.cs* en mi directorio de migraciones. La clase sería algo así</span>
 
-{% highlight c %}
+```c
 namespace MiProyecto.Migrations { 
     using System.Data.Entity.Migrations; 
     public partial class CrearIndices : DbMigration {
@@ -37,11 +37,11 @@ namespace MiProyecto.Migrations {
         public override void Down() { } 
     } 
 }
-{% endhighlight %}
+```
 
 <span style="font-size: 1em; line-height: 1.6em;">Los métodos *Up() y Down()* tienen como objetivo que indiquemos el trabajo a realizar cuando paso de una migración a otra más actual o cuando vuelvo a la original. Por tanto usaremos *Up()* para crear los índices y *Down()* para eliminarlos.</span>
 
-{% highlight c %}
+```c
 namespace MiProyecto.Migrations { 
     using System.Data.Entity.Migrations; 
     public partial class CrearIndices : DbMigration {
@@ -55,7 +55,7 @@ namespace MiProyecto.Migrations {
         } 
     } 
 }
-{% endhighlight %}
+```
 
 <span style="font-size: 1em; line-height: 1.6em;">Por último, sólo quedaría aplicar la migración mediante</span>
 

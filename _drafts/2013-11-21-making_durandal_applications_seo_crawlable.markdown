@@ -109,17 +109,17 @@ For the following server-side code samples we will use .NET code (ASP.NET MVC) b
 
 In ASP.NET MVC we need a route like this
 
-{% highlight c %}
+```c
 routes.MapRoute(
         name: "Default",
         url: "{*url}",
         defaults: new { controller = "Home", action = "Index" }
 );
-{% endhighlight %}
+```
 
 This route is redirecting all the incoming request to the “/Home/Index” route so we now need to make that work in the controller:
 
-{% highlight c %}
+```c
 public ActionResult Index() {
     // If the request is not from a bot => control goes to Durandal app
     if (Request.QueryString["_escaped_fragment_"] == null) {
@@ -138,13 +138,13 @@ public ActionResult Index() {
         return View();
     }
 }
-{% endhighlight %}
+```
 
 The work involved here consists in checking for the “*escaped_fragment*” parameter and if present, returning the HTML Snapshot by calling Crawl(). To take the snapshot, first we have to install a headless browser like [PhantomJs](http://phantomjs.org/). There are a lot of them so you can analyze and choose your preferred one. To install PhantomJS you should simply copy the *phantomjs.exe* file to your root website folder. Once there, you can execute the process passing a script as a parameter and your target url. There are several options to write the script but this one works pretty well:
 
 Create a *createSnapshot.js* script like this:
 
-{% highlight c %}
+```c
 // This example shows how to render pages that perform AJAX calls
 // upon page load.
 //
@@ -196,11 +196,11 @@ page.open(system.args[1], function (status) {
         }, maxRenderWait);
     }
 });
-{% endhighlight %}
+```
 
 The script receives the target url as a parameter. You can add this script to the Scripts folder in your ASP.NET MVC site. Finally, we have to call it to get the HTML.
 
-{% highlight c %}
+```c
 /// 
 /// Start a new phantomjs process for crawling
 /// 
@@ -227,7 +227,7 @@ private string Crawl(string url) {
     p.WaitForExit();
     return output;
 }
-{% endhighlight %}
+```
 
 The output will be the *console.log(page.content)* in the createSnapshot.js script and will include the complete dynamically generated HTML. That´s all. Once implemented in your site, it is recommended to use the Google Webmaster tools feature “fetch as googlebot” to check the retrieved content.
 
