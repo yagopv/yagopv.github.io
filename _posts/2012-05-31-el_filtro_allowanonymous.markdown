@@ -3,8 +3,9 @@ layout: post
 title: El filtro [AllowAnonymous]
 date: '2012-05-31 02:50:11'
 tags:
-- seguridad
-- asp-mvc-filters
+- ASP MVC
+categories:
+- .NET
 ---
 
 
@@ -14,7 +15,7 @@ Como su propio nombre indica el objetivo de este filtro es permitir el **acceso 
 
 En versiones anteriores de **ASP MVC** usábamos el filtro *[Authorize]* para restringir el acceso a controladores o acciones de nuestro sitio web. *[Authorize]* se puede aplicar a nivel de controlador, a nivel de acción o incluso, desde la versión 3 de **ASP MVC**, como filtro global codificado en el *global.asax,* con el objetivo de securizar la aplicación completa.
 
-El problema del atributo* [Authorize]* es que, en el caso de que tengamos controladores con acciones que han de protegerse y otras en las que no es necesario, tendremos que tener mucho cuidado de colocar el atributo en donde sea necesario y además si añadimos acciones hemos de acordarnos de si hemos de añadirlo o no.
+El problema del atributo *[Authorize]* es que, en el caso de que tengamos controladores con acciones que han de protegerse y otras en las que no es necesario, tendremos que tener mucho cuidado de colocar el atributo en donde sea necesario y además si añadimos acciones hemos de acordarnos de si hemos de añadirlo o no.
 
 En el caso de incluir el filtro como global en el *global.asax* y de esta forma hacer que la aplicación sea completamente privada el problema es que precisamente cuando arranque el sitio web tengo que estar autenticado!!!
 
@@ -30,9 +31,9 @@ RegisterGlobalFilters(GlobalFilterCollection filters) {
   filters.Add(new System.Web.Mvc.AuthorizeAttribute());
 }
 ```
-```
-Comentar que hay que añadir el ensamblado por delante del nombre del filtro  porque ya existe en System.Web.Http otro AuthorizeFilter para la Web API.
-```
+
+Comentar que hay que añadir el ensamblado por delante del nombre del filtro  porque ya existe en *System.Web.Http* otro AuthorizeFilter para la Web API.
+
 
 Una vez hecho esto y securizada mi aplicación, añadiré el atributo *[AllowAnonymous]* a las acciones que lo necesiten, es decir, *Login()*, *Register()*, …etc . Con esto ya tendría lo que estaba buscando y como se puede ver no me he de preocupar de añadir el filtro cada vez que añado un nuevo controlador o acción ya que *[Authorize]* definido de forma global ya bloquea el acceso a todos los recursos a los que explícitamente no permito el acceso.
 
