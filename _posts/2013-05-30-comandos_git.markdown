@@ -2,6 +2,10 @@
 layout: post
 title: Comandos git
 date: '2013-05-30 07:19:55'
+tags: 
+- git
+categories:
+- Source Control
 ---
 
 
@@ -22,7 +26,7 @@ git init
 
 **git clone**
 
-<span>Crea un repositorio git desde un origen remoto. Añade la localización del repositorio clonado como remoto así que se podrán obtener de nuevo los cambios en el original mediante **git fetch** o subir las modificaciones locales en caso de tener permiso mediante **git push**</span>
+Crea un repositorio git desde un origen remoto. Añade la localización del repositorio clonado como remoto así que se podrán obtener de nuevo los cambios en el original mediante **git fetch** o subir las modificaciones locales en caso de tener permiso mediante **git push**
 
 ```
 git clone git@github.yagopv/Stashy.git
@@ -109,7 +113,7 @@ Resetea el directorio de trabajo al estado del último commit realizado
 git reset
 ```
 
-**git stash **
+**git stash**
 
 Salva modificaciones temporalmente para poder cambiar de branch (checkout). Posteriormente se pueden volver a aplicar estos cambios sobre el directorio. Puedo usar las opciones list, para ver la lista de stash, apply para aplicar un stash de nuevo al directorio. También puedo aplicar un stash concreto mediante apply + el stash.
 
