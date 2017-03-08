@@ -3,9 +3,9 @@ layout: post
 title: Azure Virtual Machines
 date: '2013-07-24 05:46:31'
 tags:
-- Windows Azure
+- Azure Virtual Machines
 categories:
-- .NET
+- Windows Azure
 ---
 
 
