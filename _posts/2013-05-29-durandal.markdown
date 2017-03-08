@@ -12,7 +12,7 @@ categories:
 Hoy os voy a hablar de este pequeño framework javascript que lleva poco “tiempo en el mercado”.
 
 
-## ¿Duran -qué?
+## ¿Duran-qué?
 
 Hace unas semanas necesitaba desarrollar el sitio web de un pequeño proyecto personal.
 

@@ -4,6 +4,8 @@ title: Making Durandal applications SEO crawlable
 date: '2013-11-21 13:14:50'
 tags:
 - seo
+categories:
+- SEO
 ---
 
 

@@ -2,6 +2,11 @@
 layout: post
 title: Un poco de git (...y de Github)
 date: '2012-05-09 11:03:37'
+tags: 
+- git 
+- Github
+categories: 
+- Source Control
 ---
 
 
@@ -12,8 +17,6 @@ En este post vamos a definir una serie de términos que nos ayuden a entender me
 El objetivo de este post no es explicar paso a paso cómo funciona cada uno de los comandos de **git** o cómo se hace cada acción en **Github**. El objetivo de este post es definir una serie de términos usados tanto en Github como en git dado que creo que lo realmente importante es tener un poco claro qué es cada cosa. Después, para llevar la teoría a la practica hay infinidad de manuales y aplicaciones que nos facilitan en gran medida el trabajo.
 
 Por tanto, no vamos a ver como hacer un *push* o un *pull*, o como hacer un *merge* de dos *branches*. Pero lo que sí intentaremos ver es qué signica esto que estoy diciendo. Pues venga, vamos a comenzar a definir términos …
-
-****
 
 #### Repository (Git)
 
