@@ -4,7 +4,7 @@ title: Un poco de git (...y de Github)
 date: '2012-05-09 11:03:37'
 tags: 
 - git 
-- Github
+- github
 categories: 
 - Source Control
 ---

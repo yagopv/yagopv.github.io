@@ -3,7 +3,7 @@ layout: post
 title: Stashy, componentes para diseños adaptativos
 date: '2013-05-29 13:10:41'
 tags:
-- Frameworks
+- stashy
 categories:
 - JavaScript
 ---

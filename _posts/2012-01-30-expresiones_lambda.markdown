@@ -2,6 +2,10 @@
 layout: post
 title: Las expresiones Lambda
 date: '2012-01-30 14:47:24'
+tags: 
+- c#
+categories:
+- .NET
 ---
 
 
@@ -22,15 +26,22 @@ Las expresiones lambda se declaran en el momento en el que se van a usar como pa
 Una expresión lambda se declara mediante la siguiente sintaxis:
 
 ```
-<p>param => expr</p>
-<p>-    param será la lista de parámetros separados por comas<br />-    => es la separación entre los parámetros y la declaración de la función<br />-    expr es la implementación de la función</p>
+param => expr
+- param será la lista de parámetros separados por comas<
+- => es la separación entre los parámetros y la declaración de la función
+- expr es la implementación de la función
 ```
 
-<span style="text-decoration: underline;">*Ejemplos de funciones lambda*</span>
+*Ejemplos de funciones lambda*
 
 ```
-<p>n => n / 10 . Función que divide un número entre 10<br />(x,y) => x / y.  Función que divide dos números<br />N => {  <br />    N = n*2;<br />    return n;<br />}. Función que multiplica un número por dos</p>
-<p>mensaje => Console.WriteLine(mensaje);  . Función que no retorna nada y escribe por pantalla el mensaje que ha recibido como parámetro</p>
+n => n / 10 . Función que divide un número entre 10
+(x,y) => x / y. Función que divide dos números
+N => {
+    N = n*2;
+    return n;
+}. Función que multiplica un número por dos
+mensaje => Console.WriteLine(mensaje);. Función que no retorna nada y escribe por pantalla el mensaje que ha recibido como parámetro
 ```
 
 El tipo de retorno es inferido por el contexto. También destacar que si se realizan varias operaciones es necesario utilizar *return*. Los paréntesis sólo son obligatorios cuando hay más de un parámetro.
@@ -39,23 +50,33 @@ El tipo de retorno es inferido por el contexto. También destacar que si se real
 
 Las expresiones lambda se convierten en tiempo de compilación en funciones anónimas. Las referencias a estas funciones se transforman en delegados a dicha función. Esto permite invocar estas funciones desde código, como por ejemplo:
 
- delegate dividir = (x,y) => x / y; Console.WriteLine(dividir(10,5)); // Escribirá un 2
+```c
+delegate dividir = (x,y) => x / y; Console.WriteLine(dividir(10,5)); // Escribirá un 2
+```
 
 **dividir** en este caso es un delegado, no la función. Será el compilador el que asigne el nombre a la función en tiempo de compilación
 
 Una manera rápida de escribir lo mismo sería usando el tipo **Func<>**
 
+```c
 Func<int int=""> dividir = (x,y) => x/y; Console.WriteLine(dividir(10,5)); // Escribirá un 2</int>
+```
 
 Mediante Func<int,int,int> le asignamos tipos a un delegado. Mediante esta definición estamos indicando que el tipo Func<int,int,int> es un delegado que apunta a una función, que tiene dos parámetros de tipo entero y devuelve un resultado de tipo entero.
 
 Esta variable **dividir**, podemos pasarla como parámetro a una función para que la utilice.
 
-public int ejecutarOperacion(int valor1, int valor2, Func<int int=""> operacion) { return operacion(valor); } </int>
+```c
+public int ejecutarOperacion(int valor1, int valor2, Func<int int=""> operacion) { 
+    return operacion(valor); 
+}
+```
 
- y la usaremos de cualquiera de las siguientes dos formas
+y la usaremos de cualquiera de las siguientes dos formas
 
+```c
 int i = ejecutarOperacion(10,5, (x,y) => x / y); int j = ejecutarOperacion(10,5, dividir);
+```
 
 Como se puede observar, se puede definir directamente la función en la llamada al método o bien utilizar una existente como la vista anteriormente (**dividir**) que encaje con la definición del parámetro
 
@@ -69,11 +90,18 @@ El tipo **Func** se utilizará para expresiones lambda que retornen valores (fun
 
 Estos tipos están definidos en la librería System. Existen definiciones predeterminadas con hasta cuatro parámetros. Si necesitamos más parámetros no tenemos más que definirlo en nuestro código. En el ejemplo a continuación vemos una definición que permite utilizar Func<> con hasta 8 parámetros
 
- public delegate TResult Func<t1 t2="" t3="" t4="" t5="" t6="" t7="" t8="" tresult=""> (T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8); Func<int> Suma = (a,b,c,d,e,f,g,h) => a + b + c + d + e + f + g + h;</int></t1>
+```c
+public delegate TResult Func<t1 t2="" t3="" t4="" t5="" t6="" t7="" t8="" tresult=""> (T1 p1, T2 p2, T3 p3, T4 p4, T5 p5, T6 p6, T7 p7, T8 p8); 
+Func<int> Suma = (a,b,c,d,e,f,g,h) => a + b + c + d + e + f + g + h;
+```
 
 Si no se devuelven valores no se puede utilizar **Func**. Referenciar Func<int> produce un error de compilación y no es válido. Para esta tarea se dispone del tipo Action que no retorna valores, simplemente ejecuta grupos de instrucciones</int>
 
- Action<string> escribirMensaje = (mensaje) => Console.WriteLine(mensaje); escribirMensaje("Un saludo"); Action escibirMensajePorDefecto = () => Console.WriteLine("Hola");</string>
+```c
+Action<string> escribirMensaje = (mensaje) => Console.WriteLine(mensaje);
+escribirMensaje("Un saludo");
+Action escibirMensajePorDefecto = () => Console.WriteLine("Hola");
+```
 
 #### Arboles de expresión
 
@@ -85,15 +113,17 @@ Para definir este tipo de estructuras se usa el tipo **Expression** que genera o
 
 Un árbol de expresión se define mediante la siguiente sintaxis:
 
-```
-<p>    Expression<TDelegate> exp;</p>
+```c
+Expression<TDelegate> exp;
 ```
 
 Donde TDelegate es un delegado definido, por ejemplo, con los tipos **Func** o **Action**
 
 Con el siguiente código
 
- Expression<func int="">> dobla = x => x * 2;</func>
+```c
+Expression<func int="">> dobla = x => x * 2;
+```
 
 Lo que hacemos es crear un árbol que almacena una expresión y que recibe un entero devolviendo su valor multiplicado por 2.
 
@@ -101,13 +131,20 @@ La limitación que existe en este tipo de declaraciones es que no se pueden alma
 
 Como comentábamos antes, las expresiones lambda son utilizadas ampliamente en Entity Framework. Cuando realizamos una consulta del tipo
 
+```c
 var consulta = post.Where(p => p.User == "admin");
+```
 
 la cláusula **Where** tiene como parámetro una expresión lambda. La operación descrita para recuperar los posts del usuario admin se almacenará como una estructura de datos que podemos pasar entre capas como parámetro de métodos. Esta expresión la analizará y ejecutará el proveedor de datos que se está usando y la convertirá en código SQL para realizar la consulta contra la base de datos.
 
 Además de usar los árboles de expresión como almacen de datos, también es posible ejecutarlos cuando sea necesario previa conversión a código ejecutable. La expresión vista anteriormente en la que se pasaba un parámetro de tipo entero y se obtenía el mismo entero multiplicado por 2 puede ejecutarse de la siguiente manera:
 
- Expression<func int="">> dobla = x => x * 2; Func<int> doblaEjecutable = doble.Commpile(); int npordos = doblaEjecutable(10); console.WriteLine(npordos);</int></func>
+```c
+Expression<func int="">> dobla = x => x * 2; 
+Func<int> doblaEjecutable = doble.Commpile();
+int npordos = doblaEjecutable(10); 
+console.WriteLine(npordos);
+```
 
 Con este código obtendríamos como salida por pantalla un 20.** Compile()** extrae el delegado almacenado en la expresión y genera el código ejecutable necesario para emplearlo en donde lo necesitemos.
 

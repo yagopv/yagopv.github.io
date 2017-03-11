@@ -3,7 +3,9 @@ layout: post
 title: El filtro [HandleError] en ASP MVC 3
 date: '2012-03-02 02:28:28'
 tags:
-- asp-mvc-filters
+- asp mvc
+categories:
+- NET
 ---
 
 
@@ -15,7 +17,9 @@ Si no defino ningún parámetro entonces se aplicará sobre cualquier excepción
 
 Por ejemplo, si tengo está acción que lanza una excepción cualquiera
 
+```c
 [HandleError] public ActionResult LanzarError() { throw new Exception(); }
+```
 
 Como he decorado la acción *LanzarError()* con el atributo **[HandleError]** y en el interior de la acción estoy lanzando una excepción, la ejecución de la acción derivará al usuario a la vista de error por defecto, la que hemos comentado arriba.
 
@@ -23,7 +27,14 @@ El atributo **[HandleError]** admite varios parámetros que permiten indicar el 
 
 En el siguiente ejemplo vamos a controlar algunas excepciones que se enviarán a vistas distintas e indicaremos también el orden en el que se han de verificar los errores
 
-[HandleError(ExceptionType=typeof(MembershipCreateUserException), View="ErrorCreacionUsuario", Order=10)] [HandleError(ExceptionType=typeof(MembershipPasswordException), View="ErrorPassword", Order=20)] [HandleError(ExceptionType=typeof(ArgumentNullException), View="ErrorArgumento", Order=30)] public ActionResult LanzarError(string param1) { //Cuerpo de la acción }
+```c
+[HandleError(ExceptionType=typeof(MembershipCreateUserException), View="ErrorCreacionUsuario", Order=10)]
+[HandleError(ExceptionType=typeof(MembershipPasswordException), View="ErrorPassword", Order=20)]
+[HandleError(ExceptionType=typeof(ArgumentNullException), View="ErrorArgumento", Order=30)]
+public ActionResult LanzarError(string param1) { 
+    //Cuerpo de la acción 
+}
+```
 
 Como podemos observar, se pueden añadir múltiples atributos controlando las diferentes excepciones que se puedan producir y derivando las mismas a diferentes vistas. El parámetro *Order* indica el orden de comprobación.
 
@@ -37,7 +48,12 @@ Recalcar también que nada de esto funciona si no establezco en mi **Web.config 
 
 Por último, comentar que desde la salida de **ASP MVC 3**, en la plantilla por defecto se incluye el atributo [HandleError] como un [**filtro global**](../../../Post/GetPostByCode/filtros_globales_ASP_MVC_3 "Los filtros globales"). Los filtros globales se definen en el Global.asax
 
- public static void RegisterGlobalFilters(GlobalFilterCollection filters) { filters.Add(new HandleErrorAttribute()); }
+```c
+public static void RegisterGlobalFilters(GlobalFilterCollection filters) 
+{ 
+    filters.Add(new HandleErrorAttribute()); 
+}
+```
 
 Los filtros globales definidos en *RegisterGlobalFilters()* se aplican sobre todas las acciones de todos los controladores de la aplicación ASP MVC. Esto quiere decir que simplemente estableciendo **customErrors** a **“on”**, cuando se produzca una excepción, nos derivará a la vista por defecto “Error” hayamos o no especificado el aributo **[HandleError]** en la acción o controlador. Esto es mucho más cómodo ya que antes los controladores y acciones tenían que marcarse con infinidad de atributos **[HandleError].**
 

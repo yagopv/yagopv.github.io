@@ -3,9 +3,9 @@ layout: post
 title: Azure Mobile Services y la gestión de la Identidad
 date: '2013-10-27 07:39:04'
 tags:
-- Azure Mobile Services
+- azure
 categories:
-- Windows Azure
+- Cloud Computing
 ---
 
 

@@ -3,7 +3,7 @@ layout: post
 title: 'DurandalAuth 2'
 date: '2013-12-07 14:34:28'
 tags:
-- ASP MVC
+- asp mvc
 categories:
 - .NET
 ---

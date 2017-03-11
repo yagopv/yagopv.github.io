@@ -3,7 +3,7 @@ layout: post
 title: Durandal
 date: '2013-05-29 07:26:51'
 tags:
-- Durandal
+- durandal
 categories:
 - JavaScript
 ---
