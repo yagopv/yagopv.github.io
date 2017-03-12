@@ -3,7 +3,9 @@ layout: post
 title: El patrón Agregado (Aggregate)
 date: '2012-02-29 09:08:07'
 tags:
-- patrones
+- patterns
+categories:
+- .NET
 ---
 
 
@@ -25,17 +27,41 @@ Esto no quiere decir que las entidades y objetos que forman parte de un agregado
 
 Por tanto, extrayendo las ideas principales:
 
-```
-<p>Un <strong>Agregado</strong> es un conjunto de entidades que trabajan juntas como un todo y que siempre se accederán a través de una <strong>Entidad</strong> denominada <strong>Raíz</strong></p>
-<p>La <strong>Raíz</strong> de un agregado tiene que ser una <strong>Entidad</strong></p>
-<p>Los objetos que forman parte de un agregado pueden ser  <strong>Entidades</strong> u <strong>Objetos Valor </strong></p>
-<p>Una  <strong>Entidad</strong> pueden mantener referencias a cualquier <strong>Raíz </strong>de un <strong>Agregado</strong> pero nunca a otra <strong>Entidad</strong> u <strong>Objeto Valor</strong> que no sea <strong>Raíz </strong>y que pertenezca a un agregado. Para acceder a los objetos que no son <strong>Raíz</strong> siempre debe hacerse a través de su <strong>Agregado</strong></p>
-<p>Sólo se ha de definir un <strong>Repositorio</strong> por <strong>Agregado</strong> ( ... y un <strong>Servicio de Aplicación</strong> normalmente)</p>
-```
+
+- Un <strong>Agregado</strong> es un conjunto de entidades que trabajan juntas como un todo y que siempre se accederán a través de una <strong>Entidad</strong> denominada <strong>Raíz</strong></p>
+- <p>La <strong>Raíz</strong> de un agregado tiene que ser una <strong>Entidad</strong></p>
+- <p>Los objetos que forman parte de un agregado pueden ser  <strong>Entidades</strong> u <strong>Objetos Valor </strong></p>
+- <p>Una  <strong>Entidad</strong> pueden mantener referencias a cualquier <strong>Raíz </strong>de un <strong>Agregado</strong> pero nunca a otra <strong>Entidad</strong> u <strong>Objeto Valor</strong> que no sea <strong>Raíz </strong>y que pertenezca a un agregado. Para acceder a los objetos que no son <strong>Raíz</strong> siempre debe hacerse a través de su <strong>Agregado</strong></p>
+- <p>Sólo se ha de definir un <strong>Repositorio</strong> por <strong>Agregado</strong> ( ... y un <strong>Servicio de Aplicación</strong> normalmente)</p>
+
 
 Vamos a ver un sencillo ejemplo que ilustre este concepto
 
-public class Cliente { public int IdCliente {get; set:} public string Nombre {get; set;} public string Apellidos {get; set;} public virtual ICollection<documento> DocumentosCliente {get; set;} public void AddDocumento(Documento doc) { if (doc == null) throw new ArgumentNullException("documento"); doc.IdCliente = this.IdCliente; this.DocumentosCliente.Add(doc); } public Documento CrearDocumento(string doc) { if (doc == null) throw new ArgumentNullException("documento"); Documento nuevodoc = new Documento(); nuevodoc.Documento = doc; nuevodoc.IdCliente = this.IdCliente; return nuevodoc; } } public class Documento { public int IdDocumento {get; set;} public string NumeroDocumento {get; set;} public int IdCliente {get; set;} }</documento>
+```c
+public class Cliente { 
+  public int IdCliente {get; set;} 
+  public string Nombre {get; set;} 
+  public string Apellidos {get; set;} 
+  public virtual ICollection<documento> DocumentosCliente {get; set;} 
+  public void AddDocumento(Documento doc) { 
+    if (doc == null) throw new ArgumentNullException("documento");
+    doc.IdCliente = this.IdCliente;
+    this.DocumentosCliente.Add(doc); 
+  } 
+  public Documento CrearDocumento(string doc) { 
+    if (doc == null) throw new ArgumentNullException("documento"); 
+    Documento nuevodoc = new Documento();
+    nuevodoc.Documento = doc;
+    nuevodoc.IdCliente = this.IdCliente;
+    return nuevodoc; 
+  } 
+} 
+public class Documento { 
+  public int IdDocumento {get; set;} 
+  public string NumeroDocumento {get; set;} 
+  public int IdCliente {get; set;} 
+}
+```
 
 Como se puede apreciar en este ejemplo. La entidad **Cliente** sería la entidad raíz de un agregado formado por **Cliente** y **Documento**.
 
@@ -43,11 +69,151 @@ Si quiero añadir un nuevo documento, siempre lo tendré que hacerlo a través d
 
 Este es un ejemplo bastante sencillo. Ahora vamos a ver uno un poco más complejo (aunque no demasiado J) que añade lógica y comportamiento a la entidad además de encapsulación en un agregado.
 
-// Entidad raiz del agregado de Cuentas Bancarias public class CuentaBancaria { //Propiedades public int IdCuentaBancaria { get; set; } public NumeroCuentaBancaria NumeroCuentaBancaria { get; set; } public decimal Balance { get; private set; } public int IdCliente { get; set; } //Propiedades de navegacion public virtual Cliente Cliente { get; private set; } HashSet<movimientocuenta> _movimientocuenta; public virtual ICollection<movimientocuenta> MovimientoCuenta { get { if (_movimientocuenta == null) _movimientocuenta = new HashSet<movimientocuenta>(); return _movimientocuenta; } set { _movimientocuenta = new HashSet<movimientocuenta>(value); } } //Añadir importe a una cuenta bancaria public void DepositarImporte(decimal cantidad,string descripcion) { if (cantidad En este caso, estamos definiendo dos agregados que serán el agregado de **Cuentas Bancarias** y el agregado de **Clientes**
+```c
+// Entidad raiz del agregado de Cuentas Bancarias
+public class CuentaBancaria
+{
+    //Propiedades
+    public int IdCuentaBancaria { get; set; }
+    public NumeroCuentaBancaria NumeroCuentaBancaria { get; set; }
+    public decimal Balance { get; private set; }
+    public int IdCliente { get; set; }   
+	
+	//Propiedades de navegacion
+    public virtual Cliente Cliente { get; private set; }
+    HashSet<MovimientoCuenta> _movimientocuenta;
+    public virtual ICollection<MovimientoCuenta> MovimientoCuenta
+    {
+        get
+        {
+            if (_movimientocuenta == null)
+                _movimientocuenta = new HashSet<MovimientoCuenta>();
+             return _movimientocuenta;
+        }
+        set
+        {
+            _movimientocuenta = new HashSet<MovimientoCuenta>(value);
+        }
+    }
+	
+	//Añadir importe a una cuenta bancaria
+    public void DepositarImporte(decimal cantidad,string descripcion)
+    {
+        if (cantidad < 0) throw new ArgumentException("El importe es menor que cero");
+        Balance += cantidad;
+        this.MovimientoCuenta.Add(new MovimientoCuenta()
+        {
+            Fecha = DateTime.UtcNow,
+            Cantidad = cantidad,
+            DescripcionMovimiento = descripcion
+        });        
+    }
+	
+	//Extraer importe de una cuenta bancaria
+    public void RetirarImporte(decimal cantidad,string descripcion)
+    {
+        if ( cantidad < 0 )  throw new ArgumentException("El importe es menor que cero");
+        this.Balance -= cantidad;
+        this.MovimientoCuenta.Add(new MovimientoCuenta()
+        {
+            Fecha = DateTime.UtcNow,
+            Cantidad =- cantidad,
+            DescripcionMovimiento = descripcion
+        });
+	}
+	
+    //Establecer el Cliente asociado
+    public void AsociarCliente(Cliente cliente)
+    {
+        if (cliente == null)
+        {
+            throw new ArgumentException("El Cliente no está informado");
+        }        
+        this.Cliente = cliente;
+    } 
+}
+ 
+//Entidad del Agregado de Cuentas Bancarias
+public class MovimientoCuenta
+{
+	//Propiedades
+	public int IdMovimientoCuenta {get; set;}    
+    public DateTime Fecha { get; set; }
+    public decimal Cantidad { get; set; }
+    public string DescripcionMovimiento { get; set; }
+    
+    //Propiedades de Navegacion
+    public int IdCuentaBancaria { get; set; }
+    public virtual CuentaBancaria CuentaBancaria {get; set; }
+}
+ 
+//Objeto valor del Agregado de Cuentas Bancarias
+public class NumeroCuentaBancaria
+{
+	//ctor&acute;s
+    public NumeroCuentaBancaria(string numerooficina, string codigobanco, string numerocuenta, string digitocontrol)
+    {
+        NumeroOficina = numerooficina;
+        CodigoBanco = codigobanco;
+        NumeroCuenta = numerocuenta;
+        DigitoControl = digitocontrol;
+    }
+    public NumeroCuentaBancaria() { }
+    
+    //Propiedades
+    public string NumeroOficina { get; private set; }
+    public string CodigoBanco { get; private set; }
+    public string NumeroCuenta { get; private set; }
+    public string DigitoControl { get; private set; }
+}
+ 
+//Entidad Cliente. Raiz del Agregado de Clientes
+public class Cliente
+{
+	//Propiedades
+    public int IdCliente {get; set; }
+    public string Nombre { get; set; }
+    public string Apellidos { get; set; }
+    public string NombreCompleto
+    {
+        get
+        {
+            return string.Format("{0}, {1}", this.Apellidos, this.Nombre);
+        }
+        set { } 
+    }
+    public string Telefono { get; set; }
+    public string Empresa { get; set; }
+    public decimal LimiteCredito { get; set; }
+    
+    //Propiedades de navegacion
+    public virtual Direccion Direccion { get; set; }
+}
+ 
+//Objeto valor del agregado de Clientes
+public class Direccion
+{
+	// ctors
+    public Direccion(string ciudad, string codigopostal, string textodireccion)
+    {
+        this.Ciudad = ciudad;
+        this.CodigoPostal = codigopostal;
+        this.TextoDireccion = textodireccion;
+    }
+    public Direccion() { }        
+    
+    // Propiedades
+    public string Ciudad { get; private set; }
+    public string CodigoPostal { get; private set; }
+    public string TextoDireccion { get; private set; }
+}
+```
 
-En el caso del agregado de cuentas, vemos que lo forman tres clases, dos entidades (**CuentaBancaria **y** MovimientoBancario)** y un objeto valor (**NumeroCuenta)**. La diferencia entre entidades y objetos valor es que las entidades tienen una identidad y los objetos valor no. Las entidades se traducen en tablas en la base de datos, sin embargo los objetos valor simplemente actúan como una conjunto de propiedades que se asocian a una entidad y que no tienen razón de ser por si solos, es decir, no tienen identidad.
+En este caso, estamos definiendo dos agregados que serán el agregado de **Cuentas Bancarias** y el agregado de **Clientes**
 
-La entidad raíz del agregado de cuentas es la **CuentaBancaria**. Esta cuenta bancaria se asocia con *N***MovimientoBancario** y las cuentas bancarias tienen un **NumeroCuenta**.
+En el caso del agregado de cuentas, vemos que lo forman tres clases, dos entidades (**CuentaBancaria** y **MovimientoBancario**) y un objeto valor (**NumeroCuenta)**. La diferencia entre entidades y objetos valor es que las entidades tienen una identidad y los objetos valor no. Las entidades se traducen en tablas en la base de datos, sin embargo los objetos valor simplemente actúan como una conjunto de propiedades que se asocian a una entidad y que no tienen razón de ser por si solos, es decir, no tienen identidad.
+
+La entidad raíz del agregado de cuentas es la **CuentaBancaria**. Esta cuenta bancaria se asocia con *N* **MovimientoBancario** y las cuentas bancarias tienen un **NumeroCuenta**.
 
 Vemos como el acceso al resto de objetos del agregado es siempre a través de la entidad raíz, la **CuentaBancaria**, de la cual se extrae dinero (*RetirarImporte()*) o bien se deposita (*DepositarImporte()*). Vemos asimismo que la creación de entidades asociadas del mismo agregado también se lleva a cabo en la entidad raíz, en este caso en el interior de los métodos, aunque se podría crear un método factoría que crease los objetos.
 
@@ -55,7 +221,9 @@ Por otra parte, tenemos el agregado de Clientes, formado por una entidad raíz *
 
 Es importante recalcar, como comentábamos al principio del post, que las relaciones entre agregados se establecerán a través de las entidades raíz. Esto se refleja con el método *AsociarCliente()*, en el que se asocia un Cliente con una **CuentaBancaria** y con el establecimiento de la propiedad de navegación **Cliente**
 
- public virtual Cliente Cliente { get; private set; }
+```c
+public virtual Cliente Cliente { get; private set; }
+```
 
 Podríamos también asociar la entidad raíz **Cliente** con otras entidades que no sean raíz pero no podemos asociar entidades no raíz con otras entidades no raíz. Siempre debemos hacerlo a través de la raíz del agregado.
 
@@ -64,7 +232,5 @@ Por tanto, mantendremos dos agregados y si queremos crear repositorios de acceso
 Hasta aquí este repaso al patrón agregado y a las posibilidades que nos ofrece para desarrollar modelos de datos de manera independiente al almacén de datos que se quiera usar.
 
 Hasta pronto!!
-
-</movimientocuenta></movimientocuenta></movimientocuenta></movimientocuenta>
 
 

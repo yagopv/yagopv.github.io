@@ -3,7 +3,7 @@ layout: post
 title: Gestión de excepciones en JavaScript
 date: '2013-09-13 04:45:16'
 tags:
-- Exception handling
+- error handling
 categories:
 - JavaScript
 ---
