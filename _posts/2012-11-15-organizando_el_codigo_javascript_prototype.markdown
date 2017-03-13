@@ -3,7 +3,9 @@ layout: post
 title: Organizando el código javascript. Prototype
 date: '2012-11-15 05:38:32'
 tags:
-- patrones
+- patterns
+categories:
+- JavaScript
 ---
 
 
@@ -102,7 +104,23 @@ Observad que las variables públicas se exponen ahora en la definición de la cl
 Ahora ya podríamos en nuestro código hacer cosas como**
 
 ```javascript
-var contabilidad = new Contabilidad(new Array()); contabilidad.nuevaCuenta(111111, 100.00); contabilidad.nuevaCuenta(222222, 200.00); contabilidad.modificarSaldo(111111, 100.00); contabilidad.eliminarCuenta(111111); contabilidad.calcularSaldoTotal(); var contabilidad2 = new Contabilidad(new Array()); contabilidad2.nuevaCuenta(111111, 100.00); contabilidad2.nuevaCuenta(222222, 200.00); contabilidad2.nuevaCuenta(333333, 200.00); contabilidad2.nuevaCuenta(444444, 200.00); contabilidad2.modificarSaldo(111111, 1000.00); contabilidad2.eliminarCuenta(333333); contabilidad2.calcularSaldoTotal(); var contabilidad3 = new Contabilidad(new Array(new Cuenta(111111, 100.00), new Cuenta(222222, 200.00))); contabilidad3.nuevaCuenta(333333, 100.00); contabilidad3.calcularSaldoTotal();
+var contabilidad = new Contabilidad(new Array());
+contabilidad.nuevaCuenta(111111, 100.00);
+contabilidad.nuevaCuenta(222222, 200.00);
+contabilidad.modificarSaldo(111111, 100.00); contabilidad.eliminarCuenta(111111);
+contabilidad.calcularSaldoTotal();
+
+var contabilidad2 = new Contabilidad(new Array()); 
+contabilidad2.nuevaCuenta(111111, 100.00);
+contabilidad2.nuevaCuenta(222222, 200.00);
+contabilidad2.nuevaCuenta(333333, 200.00);
+contabilidad2.nuevaCuenta(444444, 200.00);
+contabilidad2.modificarSaldo(111111, 1000.00); contabilidad2.eliminarCuenta(333333);
+contabilidad2.calcularSaldoTotal();
+
+var contabilidad3 = new Contabilidad(new Array(new Cuenta(111111, 100.00), new Cuenta(222222, 200.00))); 
+contabilidad3.nuevaCuenta(333333, 100.00);
+contabilidad3.calcularSaldoTotal();
 ```
 
 Una ventaja de este modelo de estructuración del código es que es fácilmente extensible ya que podemos en cualquier parte sobreescribir un método expuesto de manera tan sencilla como ...

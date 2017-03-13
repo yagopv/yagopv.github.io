@@ -3,7 +3,9 @@ layout: post
 title: El filtro [Authorize]
 date: '2012-03-08 02:57:05'
 tags:
-- asp-mvc-filters
+- asp mvc
+categories:
+- .NET
 ---
 
 
@@ -15,7 +17,26 @@ Puede aplicarse tanto a nivel de controlador cómo en acciones concretas. Si se 
 
 Vamos a ver unos ejemplos de uso …
 
-[Authorize] public ActionResult Accion1() { return View(); } [Authorize(Roles="Admin, Premium")] public ActionResult Accion2() { return View(); } [Authorize(Users="admin., admin2")] public ActionResult Accion3() { return View(); } public ActionResult Accion4() { return View(); }
+```c
+[Authorize] 
+public ActionResult Accion1() { 
+  return View(); 
+} 
+
+[Authorize(Roles="Admin, Premium")] 
+public ActionResult Accion2() { 
+  return View(); 
+} 
+
+[Authorize(Users="admin., admin2")] 
+public ActionResult Accion3() { 
+  return View(); 
+} 
+
+public ActionResult Accion4() { 
+  return View(); 
+}
+```
 
 ***Accion1***, estaría restringida a los usuarios que hayan iniciado sesión.
 

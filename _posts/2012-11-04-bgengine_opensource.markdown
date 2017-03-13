@@ -2,6 +2,10 @@
 layout: post
 title: BgEngine, open source
 date: '2012-11-04 06:22:20'
+tags:
+- bgengine
+categories:
+- .NET
 ---
 
 
