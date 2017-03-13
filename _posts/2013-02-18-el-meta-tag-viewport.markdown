@@ -3,11 +3,13 @@ layout: post
 title: El meta tag viewport
 date: '2013-02-18 06:46:36'
 tags:
-- responsive-design
+- responsive design
+categories:
+- HTML
 ---
 
 
-Hasta hace bien poco, la mayoría de páginas web habían sido creadas sin ningún pensamiento acerca de cómo se mostrarían en tamaños de pantalla más pequeños. <span style="font-size: 1em; line-height: 1.6em;">Los navegadores para dispositivos móviles han estado durante mucho tiempo luchando para tratar de mostrar correctamente estas páginas al usuario final.</span>
+Hasta hace bien poco, la mayoría de páginas web habían sido creadas sin ningún pensamiento acerca de cómo se mostrarían en tamaños de pantalla más pequeños. Los navegadores para dispositivos móviles han estado durante mucho tiempo luchando para tratar de mostrar correctamente estas páginas al usuario final.
 
 Los diseños cuyo foco principal es el contenido de texto, son más sencillos de reformatear que aquellos con interfaces visualmente complejas. Estos últimos suelen acabar funcionando mediante el zoom manual para poder ver el contenido de manera correcta.
 
