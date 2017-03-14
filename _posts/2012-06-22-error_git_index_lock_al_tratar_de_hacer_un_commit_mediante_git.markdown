@@ -3,15 +3,16 @@ layout: post
 title: Error ".git/index.lock" al tratar de hacer un commit mediante git
 date: '2012-06-22 03:16:23'
 tags:
-- errores-y-excepciones
+- git
+categories:
+- Source Control
 ---
-
 
 Un error muy típico al tratar de hacer un commit mediante git es que nos indique que no puede crear el archivo .git/index.lock porque ya existe.
 
 Varias veces al tratar de hacer un **commit** mediante **git** me ha salido el siguiente error:
 
-```
+```javascript
 fatal: unable to create '.git/index.lock': File exists
 ```
 
@@ -24,5 +25,3 @@ Su solución es sencilla, simplemente he de ir a la raiz del proyecto, entrar en
 A partir de ahí ya puedo hacer el **commit** sin problemas …
 
 Hasta pronto!!
-
-

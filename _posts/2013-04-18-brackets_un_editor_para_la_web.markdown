@@ -2,8 +2,11 @@
 layout: post
 title: Brackets, un editor para la web
 date: '2013-04-18 02:50:29'
+tags: 
+- brackets
+categories:
+- Tools
 ---
-
 
 Brackets es un editor open source para desarrollo y diseño de sitios web construido usando HTML, CSS y JavaScript.
 

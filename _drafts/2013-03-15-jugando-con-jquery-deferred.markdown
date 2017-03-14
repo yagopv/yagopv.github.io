@@ -3,7 +3,9 @@ layout: post
 title: Jugando con $.Deferred()
 date: '2013-03-15 08:54:16'
 tags:
-- promises
+- jquery
+categories:
+- JavaScript
 ---
 
 
@@ -175,5 +177,3 @@ Si tratamos de hacer algo como *wait().resolve()* fuera del cuerpo de la funció
 Bueno, pues hasta aquí todo … espero que le sirva a alguien …
 
 <span style="font-size: 1em; line-height: 1.6em;">Hasta pronto!!</span>
-
-
