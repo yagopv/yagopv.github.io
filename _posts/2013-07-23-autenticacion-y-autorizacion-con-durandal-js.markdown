@@ -8,7 +8,6 @@ categories:
 - JavaScript
 ---
 
-
 En las últimas semanas he estado intentando crear una plantilla de inicio para aplicaciones Web API/Durandal que incluya el sistema de autenticación y autorización de la plantilla que incluye Visual Studio 2012 para ASP MVC 4 (Internet).
 
 La plantilla la comparto en [mi cuenta de Github](https://github.com/yagopv/durandalauth) y también he creado un [sitio web de ejemplo](https://durandalauth.azurewebsites.net/#/ "DurandalAuth sample site") en Azure.

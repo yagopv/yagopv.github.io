@@ -3,9 +3,10 @@ layout: post
 title: Creación de clases con javascript y herencia
 date: '2012-05-02 09:50:52'
 tags:
-- poo
+- patterns
+categories:
+- JavaScript
 ---
-
 
 En javascript es posible crear clases como en cualquier otro lenguaje orientado a objetos pero la forma de hacerlo difiere en gran medida del resto de las plataformas orientadas a objetos como .NET o Java.
 
@@ -49,14 +50,14 @@ Podemos también crear variables privadas para dicha clase, que sólo sean acces
 
 ```javascript
 function Animal(nombre, especie, numerodepatas, tienecola) {
-    //Variables privadas 
-    var _nombreCompleto; 
-    var _color; 
-    // Propiedades 
-    this.Nombre = nombre; 
-    this.Especie = especie; 
-    this.NumeroDePatas = numerodepatas; 
-    this.TieneCola = tienecola; 
+    //Variables privadas
+    var _nombreCompleto;
+    var _color;
+    // Propiedades
+    this.Nombre = nombre;
+    this.Especie = especie;
+    this.NumeroDePatas = numerodepatas;
+    this.TieneCola = tienecola;
 }
 ```
 
@@ -96,7 +97,7 @@ function Animal(nombre, especie, numerodepatas, tienecola) {
 
 ***setNombreCompleto()*** establece el nombre complete el animal concatenando el ***Nombre*** y la ***Especie***.
 
-***getNombreCompleto()***recupera el nombre completo.
+***getNombreCompleto()*** recupera el nombre completo.
 
 
 ## Herencia
@@ -134,9 +135,9 @@ Sobre el ***prototype*** de una clase (o función) se permite adjuntar objetos q
 
 En definitiva el ***prototype*** de un objeto es una propiedad común a todos los objetos que se crean de una clase determinada. Es por tanto el lugar donde se ha de establecer la herencia.
 
-Además, creamos una propiedad ***LecheRestante*** y una ***Victimas***en las **Vacas** y los **Tigres** respectivamente.
+Además, creamos una propiedad ***LecheRestante*** y una ***Victimas*** en las **Vacas** y los **Tigres** respectivamente.
 
-Como las vacas dan mucha leche voy a crear un método ***ordenhar() ***para quitarle un poco de vez en cuando y como los tigres son bastante peligrosos voy a añadirles un método que sea ***comerpersona() *** para cuando tengan hambre, que tengan como parámetro en número de personas que se hayan comido.
+Como las vacas dan mucha leche voy a crear un método ***ordenhar()*** para quitarle un poco de vez en cuando y como los tigres son bastante peligrosos voy a añadirles un método que sea ***comerpersona()*** para cuando tengan hambre, que tengan como parámetro en número de personas que se hayan comido.
 
 
 ## **Probando nuestras clases**
@@ -147,7 +148,7 @@ Creo una página web *test_inheritance.html* e incluyo en el mismo directorio un
 
 La página creada quedaría así
 
-{% highlight html %}
+```html
 <!DOCTYPE html>
 <html>
     <head>

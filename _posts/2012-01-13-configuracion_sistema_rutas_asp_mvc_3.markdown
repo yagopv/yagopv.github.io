@@ -8,7 +8,6 @@ categories:
 - .NET
 ---
 
-
 El sistema de routing es el controlador frontal de una aplicación ASP MVC.
 
 Cualquier url introducida en el navegador pasará por el sistema de rutas, este se encargará de analizar la información que contiene la url y de compararla con la tabla de rutas y así derivar la petición al controlador que corresponda.
@@ -77,56 +76,105 @@ En el código anterior definimos la ruta por defecto, con un patrón de url que 
 
 ***Patrón de la URL***. Es el formato de la URL. Cuando exista una petición entrante se utiliza para determinar si dicha petición se procesará como se indica en el mapeo. También se utilizará para generación de links con helpers como Html.ActionLink(), siendo en este caso utilizada como plantilla de generación de la url. El patrón codificado en el ejemplo es “{controller}/{action}/{id}”, siendo {controller} un controlador cualquiera de nuestra aplicación, {action} una acción cualquiera dentro del controlador y {id} un parámetro del método de acción. También se puede observar que en los parámetros por defecto este {id} se indica como opcional por lo que de esta manera con este patrón se pueden procesar peticiones del estilo de:
 
-```
-<p><a href="http://www.midominio.com/Automovil/Index%C3%82%C2%A0">http://www.midominio.com/Automovil/Index </a> =>  Que nos podría llevar a un índice de todos los automóviles<br /><a href="http://www.midominio.com/Automovil/Edit/3%C3%82%C2%A0">http://www.midominio.com/Automovil/Edit/3 </a> => Con la cual editaríamos el automóvil  con identificador 4</p>
+```c
+http://www.midominio.com/Automovil/Index =>  Que nos podría llevar a un índice de todos los automóviles
+
+http://www.midominio.com/Automovil/Edit/3=> Con la cual editaríamos el automóvil  con identificador 3
 ```
 
 aunque también encajaría una petición más compleja como la siguiente:
 
-```
-<p><a href="http://www.midominio.com/Automovil/Index?page=0&sort=datecreated&sortdir=DESC&searchstring=bmw%20">http://www.midominio.com/Automovil/Index?page=0&sort=datecreated&sortdir=DESC&searchstring=bmw </a></p>
+```c
+http://www.midominio.com/Automovil/Index?page=0&sort=datecreated&sortdir=DESC&searchstring=bmw
 ```
 
 mediante la cual podríamos visualizar los automóviles que contienen el texto “bmw” ordenados por fecha de creación descendente. Esto se puede hacer debido a que el parámetro {id} es opcional. En el método de acción del controlador definiremos todos estos parámetros de la siguiente manera:
 
+```c
 public ActionResult Index(int? page, string sort, string sortdir,string searchstring)
+```
 
 Podemos jugar con el patrón de la manera que queramos. Podríamos por ejemplo introducir este patrón:
 
-```
-<p>catalogo/{marca}/{modelo}</p>
+```c
+catalogo/{marca}/{modelo}
 ```
 
 con el que una petición como esta, http://www.midominio.com/catalogo/mercedes/A3/ encajaría perfectamente, recuperando los “mercedes” de tipo “A3” que existen en el catálogo. El sistema de routing se encarga de hacer el emparejamiento de los parámetros de la petición, marca=mercedes, modelo=A3.
 
 ***Valores por defecto de los parámetros***. No es necesario que una petición incluya todos los parámetros indicados en el patrón. Esto se permite gracias a los parámetros por defecto. Dado el código de definición de una ruta del que habíamos partido:
 
- routes.MapRoute( "Default", // Nombre de la ruta "{controller}/{action}/{id}", // URL con parámetros new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parametros por defecto );
+```c
+routes.MapRoute(
+    "Default",   // Nombre de la ruta
+    "{controller}/{action}/{id}", // URL con parámetros
+    new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parametros por defecto
+);
+```
 
 peticiones del tipo *http://www.midominio.com/* o *http://www.midominio.com/Home* encajan con la plantilla de la ruta debido a que el resto de parámetros se completan con los por defecto. Por tanto las peticiones anteriores nos llevan ambas a *http://www.midominio.com/Home/Index*.  
 Para el correcto funcionamiento de la aplicación todas las rutas deben contener el controlador y la acción. Por esta razón, si en el patrón no se incluye {controller} y {action} se debe especificar en los parámetros por defecto
 
- routes.MapRoute( "Automoviles", // Nombre de la ruta "catalogo/{marca}/{modelo}", // URL con parámetros new { controller = "Automovil", action = "Index" } // Parametros por defecto );
+```c
+routes.MapRoute(
+    "Automoviles",   // Nombre de la ruta
+    "catalogo/{marca}/{modelo}", // URL con parámetros
+    new { controller = "Automovil", action = "Index" } // Parametros por defecto
+);
+```
 
 ***Restricciones.*** Las restricciones permiten filtrar valores sobre las rutas actuando sobre parámetros u otros valores de manera que si no cumplen con la restricción se descarta la ruta. Se pueden definir de dos maneras, o bien mediante expresiones regulares o bien con una clase que implemente IRouteConstraint.
 
 Mediante expresiones regulares:
 
- routes.MapRoute( "Default", // Nombre de la ruta "{controller}/{action}/{id}", // URL con parámetros new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parametros por defecto, new { id = @"\d{1,5}" } //Restricciones );
+```c
+routes.MapRoute(
+    "Default",   // Nombre de la ruta
+    "{controller}/{action}/{id}", // URL con parámetros
+    new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parametros por defecto,
+    new { id = @"\d{1,5}" } //Restricciones
+);
+```
 
 La expresión filtra la ruta de manera que los valores del parámetro id han de contener obligatoriamente entre 1 y 5 dígitos
 
 Mediante una clase:
 
-public class AutomovilRouteConstraint : IRouteConstraint { private readonly IAutomovilRepository automovilRepository = new AutomovilRepository(); public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection) { if (!values.ContainsKey(parameterName)) return false; var automovil = (string)values[parameterName]; return slugRepository.Exists(automovil); } }
+```c
+public class AutomovilRouteConstraint : IRouteConstraint
+{
+    private readonly IAutomovilRepository automovilRepository = new AutomovilRepository();
+
+    public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
+    {
+        if (!values.ContainsKey(parameterName))
+            return false;
+
+        var automovil = (string)values[parameterName];
+
+        return slugRepository.Exists(automovil);
+    }
+}
+````
 
 En el código anterior se filtra la existencia de un automóvil en un repositorio de automóviles:
 
-routes.MapRoute("Automoviles", "{automovil}", new { controller = "Automovil", action = "View" }, new { slug = new AutomovilRouteConstraint() });
+```c
+routes.MapRoute("Automoviles", "{automovil}",
+    new { controller = "Automovil", action = "View" },
+    new { slug = new AutomovilRouteConstraint() });
+````
 
 ***Espacios de nombres de controladores.*** Para evitar conflictos entre controladores con el mismo nombre se puede especificar el espacio de nombre donde se han de localizar los mismos:
 
- routes.MapRoute( "Default", // Nombre de la ruta "{controller}/{action}/{id}", // URL con parámetros new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parametros por defecto, new[] { "MiAplicacion.Controllers" } );
+```c
+routes.MapRoute(
+    "Default",   // Nombre de la ruta
+    "{controller}/{action}/{id}", // URL con parámetros
+    new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parametros por defecto,
+    new[] { "MiAplicacion.Controllers" }
+);
+````
 
 Una de las cosas más importantes a recordar es que la tabla de rutas se procesa secuencialmente según la hemos definido en nuestro código. Por tanto es fácil cometer errores en la definición de la misma y que una petición que tenemos previsto procesar con una plantilla acabe procesandose con una anterior que también encaja. Ojo con esto!!
 
