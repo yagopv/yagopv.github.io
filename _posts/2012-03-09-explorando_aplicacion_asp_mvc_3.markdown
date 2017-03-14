@@ -2,6 +2,10 @@
 layout: post
 title: Explorando un aplicación ASP MVC 3
 date: '2012-03-09 01:40:49'
+tags: 
+- asp mvc
+categories:
+- .NET
 ---
 
 Cuando creamos una nueva aplicación ASP MVC 3 desde Visual Studio, se genera una estructura de carpetas por defecto. En este post vamos a intentar desmenuzar esta estructura generada por la plantilla por defecto.

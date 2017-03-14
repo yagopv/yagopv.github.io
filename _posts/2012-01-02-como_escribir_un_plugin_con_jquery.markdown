@@ -3,7 +3,9 @@ layout: post
 title: Cómo crear un plugin con jQuery
 date: '2012-01-02 13:44:16'
 tags:
-- plugins-y-widgets
+- jquery
+categories:
+- JavaScript
 ---
 
 
