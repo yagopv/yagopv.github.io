@@ -4,9 +4,10 @@ title: Creación de Objetos Valor en Entity Framework y el problema de los valor
   nulos
 date: '2012-04-27 04:52:50'
 tags:
-- bases-de-datos
+- entity framework
+categories:
+- .NET
 ---
-
 
 Cuando trabajamos con Objetos Valor en la creación de modelos de Dominio es posible que nos encontremos con un error muy común y es que lo Objetos Valor (Complex Types en Entity Framework) son siempre obligatorios.
 
@@ -14,7 +15,7 @@ En la creación de modelos de Dominio normalmente además de **Entidades** neces
 
 Por ejemplo, en la entidad ***Comentario*** definida a continuación podriamos incluir un **Objeto Valor** ***UsuarioAnonimo*** que se crease cuando el comentario es escrito por un usuario anónimo. Este ***UsuarioAnonimo*** no tiene identidad por lo que en nuestro modelo vamos a tratarlo como un **Objeto Valor**
 
-```javascript
+```c
 public class Comentario
 {
     public int IdComentario { get; set; }
@@ -34,7 +35,7 @@ public class UsuarioAnonimo
 
 El problema que nos vamos a encontrar al crear un objeto de tipo ***Comentario*** y guardar los cambios de la siguiente manera
 
-```javascript
+```c
 using (var context = new ComentariosContext())
 {
     Comentario  comentario = new Comentario()
@@ -58,7 +59,7 @@ Esta ***Exception*** se produce debido a que los **Objetos Valor** (***ComplexTy
 
 Por tanto, para solucionar el problema lo único que hemos de hacer es instanciar el **Objeto Valor**
 
-```javascript
+```c
 using (var context = new ComentariosContext())
 {
     Comentario  comentario = new Comentario()
