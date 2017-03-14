@@ -3,7 +3,9 @@ layout: post
 title: Creación de restricciones personalizadas en ASP MVC 3
 date: '2012-02-26 12:51:52'
 tags:
-- validacion
+- asp mvc
+categories:
+- .NET
 ---
 
 
@@ -23,23 +25,64 @@ Vamos a ver diferentes formas de definir nuestras restricciones de manera que po
 
 El atributo [[CustomValidation]](http://msdn.microsoft.com/en-us/library/system.componentmodel.dataannotations.customvalidationattribute%28v=vs.95%29.aspx "El atributo CustomValidation") nos permite seleccionar una clase y un método de la misma que se encargará de efectuar la validación del campo. Este atributo se puede aplicar sobre una propiedad concreta de la entidad o bien sobre toda la entidad.
 
-[CustomValidation(typeof(ProductValidations), "IsValidIdProducto")] public int IdProducto {get; set;}
+```c
+[CustomValidation(typeof(ProductValidations), "IsValidIdProducto")]
+public int IdProducto {get; set;}
+```
 
-El código anterior nos permite validar la propiedad **IdProducto**. Para esto, según se ha indicado en la anotación, se usará una clase **ProductValidations** y dentro de esa clase, el método **IsValidIdProducto **se encargará de la validación de la propiedad. Este método ha de ser estático**.**
+El código anterior nos permite validar la propiedad **IdProducto**. Para esto, según se ha indicado en la anotación, se usará una clase **ProductValidations** y dentro de esa clase, el método **IsValidIdProducto** se encargará de la validación de la propiedad. Este método ha de ser estático.
 
-****Supongamos que el valor del identificador del producto no puede superar el 10000. Una posible implementación de esta restriccion personalizada sería la siguiente
+Supongamos que el valor del identificador del producto no puede superar el 10000. Una posible implementación de esta restriccion personalizada sería la siguiente:
 
-public static class ProductValidations { public static ValidationResult IsValidIdProducto(int value) { if (value Como podemos comprobar, en caso de que la validación sea correcta se está retornado *ValidationResult.Success*. En caso contrario se devuelve un nuevo [*ValidationResult*](http://msdn.microsoft.com/es-es/library/system.windows.controls.validationresult.aspx "ValidationResult")con el texto del mensaje de error. Es posible retornar *null* en este nuevo ValidationResult que se genera al producirse un error. En este último caso, el mensaje de error se recogerá de las propiedades del atributo *[CustomValidation]*.
+```c
+public static class ProductValidations
+{
+    public static ValidationResult IsValidIdProducto(int value)
+    {
+        if (value <= 10000)
+        {
+            return ValidationResult.Success;
+        }
+        return new ValidationResult("El Id del Producto debe ser inferior a 10000");
+    }
+}
+```
+
+Como podemos comprobar, en caso de que la validación sea correcta se está retornado *ValidationResult.Success*. En caso contrario se devuelve un nuevo [*ValidationResult*](http://msdn.microsoft.com/es-es/library/system.windows.controls.validationresult.aspx "ValidationResult") con el texto del mensaje de error. Es posible retornar *null* en este nuevo ValidationResult que se genera al producirse un error. En este último caso, el mensaje de error se recogerá de las propiedades del atributo *[CustomValidation]*.
 
 Como comentábamos al principio, si la validación afecta a más de una propiedad, podemos aplicar el atributo a nivel de clase.
 
 Supongamos una clase **Video** que contiene las propiedades *altura* y *anchura*
 
-[CustomValidation(typeof(VideoValidations),"comprobarMedidas")] public class Video { public string Url {get; set;} public int Altura { get; set;} public int Anchura {get; set;} }
+```c
+[CustomValidation(typeof(VideoValidations),"comprobarMedidas")]
+public class Video
+{
+    public string Url {get; set;}
+    public int Altura { get; set;}
+    public int Anchura {get; set;}
+}
+```
 
 si queremos validar que las medidas del video cumplan un mínimo y un máximo podríamos hacerlo con una implementación como la siguiente
 
-public static class VideoValidations { public static ValidationResult comprobarMedidas(Video value) { if ((value.Altura > 100) && (value.Anchura > 200)) { if (value.Anchura > value.Altura) { return ValidationResult.Success; } } return new ValidationResult("Error en las medidas del Video"); } }
+```c
+public static class VideoValidations
+{
+    public static ValidationResult comprobarMedidas(Video value)
+    {
+        if ((value.Altura > 100) &amp;&amp; (value.Anchura > 200))
+        {
+            if (value.Anchura > value.Altura)
+            {
+                return ValidationResult.Success;
+            }
+        }
+        return new ValidationResult("Error en las medidas del Video");
+    }
+}
+
+```
 
 En la siguiente validación se obliga a que la anchura del video sea mayor que la altura y además que la altura sea mayor que 100 y la anchura mayor de 200.
 
@@ -47,21 +90,72 @@ En la siguiente validación se obliga a que la anchura del video sea mayor que l
 
 Otra forma de aplicar restricciones sobre nuestras entidades es directamente definir atributos como los que ya nos ofrece el propio Framework. Para ello deberemos crear una clase que herede de [**ValidationAttributte**](http://msdn.microsoft.com/es-es/library/system.componentmodel.dataannotations.validationattribute.aspx "Clase base de todos los atributos de validación") .Esta clase tiene que sobreescribir el método* IsValid()* que nos indicará si se cumple o no la restricción
 
-public class IsValidIdProductoAttributte : ValidationAttibutte { public override bool IsValid(object value) { int id = Convert.Int32(value); if (id En el ejemplo anterior, se crea un atributo que realiza la misma función que en el primer ejemplo que vimos. Obliga a que el identificador del producto introducido sea menor o igual a 10000.
+```c
+public class IsValidIdProductoAttributte : ValidationAttibutte
+{
+    public override bool IsValid(object value)
+    {
+        int id = Convert.Int32(value);
+        if (id <= 10000)
+        {
+            return true;
+        }
+        return false;
+    }
+}
+```
+
+En el ejemplo anterior, se crea un atributo que realiza la misma función que en el primer ejemplo que vimos. Obliga a que el identificador del producto introducido sea menor o igual a 10000.
 
 Este nuevo atributo que acabamos de crear se aplicaría de la siguiente forma
 
-[IsValidIdProducto] public int IdProducto {get; set;} //Si queremos devolver un mensaje de error [IsValidIdProducto(ErrorMessage="El identificador de producto tiene que ser menor o igual que 10000")] public int IdProducto {get; set;}
+```c
+[IsValidIdProducto]
+public int IdProducto {get; set;}
+
+//Si queremos devolver un mensaje de error
+
+[IsValidIdProducto(ErrorMessage="El identificador de producto tiene que ser menor o igual que 10000")]
+public int IdProducto {get; set;} 
+```
 
 Como en el caso del empleo de [CustomValidation], los atributos personalizados pueden aplicarse a nivel de clase. En este caso el tipo de *value* sería la clase sobre la que se aplique.
 
 #### Validación con IValidatableObject
 
-La interfaz [**IValidatableObject**](http://msdn.microsoft.com/es-es/library/system.componentmodel.dataannotations.ivalidatableobject.aspx "La interfaz IValidatableObject")también nos permite aplicar restricciones sobre nuestras entidades del modelo. Esta interfaz reside en *System.ComponentModel.DataAnnotations*.
+La interfaz [**IValidatableObject**](http://msdn.microsoft.com/es-es/library/system.componentmodel.dataannotations.ivalidatableobject.aspx "La interfaz IValidatableObject") también nos permite aplicar restricciones sobre nuestras entidades del modelo. Esta interfaz reside en *System.ComponentModel.DataAnnotations*.
 
 Para usar la interfaz hacemos que directamente la entidad sobre la que queremos implementar restricciones la implemente. La implementación de **IValidatableObject** añadirá un método *Validate()* a nuestra clase que usaremos para definir nuestras restricciones. En este método comprobaremos la validez de la entidad, devolviendo una lista de errores (**ValidationResult**) en caso de que se produzcan.
 
-public class Video : IValidatableObject { public string Url {get; set;} public int Altura { get; set;} public int Anchura {get; set;} public IEnumerable<validationresult> Validate(ValidationContext validationContext) { if (string.IsNullOrEmpty(Url)) { yield return new ValidationResult("Url obligatoria", new [] {"Url"} ); } if ((Altura Anchura) { yield return new ValidationResult("La altura no debe ser mayor que la anchura", new [] {"Altura", "Anchura"} ); } } } }</validationresult>
+```c
+public class Video : IValidatableObject
+{
+    public string Url {get; set;}
+    public int Altura { get; set;}
+    public int Anchura {get; set;}
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (string.IsNullOrEmpty(Url))
+        {
+            yield return new ValidationResult("Url obligatoria", new [] {"Url"} );
+        }
+
+        if ((Altura <= 100) || (Anchura <= 200))
+        {
+            yield return new ValidationResult("Medidas incorrectas", new [] {"Altura", "Anchura"} );
+        }
+        else
+       {
+
+            if (Altura > Anchura)
+            {
+                yield return new ValidationResult("La altura no debe ser mayor que la anchura", new [] {"Altura", "Anchura"} );
+            }
+      }
+   }
+}
+```
 
 En la implementación del método *Validate()* se definen las restricciones a aplicar sobre la clase. Vemos que los **ValidationResult** devuelven el mensaje de error además de las propiedades que lo están provocando. Se genera por tanto una lista de errores que se propagará a la Vista. El uso de la interfaz **IValidatableObject** es compatible con el uso del resto de restricciones, pero sólo se ejecutará el método *Validate()* cuando no exista ningún error una vez pasadas las validaciones de las anotaciones de datos.
 

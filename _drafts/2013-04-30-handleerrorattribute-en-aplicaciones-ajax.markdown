@@ -3,8 +3,9 @@ layout: post
 title: HandleErrorAttribute en aplicaciones ajax
 date: '2013-04-30 03:13:38'
 tags:
-- ajax
-- asp-mvc-filters
+- asp mvc
+categories:
+- .NET
 ---
 
 
