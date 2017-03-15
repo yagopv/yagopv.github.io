@@ -2,8 +2,11 @@
 layout: post
 title: 'Los operadores ? : y ?? en c#'
 date: '2012-07-10 06:54:11'
+tags:
+- c#
+categories:
+- .NET
 ---
-
 
 Vamos a ver en este post cómo usar el operador ternario y el operador null coalescing (??) en c#.
 
@@ -46,7 +49,7 @@ Estamos evaluando si una variable es *null* o no. Con el operador ?? podríamos 
 return variable ?? "**";
 ```
 
-Bastante más compacto ¿no?. Si *variable* es *true* se retornará *variable*. En caso contrario *“**”*.
+Bastante más compacto ¿no?. Si *variable* es *true* se retornará *variable*. En caso contrario '**'.
 
 El operador ?? es de gran utilidad para retornar valores en funciones o en la asignación de variables que pueden ser nulas.
 

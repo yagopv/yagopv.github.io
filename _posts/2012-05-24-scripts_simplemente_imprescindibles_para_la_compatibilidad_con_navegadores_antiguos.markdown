@@ -4,7 +4,9 @@ title: Scripts simplemente imprescindibles para la compatibilidad con navegadore
   antiguos
 date: '2012-05-24 09:33:30'
 tags:
-- scripts
+- libraries
+categories:
+- JavaScript
 ---
 
 
@@ -36,7 +38,7 @@ Tal y como en el caso de **html5shiv**, **Respond.js** funciona simplemente aña
 
 ## Modernizr
 
-No voy a descubrir [**Modernizr**](http://modernizr.com/ "Modernizr")aquí porque su uso es sin duda ya generalizado. No hay más que ver su inclusión por defecto en los proyectos web de las últimas versiones de **Visual Studio.** **Modernizr** permite detectar características de HTML5 y CSS3 en el navedagor que abre la página web y actuar en consecuencia. Además hay múltiples plugins que permiten solucionar la situación cuando un navegador no soporta una característica (*polyfills*). [En este enlace](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills "Polyfills") se puede acceder a una lista y además comprobar que el resto de scripts aqui comentados se incluyen en la misma para paliar la falta de las características HTML5 o CSS3 comentadas y se permiten cargar mediante la sencilla instruccion
+No voy a descubrir [**Modernizr**](http://modernizr.com/ "Modernizr") aquí porque su uso es sin duda ya generalizado. No hay más que ver su inclusión por defecto en los proyectos web de las últimas versiones de **Visual Studio.** **Modernizr** permite detectar características de HTML5 y CSS3 en el navedagor que abre la página web y actuar en consecuencia. Además hay múltiples plugins que permiten solucionar la situación cuando un navegador no soporta una característica (*polyfills*). [En este enlace](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills "Polyfills") se puede acceder a una lista y además comprobar que el resto de scripts aqui comentados se incluyen en la misma para paliar la falta de las características HTML5 o CSS3 comentadas y se permiten cargar mediante la sencilla instruccion
 
 ```javascript
 Modernizr.load({ test: Modernizr.history, nope: 'History.js' });
@@ -47,7 +49,5 @@ con esta instrucción estamos evaluando la existencia de la característica *his
 En resumen, estos scripts facilitan sin duda el tedioso trabajo de compatibilizar y probar el funcionamiento de las aplicaciones web en múltiples navegadores. Hay muchos más … pero estos son los que yo conozco.
 
 Hasta pronto!!
-
-[<span>html5shiv</span>](http://code.google.com/p/html5shiv/)
 
 

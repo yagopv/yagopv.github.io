@@ -3,8 +3,9 @@ layout: post
 title: Cómo crear un filtro anti-spam para tu blog usando Akismet y ASP MVC
 date: '2012-07-09 06:43:25'
 tags:
-- asp-mvc-filters
-- akismet
+- asp mvc
+categories:
+- .NET
 ---
 
 
@@ -35,11 +36,11 @@ El proyecto que nos estamos descargando, contiene principalmente dos clases en e
 <p><em><strong>SubmitHam()</strong></em>. Cuando tengo un falso positivo puedo hacer una llamada usando este método y convertirlo en correcto</p>
 <p><em><strong>SubmitSpam(). </strong></em>Cuando algún comentario se ha pasado por alto como spam puedo usar este método para avisar a Akismet que se trata de spam y que en la siguiente ocasión lo trate bien.</p>
 
-***AkismetComment*** representa la entidad que identifica el comentario usado por Akismet****** para almacenar en su base de datos.
+***AkismetComment*** representa la entidad que identifica el comentario usado por Akismet para almacenar en su base de datos.
 
 Una vez incorporado este componente, lo que vamos a hacer es crear un filtro **ASP MVC** que podamos aplicar en las acciones “conflictivas”. El código de nuestro filtro será algo así:
 
-```javascript
+```c
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -127,14 +128,16 @@ Almacenar los comentarios marcados como spam en nuestra base de datos es una dec
 
 Bueno, pues una vez creado el filtro ASP MVC podemos aplicarlo sobre nuestras acciones de la siguiente forma
 
+```c
 [AkismetFilter(AuthorField = "Username", EmailField = "Email", WebsiteField = "Web", CommentField = "Message")]
 public ActionResult AddComment(Comment comment)
+````
 
 Según hemos indicado en la anotación de nuestro atributo personalizado, los campos que habrá que rastrear en el contexto de la petición serán ***Username, Email, Web y Message*** para efectuar el enlace en el filtro con el objeto ***AkismetComment***.
 
 En el interior de la acción haré la gestión necesaria para tratar los comentarios que nuestro ***AkismetFilterAttribute*** haya categorizado como spam
 
-```javascript
+```c
 if (ModelState["isspam"] != null)
 {
     // Lo que sea que quiero hacer con los comentarios que sean spam ... 

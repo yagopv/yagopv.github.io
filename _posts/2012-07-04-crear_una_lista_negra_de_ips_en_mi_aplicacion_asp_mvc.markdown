@@ -3,11 +3,10 @@ layout: post
 title: Crear una lista negra de Ip´s en mi aplicación ASP MVC
 date: '2012-07-04 08:43:08'
 tags:
-- ip-blacklist
-- seguridad
-- asp-mvc-filters
+- asp mvc
+categories:
+- .NET
 ---
-
 
 En este post vamos a crear un filtro ASP MVC que puede usarse con cualquier acción, controlador o como filtro global y que permitirá rechazar direcciones Ip que no queremos que accedan a nuestro contenido.
 
@@ -38,7 +37,7 @@ Almacenamos las direcciones ip que no nos interesa que accedan al servidor separ
 
 Creamos una clase repositorio para leer el fichero
 
-```javascript
+```c
 namespace MyApp.Helpers
 {
     public class BlackListRepository
@@ -60,7 +59,7 @@ Esta clase contiene simplemente un método que retorna una lista de ips que se a
 
 A continuación añadimos una nueva clase que será nuestro filtro ASP MVC
 
-```javascript
+```c
 namespace MyApp.Filters
 {
     public class IPHostValidationAttribute : ActionFilterAttribute
@@ -87,13 +86,13 @@ Por último, vamos a manipular el ***Global.asax*** para que el filtro sea globa
 
 Registramos el filtro como global
 
-```javascript
+```c
 filters.Add(new IPHostValidationAttribute());
 ```
 
-En *<span class="nf">Application_Start</span><span class="p">()</span>* añadimos la siguiente linea para leer el fichero y almacenar su contenido en memoria
+En *Application_Start()* añadimos la siguiente linea para leer el fichero y almacenar su contenido en memoria
 
-```javascript
+```c
 BlackListRepository.GetAllIpsInBlackList(this.Server);
 ```
 

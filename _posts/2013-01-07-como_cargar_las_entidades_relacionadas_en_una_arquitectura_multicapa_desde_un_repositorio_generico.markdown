@@ -4,7 +4,9 @@ title: Cómo cargar las entidades relacionadas en una arquitectura multicapa des
   un repositorio genérico
 date: '2013-01-07 03:12:43'
 tags:
-- bases-de-datos
+- entity framework
+categories:
+- .NET
 ---
 
 
@@ -14,7 +16,7 @@ Cuando trabajamos en una arquitectura multicapa usando Entity Framework y aplica
 
 Normalmente el filtrado de entidades lo haremos desde un repositorio genérico en el que podríamos tener un método como el siguiente …
 
-```javascript
+```c
 public virtual IEnumerable<TEntity> GetFiltered(System.Linq.Expressions.Expression<Func<TEntity, bool>> filter)
 {
     return GetSet().Where(filter);
@@ -28,13 +30,13 @@ IDbSet<TEntity> GetSet()
 
 … que tiene cómo parámetro un filtro cualquiera y retorna las entidades que cumplan la condición del filtro.
 
-Si no estamos usando Lazy Loading, entonces las entidades relacionadas nunca se cargarán si no lo indicamos de forma explícita mediante los métodos de inclusión que nos facilita Entity Framework ([Include](http://msdn.microsoft.com/es-es/library/bb738708.aspx "Include")). Esto puede provocar que acabemos sobreescribiendo en los repositorios específicos el método *GetFiltered *o bien añadiendo otros similares con el único objetivo de añadir los objetos relacionados. ¿No sería mucho más sencillo poder especificar directamente en nuestro método *GetFiltered* de nuestro repositorio genérico los objetos relacionados a incluir?
+Si no estamos usando Lazy Loading, entonces las entidades relacionadas nunca se cargarán si no lo indicamos de forma explícita mediante los métodos de inclusión que nos facilita Entity Framework ([Include](http://msdn.microsoft.com/es-es/library/bb738708.aspx "Include")). Esto puede provocar que acabemos sobreescribiendo en los repositorios específicos el método *GetFiltered* o bien añadiendo otros similares con el único objetivo de añadir los objetos relacionados. ¿No sería mucho más sencillo poder especificar directamente en nuestro método *GetFiltered* de nuestro repositorio genérico los objetos relacionados a incluir?
 
 Técnicamente es posible hacerlo. Simplemente tenemos que crear un método de extensión en nuestra capa de acceso a datos, donde hayamos alojado nuestro repositorio genérico por ejemplo y mantengamos las referencias a Entity Framework.
 
 El método de extensión sería así …
 
-```javascript
+```c
 public static IQueryable<T> IncludeMultiple<T>(this IQueryable<T> query, params Expression<Func<T, object>>[] includes)
     where T : class
 {
@@ -50,7 +52,7 @@ public static IQueryable<T> IncludeMultiple<T>(this IQueryable<T> query, params 
 
 … una vez definido ya lo podríamos usar en nuestro repositorio genérico y redefinir GetFiltered de la siguiente forma:
 
-```javascript
+```c
 public virtual IEnumerable<TEntity> GetFiltered(System.Linq.Expressions.Expression<Func<TEntity, bool>> filter, params Expression<Func<T, object>>[] includes)
 {
     return GetSet().Where(filter).IncludeMultiple(includes);
@@ -61,7 +63,7 @@ Con esto ya está listo y podemos recuperar las entidades relacionadas de una fo
 
 Por ejemplo, podríamos llamar a GetFiltered así …
 
-```javascript
+```c
 MyOrderRepository.GetFiltered(o => o.Id == id, o => o.OrderLines, o => o.ShipAddress, o => o.Customer)
 ```
 
