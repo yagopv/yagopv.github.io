@@ -73,7 +73,9 @@ El código del widget será el siguiente:
         _ajaxload: function (url, add) {
             var self = this;
             if (add) {
-                history.pushState({ uri: url }, '', url);
+                history.pushState({
+                    uri: url
+                }, '', url);
             }
             $(this.options.target).load(url, function () {
                 self._trigger("afterajax");
@@ -97,11 +99,11 @@ El código del widget será el siguiente:
             var loading;
             if (self.options.loadingdefaultclass != "") {
                 loading = $('<div id="spalinks_loader style="display:none"></div>')
-									.addClass(self.options.loadingdefaultclass)
-									.append($("<p></p>").text(self.options.loadingdefaulttext));
+                    .addClass(self.options.loadingdefaultclass)
+                    .append($("<p></p>").text(self.options.loadingdefaulttext));
             } else {
                 loading = $('<div id="spalinks_loader" style="display:none; position: fixed; top: 0; left: 0; z-index: 5000; font-size: 150%; width:100%;"></div>')
-									.append($('<p style="margin: 0 auto; text-align:center; background-color: #7BB33D; color: white; font-weight:bold; font-size:15px; padding: 6px; width:22%; -moz-border-radius: 0 0 5px 5px; border-radius: 0 0 5px 5px; -moz-box-shadow: 0 1px 15px #7BB33D; -webkit-box-shadow: 0 1px 15px #7BB33D; box-shadow: 0 1px 15px #7BB33D;"></p>').text(this.options.loadingdefaulttext));
+                    .append($('<p style="margin: 0 auto; text-align:center; background-color: #7BB33D; color: white; font-weight:bold; font-size:15px; padding: 6px; width:22%; -moz-border-radius: 0 0 5px 5px; border-radius: 0 0 5px 5px; -moz-box-shadow: 0 1px 15px #7BB33D; -webkit-box-shadow: 0 1px 15px #7BB33D; box-shadow: 0 1px 15px #7BB33D;"></p>').text(this.options.loadingdefaulttext));
             }
             $(this.element).append(loading);
             $("#spalinks_loader").slideDown();

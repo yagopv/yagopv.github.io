@@ -29,7 +29,13 @@ La creación se lleva a cabo invocando a la factoría de widgets (**$.widget**),
 
 Las dependencias para la creación de widgets se pueden resolver con referencias a scripts presentes en algún [CDN](http://www.asp.net/ajaxlibrary/cdn.ashx "Content Delivery Network") para jquery y jquery UI. Los widgets se definen en su propio archivo .js. La manera de escribirlos, utilizando cierres parecidos a los de los plugins, sería de la siguiente forma
 
- (function($) { $.widget('ns.form()', { // definición del widget }); }(jQuery));
+```javascript
+ (function($) {
+   $.widget('ns.form()', {
+     // definición del widget
+   });
+ }(jQuery));
+```
 
 Como se puede apreciar, el argumento pasado es el propio plugin de jquery ($) que nos permite usarlo en el interior del componente.
 
