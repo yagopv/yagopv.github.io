@@ -56,7 +56,7 @@ var Contabilidad = function () {
 }();
 ```
 
-</div>definimos *_cuentas y _saldototal *como variables privadas para soportar el conjunto de cuentas (será un array de cuentas) y el saldo total que sumen en total los saldos individuales. Además exponemos dos métodos, *Saldo y Cuentas *como métodos públicos, que invocarán a los métodos privados, _SaldoTotal y _Cuentas, con el objetivo de recuperar los valores de las variables privadas definidas (son getters).
+</div>definimos _cuentas y _saldototal como variables privadas para soportar el conjunto de cuentas (será un array de cuentas) y el saldo total que sumen en total los saldos individuales. Además exponemos dos métodos, Saldo y Cuentas como métodos públicos, que invocarán a los métodos privados, _SaldoTotal y _Cuentas, con el objetivo de recuperar los valores de las variables privadas definidas (son getters).
 
 A continuación, añadimos un método *init* a modo de constructor que nos servirá para poblar las variables privadas con datos y para inicializar el módulo.
 
