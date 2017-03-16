@@ -3,9 +3,10 @@ layout: post
 title: Entity Framework Code First. Cómo añadir un índice a la base de datos.
 date: '2013-02-28 10:26:13'
 tags:
-- bases-de-datos
+- entity framework
+categories:
+- .NET
 ---
-
 
 Debería ser muy sencillo realizar una tarea tan común como añadir un índice usando un ORM como Entity Framework … pero no.
 
@@ -15,7 +16,7 @@ Sin embargo, con la llegada de Entity Framework Migrations, es relativamente sen
 
 En primer lugar he de habilitar las migraciones escribiendo en la consolo del administrador de paquetes de Nuget
 
-```
+```console
 PM> Enable-Migrations -EnableAutomaticMigrations
 ```
 
@@ -23,11 +24,11 @@ Esto añadirá la carpeta de migraciones junto a la clase de configuración *Con
 
 Podríamos añadir directamente en el método *Seed* de esta clase de configuración la creación del índice. Pero existe otra forma más elegante. Para ello añadimos una nueva migración mediante
 
-```
+```console
 PM> Add-Migration CrearIndices
 ```
 
-<span>Con lo que se añadiría una nueva clase *XXXX_CrearIndices.cs* en mi directorio de migraciones. La clase sería algo así</span>
+Con lo que se añadiría una nueva clase *XXXX_CrearIndices.cs* en mi directorio de migraciones. La clase sería algo así:
 
 ```c
 namespace MiProyecto.Migrations { 
@@ -39,27 +40,27 @@ namespace MiProyecto.Migrations {
 }
 ```
 
-<span style="font-size: 1em; line-height: 1.6em;">Los métodos *Up() y Down()* tienen como objetivo que indiquemos el trabajo a realizar cuando paso de una migración a otra más actual o cuando vuelvo a la original. Por tanto usaremos *Up()* para crear los índices y *Down()* para eliminarlos.</span>
+Los métodos *Up() y Down()* tienen como objetivo que indiquemos el trabajo a realizar cuando paso de una migración a otra más actual o cuando vuelvo a la original. Por tanto usaremos *Up()* para crear los índices y *Down()* para eliminarlos.
 
 ```c
-namespace MiProyecto.Migrations { 
-    using System.Data.Entity.Migrations; 
+namespace MiProyecto.Migrations {
+    using System.Data.Entity.Migrations;
     public partial class CrearIndices : DbMigration {
-        public override void Up() {
-            CreateIndex("Tabla1", "Campo1", true, "IX_Campo1"); 
-            CreateIndex("Tabla2", "Campo2", true, "IX_Campo2"); 
-        } 
-        public override void Down() { 
-             DropIndex("Tabla1", "IX_Campo1");
-             DropIndex("Tabla2", "IX_Campo1"); 
-        } 
-    } 
+        public override void Up() {}
+            CreateIndex("Tabla1", "Campo1", true, "IX_Campo1");
+            CreateIndex("Tabla2", "Campo2", true, "IX_Campo2");
+        }
+        public override void Down() {
+             DropIndex("Tabla1", "IX_Campo1")
+             DropIndex("Tabla2", "IX_Campo1");
+        }
+    }
 }
 ```
 
-<span style="font-size: 1em; line-height: 1.6em;">Por último, sólo quedaría aplicar la migración mediante</span>
+Por último, sólo quedaría aplicar la migración mediante
 
-```
+```console
 PM> Update-Database
 ```
 
@@ -67,7 +68,5 @@ Sencillo no?
 
 Hasta pronto!!
 
-<span>  
-</span>
 
 

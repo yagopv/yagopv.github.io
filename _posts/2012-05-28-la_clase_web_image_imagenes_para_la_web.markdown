@@ -3,9 +3,10 @@ layout: post
 title: La clase WebImage. Imágenes para la Web
 date: '2012-05-28 07:58:27'
 tags:
-- multimedia
+- asp mvc
+categories:
+- .NET
 ---
-
 
 La clase WebImage representa a objetos que permiten manipular y mostrar imágenes en una página Web. Es una clase especialmente diseñada para este tipo de entornos y nos permite olvidarnos de la programación de complicados algoritmos para el manejo de imágenes.
 
@@ -43,7 +44,7 @@ Para crear una nueva imagen Web podemos hacerlo a través de los tres métodos c
 
 ***Marcas de agua***
 
-```javascript
+```c
 WebImage AddImageWatermark(
     string watermarkImageFilePath (o WebImage watermarkImage), 
     int width, 
@@ -66,7 +67,7 @@ Se permite orientar la marca de agua sobre la imagen mediante *horizontalAlign (
 
 Este método devuelve la imagen con la marca de agua incorporada.
 
-```javascript
+```c
 WebImage AddTextWatermark(string text, string fontColor, int fontSize, string fontStyle, string fontFamily, string horizontalAlign, string verticalAlign, int opacity, int padding )
 ```
 
@@ -74,7 +75,7 @@ Este método es similar a la marca de agua, pero en lugar de un imagen se crear�
 
 ***Duplicidad de imágenes***
 
-```javascript
+```c
 WebImage Clone()
 ```
 
@@ -82,7 +83,7 @@ WebImage Clone()
 
 ***Recorte de imágenes***
 
-```javascript
+```c
 WebImage Crop(int top, int left, int bottom, int right )
 ```
 
@@ -90,16 +91,16 @@ WebImage Crop(int top, int left, int bottom, int right )
 
 Existe un bug en esta clase ya que al crear una nueva *WebImage* se crear un borde en la parte de arriba e izquierda de la imagen con anchura de un pixel. Es por tanto necesario usar este método para recortar dicho borde.
 
-```javascript
+```c
 var image = new WebImage(path).Crop(1,1);
 ```
 
 ***Girar imágenes***
 
-```javascript
-WebImage FlipHorizontal() 
-WebImage FlipVertical() 
-WebImage RotateLeft() 
+```c
+WebImage FlipHorizontal()
+WebImage FlipVertical()
+WebImage RotateLeft()
 WebImage RotateRight()
 ```
 
@@ -107,7 +108,7 @@ Estos cuatro métodos pemiten voltear o rotar las imágenes retornando una nueva
 
 ***Obtener la imágen en bytes***
 
-```javascript
+```c
 byte[] GetBytes(string requestedFormat )
 ```
 
@@ -115,7 +116,7 @@ Este método es interesante ya que me devuelve un array de bytes representando l
 
 ***Obtener la imágen del contexto de la petición***
 
-```javascript
+```c
 static WebImage GetImageFromRequest( string postedFileName )
 ```
 
@@ -123,7 +124,7 @@ Este método permite obtener una instancia de *WebImage* del contexto de la peti
 
 ***Almacenamiento o envío de respuestas al navegador***
 
-```javascript
+```c
 WebImage Save( string filePath, string imageFormat, bool forceCorrectExtension )
 ```
 
@@ -131,7 +132,7 @@ El método *Save()* nos permitirá guardar una *WebImage* en el *filePath* indic
 
 *forceCorrectExtension*, cuando es *true* hace que se corrija la extensión de la imagen en caso de detectar que es incorrecta. Es decir, una imagen llamada *imagen.zip* que sea en realidad .jpg, se guardará como *imagen.zip.jpg.*
 
-```javascript
+```c
 WebImage Write(string requestedFormat )
 ```
 
@@ -139,7 +140,7 @@ WebImage Write(string requestedFormat )
 
 ***Reescalado***
 
-```javascript
+```c
 WebImage Resize( int width, int height, bool preserveAspectRatio, bool preventEnlarge )
 ```
 
@@ -180,7 +181,7 @@ public void GetThumbnail(int imageId, int width, int height)
 
 que usaremos de la siguiente forma en nuestra vista
 
-```javascript
+```html
 <img src="@Url.Action("GetThumbnail", new { imageId= item.Id, width = 100, height = 100 })" />
 ```
 

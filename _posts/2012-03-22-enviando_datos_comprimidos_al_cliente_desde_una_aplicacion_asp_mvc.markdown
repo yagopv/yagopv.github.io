@@ -22,7 +22,31 @@ La mayoría de navegadores actuales aceptan este tipo de codificación en las re
 
 Vamos a ver la implementación que utilicé
 
- public class EnableCompressionAttribute : ActionFilterAttribute { const CompressionMode compress = CompressionMode.Compress; public override void OnActionExecuting(ActionExecutingContext filterContext) { HttpRequestBase request = filterContext.HttpContext.Request; HttpResponseBase response = filterContext.HttpContext.Response; string acceptEncoding = request.Headers["Accept-Encoding"]; if (acceptEncoding == null) return; if (acceptEncoding.ToLower().Contains("gzip")) { response.Filter = new GZipStream(response.Filter, compress); response.AppendHeader("Content-Encoding", "gzip"); } else if (acceptEncoding.ToLower().Contains("deflate")) { response.Filter = new DeflateStream(response.Filter, compress); response.AppendHeader("Content-Encoding", "deflate"); } } }
+```c
+    public class EnableCompressionAttribute : ActionFilterAttribute
+    {
+        const CompressionMode compress = CompressionMode.Compress;
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            HttpRequestBase request = filterContext.HttpContext.Request;
+            HttpResponseBase response = filterContext.HttpContext.Response;
+            string acceptEncoding = request.Headers["Accept-Encoding"];
+            if (acceptEncoding == null)
+                return;
+            if (acceptEncoding.ToLower().Contains("gzip"))
+            {
+                response.Filter = new GZipStream(response.Filter, compress);
+                response.AppendHeader("Content-Encoding", "gzip");
+            }
+            else if (acceptEncoding.ToLower().Contains("deflate"))
+            {
+                response.Filter = new DeflateStream(response.Filter, compress);
+                response.AppendHeader("Content-Encoding", "deflate");
+            }
+        }
+    }
+
+```
 
 Esta sencilla implementación, genera un filtro de acción ***EnableCompression*** que hereda de ***ActionFilterAttributte***.
 
@@ -32,13 +56,20 @@ Básicamente, lo que hace es lo siguiente:
 
 2) Comprueba la cabecera ***“Accept-Encoding”*** que envía el navegador cliente
 
+```c
 string acceptEncoding = request.Headers["Accept-Encoding"];
+```
 
 3) Si la cabecera es null no hace nada
 
 4) En caso contrario, comprueba en primer lugar si acepta el tipo de compresión ***“gzip”*** para en ese caso comprimir mediante ***GZipStream()*** la respuesta
 
- if (acceptEncoding.ToLower().Contains("gzip")) { response.Filter = new GZipStream(response.Filter, compress); response.AppendHeader("Content-Encoding", "gzip"); }
+```c
+ if (acceptEncoding.ToLower().Contains("gzip")) {}
+    response.Filter = new GZipStream(response.Filter, compress);
+    response.AppendHeader("Content-Encoding", "gzip");
+}
+```
 
 5) Si no acepta ***“gzip”*** lo intenta con ***“deflate”*** , y en caso de aceptar este tipo comprime la respuesta mediante ***DeflateStream()***
 
@@ -46,8 +77,9 @@ string acceptEncoding = request.Headers["Accept-Encoding"];
 
 Una vez compilada la clase que contiene este fitro se usaría así en nuestros controladores
 
+```c
 [EnableCompression] public ActionResult Index() { return View() }
-
+```
 Con este simple filtro de acción, los tamaños de las respuesta se redujeron considerablemente.
 
 El tamaño se redujo de 30.6Kb a 6.1Kb. Cuando devuelve la respuesta comprimida se incluye el header *Content-Encoding* ***gzip***.

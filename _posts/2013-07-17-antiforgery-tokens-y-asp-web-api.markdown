@@ -3,9 +3,10 @@ layout: post
 title: AntiForgery tokens y ASP web API
 date: '2013-07-17 05:19:44'
 tags:
-- web-api
+- asp mvc
+categories:
+- .NET
 ---
-
 
 En ASP MVC la gestión del mecanismo de protección contra ataque CSRF es muy sencillo de utilizar. En la Web API no tanto.
 
@@ -15,7 +16,7 @@ En las aplicaciones ASP MVC, el mecanismo de protección contra ataques CSRF (Cr
 @Html.AntiForgeryToken()
 ```
 
-<span style="font-size: 1em; line-height: 1.6em;">… y a continuación decorar el método que gestiona el POST del formulario con:</span>
+… y a continuación decorar el método que gestiona el POST del formulario con:
 
 ```c
 [ValidateAntiForgeryToken] public ActionResult MiAccion() { }

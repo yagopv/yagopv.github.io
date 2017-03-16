@@ -8,7 +8,6 @@ categories:
 - .NET
 ---
 
-
 El filtro que vamos a comentar en este post permite restringir el acceso a ciertas url de nuestr dominio para que no puedan se llamadas “desde fuera” de nuestra aplicación.
 
 El atributo [[ChildActionOnly]](http://msdn.microsoft.com/en-us/library/system.web.mvc.childactiononlyattribute.aspx "El  filtro ChildActionOnly restringe el acceso a ciertas url") restringe el acceso a las url marcadas con este atributo desde fuera de nuestro código.

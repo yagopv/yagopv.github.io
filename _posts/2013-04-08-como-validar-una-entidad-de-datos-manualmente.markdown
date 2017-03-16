@@ -2,6 +2,10 @@
 layout: post
 title: Cómo validar una entidad de datos manualmente
 date: '2013-04-08 06:44:23'
+tags:
+- entity framework
+categories:
+- .NET
 ---
 
 
@@ -19,7 +23,7 @@ Nuestras entidades de datos normalmente se validarán usando **DataAnnotations**
 
 Esta clase podría ser algo así
 
-```javascript
+```c
 public class MyEntityValidator     
 {
     void SetValidatableObjectErrors<TEntity>(TEntity item, List<string> errors) where TEntity : class
