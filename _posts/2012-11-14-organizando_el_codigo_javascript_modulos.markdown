@@ -3,7 +3,9 @@ layout: post
 title: Organizando el código javascript. Módulos
 date: '2012-11-14 05:00:01'
 tags:
-- patrones
+- patterns
+categories:
+- Frontend
 ---
 
 

@@ -5,7 +5,7 @@ date: '2013-09-13 04:45:16'
 tags:
 - error handling
 categories:
-- JavaScript
+- Frontend
 ---
 
 

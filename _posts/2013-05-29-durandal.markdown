@@ -5,7 +5,7 @@ date: '2013-05-29 07:26:51'
 tags:
 - durandal
 categories:
-- JavaScript
+- Frontend
 ---
 
 

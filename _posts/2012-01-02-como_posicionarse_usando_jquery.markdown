@@ -5,7 +5,7 @@ date: '2012-01-02 21:51:05'
 tags:
 - jquery
 categories:
-- JavaScript
+- Frontend
 ---
 
 

@@ -6,7 +6,7 @@ date: '2012-05-24 09:33:30'
 tags:
 - libraries
 categories:
-- JavaScript
+- Frontend
 ---
 
 

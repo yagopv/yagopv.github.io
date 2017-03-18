@@ -5,7 +5,7 @@ date: '2012-05-02 09:50:52'
 tags:
 - patterns
 categories:
-- JavaScript
+- Frontend
 ---
 
 En javascript es posible crear clases como en cualquier otro lenguaje orientado a objetos pero la forma de hacerlo difiere en gran medida del resto de las plataformas orientadas a objetos como .NET o Java.

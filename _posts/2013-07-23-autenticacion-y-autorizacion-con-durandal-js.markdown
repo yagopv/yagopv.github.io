@@ -5,7 +5,7 @@ date: '2013-07-23 07:32:07'
 tags:
 - Durandal
 categories:
-- JavaScript
+- Frontend
 ---
 
 En las últimas semanas he estado intentando crear una plantilla de inicio para aplicaciones Web API/Durandal que incluya el sistema de autenticación y autorización de la plantilla que incluye Visual Studio 2012 para ASP MVC 4 (Internet).

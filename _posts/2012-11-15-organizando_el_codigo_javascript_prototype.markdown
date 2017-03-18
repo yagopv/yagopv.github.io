@@ -5,7 +5,7 @@ date: '2012-11-15 05:38:32'
 tags:
 - patterns
 categories:
-- JavaScript
+- Frontend
 ---
 
 

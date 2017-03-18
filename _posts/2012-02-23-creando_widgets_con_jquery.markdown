@@ -6,7 +6,7 @@ tags:
 - jquery
 - jquery ui
 categories:
-- Frontend Development
+- Frontend
 ---
 
 jQuery UI nos proporciona una forma ágil y sencilla de construir componentes asociables a elementos de DOM mediante la factoría de widgets.

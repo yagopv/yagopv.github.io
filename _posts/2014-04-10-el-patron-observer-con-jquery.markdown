@@ -5,7 +5,7 @@ date: '2014-04-10 14:38:48'
 tags:
 - patterns
 catgories:
-- JavaScript
+- Frontend
 ---
 
 

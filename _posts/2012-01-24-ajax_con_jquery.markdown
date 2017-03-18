@@ -5,7 +5,7 @@ date: '2012-01-24 15:00:40'
 tags:
 - jquery
 categories:
-- JavaScript
+- Frontend
 ---
 
 Una de las funcionalidades más importantes que nos ofrece jquery es la simplificación de las llamadas ajax mediante una serie de métodos y eventos.

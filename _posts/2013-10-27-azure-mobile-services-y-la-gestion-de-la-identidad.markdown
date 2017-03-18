@@ -5,7 +5,7 @@ date: '2013-10-27 07:39:04'
 tags:
 - azure
 categories:
-- Cloud Computing
+- Cloud
 ---
 
 

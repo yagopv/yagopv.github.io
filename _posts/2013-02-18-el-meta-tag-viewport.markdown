@@ -5,7 +5,7 @@ date: '2013-02-18 06:46:36'
 tags:
 - responsive design
 categories:
-- HTML
+- Frontend
 ---
 
 
