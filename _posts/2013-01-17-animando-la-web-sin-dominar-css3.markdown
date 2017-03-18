@@ -2,13 +2,16 @@
 layout: post
 title: Animando la Web (...sin dominar CSS3...)
 date: '2013-01-17 07:06:47'
+tags:
+- animaciones
+categories:
+- Frontend
 ---
 
 
 El auge de CSS3 abre un nuevo mundo de posibilidades para los diseñadores permitiendo crear experiencias de usuario mucho más ricas de lo que estábamos acostumbrados a ver.
 
-Es muy complicado dominar todos los frentes cuando se trata de encarar un proyecto web. <span style="font-size: 1em; line-height: 1.6em;">CSS, HTML, lenguajes servidor, javascript y todas sus librerías (jquery, underscores, backbone, knockout) … etc.  
-</span>
+Es muy complicado dominar todos los frentes cuando se trata de encarar un proyecto web. CSS, HTML, lenguajes servidor, javascript y todas sus librerías (jquery, underscores, backbone, knockout) … etc.
 
 Desde luego, no es tarea fácil, por lo que en muchos casos acabamos teniendo un mayor grado de conocimiento en el lado del cliente o bien en el lado del servidor.
 
@@ -22,11 +25,9 @@ Se trata de la librería de clases CSS [animate.css](http://daneden.me/animate/ 
 
 ### Animate.css
 
-Dice su autor …
+Dice su autor ...
 
-```
-animate.css is a bunch of cool, fun, and cross-browser animations for you to use in your projects. Great for emphasis, home pages, sliders, and general just-add-water-awesomeness.
-```
+>animate.css is a bunch of cool, fun, and cross-browser animations for you to use in your projects. Great for emphasis, home pages, sliders, and general just-add-water-awesomeness.
 
 … efectivamente, este proyecto nos ofrece una hoja de estilos que simplemente define una colección de clases que nos proporcionan diferentes efectos tan solo con aplicarlos a un elemento HTML.
 

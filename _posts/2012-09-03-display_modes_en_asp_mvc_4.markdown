@@ -2,8 +2,11 @@
 layout: post
 title: Display Modes en ASP MVC 4
 date: '2012-09-03 07:20:16'
+tags:
+- asp mvc
+categories:
+- .NET
 ---
-
 
 Una de las características más interesantes que llega con ASP MVC 4 es la facilidad que ofrece para desarrollar aplicaciones móviles en paralelo a las de escritorio.
 
@@ -17,54 +20,52 @@ Cada una de las vistas, la diferenciaremos de las otras mediante la inclusión d
 
 Supongamos que en nuestra aplicación queremos crear vistas personalizables para los tres tipos de dispositivos comunes, escritorio, tablets y móviles. Hemos de crear dos Display Modes nuevos a los que llamaremos **Tablet** y **Movil** (El escritorio cogerá las vistas por defecto). Para ello debemos modificar ***DisplayModeProvider*** y añadir los dos nuevos modos de visualización, además de indicar cómo reconocerlos una vez se recibe una petición.
 
-Vamos a usar el ***UserAgent***para realizar esta distinción. En el método *Application_Start()* añadimos el siguiente código
+Vamos a usar el ***UserAgent*** para realizar esta distinción. En el método *Application_Start()* añadimos el siguiente código
 
-```javascript
+```c
 using System.Web.WebPages;
 
-protected void Application_Start() { 
+protected void Application_Start() {
 
-	AreaRegistration.RegisterAllAreas(); 
-	FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters); 
-	RouteConfig.RegisterRoutes(RouteTable.Routes); 
-	BundleConfig.RegisterBundles(BundleTable.Bundles); 
-	DisplayModeProvider.Instance.Modes.Insert(0, 
-		new DefaultDisplayMode("Phone") 
-		{
-			ContextCondition = (context => ( 
-			(context.GetOverriddenUserAgent() != null) &amp;&amp; 
-			( 
-				(context.GetOverriddenUserAgent().IndexOf("iPhone", 
-					StringComparison.OrdinalIgnoreCase) >= 0) || 
-				(context.GetOverriddenUserAgent().IndexOf("iPod", 
-					StringComparison.OrdinalIgnoreCase) >= 0) || 
-				(context.GetOverriddenUserAgent().IndexOf("Droid", 
-					StringComparison.OrdinalIgnoreCase) >= 0) || 
-				(context.GetOverriddenUserAgent().IndexOf("Blackberry",
-					StringComparison.OrdinalIgnoreCase) >= 0) || 
-				(context.GetOverriddenUserAgent() .StartsWith("Blackberry", 
-					StringComparison.OrdinalIgnoreCase)) 
-				) 
-			)) 
-		}); 
-		
-	DisplayModeProvider.Instance.Modes.Insert(0, 
-		new DefaultDisplayMode("Tablet") 
-		{ 
-			ContextCondition = (context => ( 
-			(context.GetOverriddenUserAgent() != null) &amp;&amp; 
-			( 
-				(context.GetOverriddenUserAgent().IndexOf("iPad", 
-					StringComparison.OrdinalIgnoreCase) >= 0) || 
-				(context.GetOverriddenUserAgent().IndexOf("Playbook", 
-					StringComparison.OrdinalIgnoreCase) >= 0) || 
-				(context.GetOverriddenUserAgent() .IndexOf("Transformer", 
-					StringComparison.OrdinalIgnoreCase) >= 0) || 
-				(context.GetOverriddenUserAgent().IndexOf("Xoom", 
-					StringComparison.OrdinalIgnoreCase) >= 0) 
-				) 
-			)) 
-		}); 
+  AreaRegistration.RegisterAllAreas();
+  FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+  RouteConfig.RegisterRoutes(RouteTable.Routes);
+  BundleConfig.RegisterBundles(BundleTable.Bundles);
+  DisplayModeProvider.Instance.Modes.Insert(0,
+    new DefaultDisplayMode("Phone") {
+      ContextCondition = (context => (
+        (context.GetOverriddenUserAgent() != null) & amp; & amp;
+        (
+          (context.GetOverriddenUserAgent().IndexOf("iPhone",
+            StringComparison.OrdinalIgnoreCase) >= 0) ||
+          (context.GetOverriddenUserAgent().IndexOf("iPod",
+            StringComparison.OrdinalIgnoreCase) >= 0) ||
+          (context.GetOverriddenUserAgent().IndexOf("Droid",
+            StringComparison.OrdinalIgnoreCase) >= 0) ||
+          (context.GetOverriddenUserAgent().IndexOf("Blackberry",
+            StringComparison.OrdinalIgnoreCase) >= 0) ||
+          (context.GetOverriddenUserAgent().StartsWith("Blackberry",
+            StringComparison.OrdinalIgnoreCase))
+        )
+      ))
+    });
+
+  DisplayModeProvider.Instance.Modes.Insert(0,
+    new DefaultDisplayMode("Tablet") {
+      ContextCondition = (context => (
+        (context.GetOverriddenUserAgent() != null) & amp; & amp;
+        (
+          (context.GetOverriddenUserAgent().IndexOf("iPad",
+            StringComparison.OrdinalIgnoreCase) >= 0) ||
+          (context.GetOverriddenUserAgent().IndexOf("Playbook",
+            StringComparison.OrdinalIgnoreCase) >= 0) ||
+          (context.GetOverriddenUserAgent().IndexOf("Transformer",
+            StringComparison.OrdinalIgnoreCase) >= 0) ||
+          (context.GetOverriddenUserAgent().IndexOf("Xoom",
+            StringComparison.OrdinalIgnoreCase) >= 0)
+        )
+      ))
+    });
 }
 ```
 
@@ -74,25 +75,25 @@ El código anterior usa el UserAgent para evaluar de qué dispositivo viene la p
 
 Cuando llega una petición del tipo …
 
-```
+```javascript
 /Aplicacion/Controlador/
 ```
 
 … si el dispositivo de entrada es un PC se retorna la vista …
 
-```
+```javascript
 /Views/Controlador/Index.cshtml
 ```
 
 … si el dispositivo es un móvil …
 
-```
+```javascript
 /Views/Controlador/Index.Phone.cshtml
 ```
 
 … y si fuera un tablet …
 
-```
+```javascript
 /Views/Controlador/Index.Tablet.cshtml
 ```
 

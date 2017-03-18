@@ -3,9 +3,10 @@ layout: post
 title: Bindings de texto usando knockout con jquerymobile
 date: '2012-09-27 04:54:00'
 tags:
-- binding
+- knockout
+categories:
+- Frontend
 ---
-
 
 Cuando usas los bindings de texto de knockout en combinación con jquerymobile puedes encontrarte con algún problemilla …
 
@@ -17,25 +18,25 @@ Para arreglar esto, lo que finalmente hice es crear un custom binding de texto m
 
 ```javascript
 ko.bindingHandlers.jqmtext = {
-    update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        var value = valueAccessor();
-        var valueUnwrapped = ko.utils.unwrapObservable(value);
-        $(element).find(".ui-btn-text").text(valueUnwrapped);
-    }
+  update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+    var value = valueAccessor();
+    var valueUnwrapped = ko.utils.unwrapObservable(value);
+    $(element).find(".ui-btn-text").text(valueUnwrapped);
+  }
 };
 ```
 
 Una vez que tengo el binding definido, ya puedo utilizarlo en mi código html sin problemas y mi interfaz dejará de “romperse” …
 
-```javascript
+```html
 //Collapsibles
 <div data-role="collapsible">
-    <h2 data-bind="jqmtext : mitexto"></h2>
-    ....
+  <h2 data-bind="jqmtext : mitexto"></h2>
+  ....
 </div>
 
 //Buttons
-<a href="#" data-role="button" data-bind="jqmtext : mitexto"></a>	
+<a href="#" data-role="button" data-bind="jqmtext : mitexto"></a>
 ```
 
 

@@ -3,9 +3,10 @@ layout: post
 title: Problemas con los verbos PUT y DELETE en la  ASP MVC Web API
 date: '2012-06-12 03:55:43'
 tags:
-- errores-y-excepciones
+- asp mvc
+categories:
+- .NET
 ---
-
 
 Es posible que al usar la Web API con Visual Studio y tratar de procesar peticiones mediante los verbos PUT o DELETE el servidor me indique que el recurso no se ha encontrado (404 Not Found) o que dichos verbos no están permitidos (405 Not Allowed).
 
@@ -13,7 +14,7 @@ Es posible que al intentar trabajar con la *Web API* en Visual Studio experiment
 
 En mi caso, con Visual Studio 2012, estos problemas se resolvieron incluyendo las siguientes líneas en el *web.config …*
 
-```
+```xml
 <system.webserver>
     <modules runallmanagedmodulesforallrequests="true">
     <remove name="WebDAVModule"></remove></modules></system.webserver>

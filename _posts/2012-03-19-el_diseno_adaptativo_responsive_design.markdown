@@ -3,7 +3,9 @@ layout: post
 title: El diseño adaptativo (Responsive design)
 date: '2012-03-19 15:20:02'
 tags:
-- responsive-design
+- responsive design
+categories:
+- Frontend
 ---
 
 
@@ -26,12 +28,9 @@ Existen múltiples sistemas de este tipo, el más popular sin duda es el creado 
 
 La base es tomar como referencia una página de anchura 960 pixels y dividirla en N columnas, 10, 12, 16, 24 , etc. Las columnas tendrán huecos entre ellas con una longitud fija.
 
-***![Grid layout](http://img.technospot.net/gird-system-sample.png "Grid layout")***
+![Grid layout](http://img.technospot.net/gird-system-sample.png "Grid layout")
 
-***  
-***
-
-Como vemos en la imagen (En este caso de un grid de 940px), las lineas verticales serían las columnas y entre cada columna existe un hueco. También hay una serie de cajas horizontales que serían nuestros **<div>** y que ocuparían un ancho basado en un número de columnas, este número será el que consideremos necesario para mostrar cada componente.
+Como vemos en la imagen (En este caso de un grid de 940px), las lineas verticales serían las columnas y entre cada columna existe un hueco. También hay una serie de cajas horizontales que serían nuestros div y que ocuparían un ancho basado en un número de columnas, este número será el que consideremos necesario para mostrar cada componente.
 
 Por tanto, haciendo cálculos y dependiendo del número de columnas que escojamos, rápidamente obtenemos el ancho de cada columna y hueco entre ellas con lo que lo podemos definir una estructura de manera bastante rápida.
 
@@ -43,15 +42,56 @@ Las hojas de estilo del** Framework 960**, como comentaba, tienen una serie de c
 
 Supongamos la hoja de estilos de un grid de 12 columnas… la clase **.grid_1** ocupa 1 columna, la clase **.grid_2** ocupa dos columnas + el hueco que hay entre ellas, la clase **.grid_3**, tres columnas y dos huecos y así hasta la clase **.grid_12** que ocuparía 12 columnas, el ancho total.
 
-Las clases **._grid_X ** son las clases principales en el sistema 960, pero la hoja de estilos va mucho más allá, ya que contiene otra serie de utilidades para ayudarnos en nuestro diseño. Hay clases para añadir espacio antes de cada columna (.***preffix_X***), otras para quitar espacio delante de una columna (***.suffix_X***), también tenemos otras que ocupan todo el ancho y actúan como contenedor (***.container_12***), otras que añaden huecos entre columnas …etc.
+Las clases **._grid_X** son las clases principales en el sistema 960, pero la hoja de estilos va mucho más allá, ya que contiene otra serie de utilidades para ayudarnos en nuestro diseño. Hay clases para añadir espacio antes de cada columna (.***preffix_X***), otras para quitar espacio delante de una columna (.***suffix_X***), también tenemos otras que ocupan todo el ancho y actúan como contenedor (.***container_12***), otras que añaden huecos entre columnas ...etc.
 
 A partir de este grid abstracto, si yo quiero dividir mi diseño por ejemplo en una cabecera que ocupe todo el ancho, a continuación el contenido más una barra lateral, y por último un pié de página con todo el ancho, podría estructurarlo de la siguiente manera según las clases del grid 960
 
-<div class="container_12"><div class="grid_12"> //Cabecera </div><div class="grid_8"> //Contenido principal </div><div class="grid_4"> //Barra lateral </div><div class="grid_12"> //Pié de página </div></div>
+```html
+<div class="container_12">
+  <div class="grid_12">
+    //Cabecera
+  </div>
+  <div class="grid_8">
+    //Contenido principal</div>
+  <div class="grid_4">
+    //Barra lateral
+  </div>
+  <div class="grid_12">
+    //Pié de página
+  </div>
+</div>
+````
 
 Las clases de la hoja de estilos de 960 serían las siguientes (Recordad que ya vienen dadas)
 
-.container_12 { margin-left: auto; margin-right: auto; width: 960px; } .grid_4, .grid_8, .grid_12 { display: inline; float: left; margin-left: 10px; margin-right: 10px; } .container_12 .grid_4 { width: 300px; } .container_12 .grid_8 { width: 620px; } .container_12 .grid_12 { width: 940px; }
+```css
+.container_12 {
+  margin-left: auto;
+  margin-right: auto;
+  width: 960px;
+}
+
+.grid_4,
+.grid_8,
+.grid_12 {
+  display: inline;
+  float: left;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.container_12 .grid_4 {
+  width: 300px;
+}
+
+.container_12 .grid_8 {
+  width: 620px;
+}
+
+.container_12 .grid_12 {
+  width: 940px;
+}
+````
 
 Con esto ya tendríamos montado el esqueleto de nuestra página. Las propiedades ***float:left*** son las que hacen funcionar el sistema, ya que esta propiedad hace “flotar” las cajas hacia la izquierda y cuando se quedan sin espacio comienza a mostrarlas en la fila siguiente. Tal y como hemos montado nuestro esqueleto, el primer bloque ocupa el ancho total con lo que el siguiente bloque comienza en la segunda fila. Los bloques dos y tres se muestran por tanto en la segunda fila y cuando se quedan sin espacio se pasa a la tercera fila para mostrar el pié de página.
 
@@ -66,7 +106,7 @@ Por tanto, los sistemas de grid, son en definitiva **una ayuda** para la constru
 
 En mayo de 2010, Ethan Marcotte publicó un artículo llamado “[Responsive Web Design](http://www.alistapart.com/articles/responsive-web-design/)“. El artículo habla de la necesidad de construir sitios web adaptados a la web actual, es decir, sitios que se puedan visualizar en los equipos de escritorio, tablets, móviles, etc, de manera correcta y adaptados a las particularidades de cada uno de los dispositivos. Esto, se debería intentar conseguir sin construir sitios diferentes para cada uno de los dispositivos, sino que un único sitio web “inteligente” debería adaptar su diseño dependiendo del tipo de dispositivo en el que se esté mostrando.
 
-Una vez comprendido el concepto de **grid** y de** diseño adaptativo**, lo primero que no me casaba es que el sistema 960 está construído basado en clases de longitud fija y por tanto, ¿Cómo se puede adaptar a cualquier tipo de dispositivo un tamaño fijo? … parece que no tiene mucho sentido y lo ideal sería utilizar tamaños basados en porcentajes ¿no?.
+Una vez comprendido el concepto de **grid** y de **diseño adaptativo**, lo primero que no me casaba es que el sistema 960 está construído basado en clases de longitud fija y por tanto, ¿Cómo se puede adaptar a cualquier tipo de dispositivo un tamaño fijo? … parece que no tiene mucho sentido y lo ideal sería utilizar tamaños basados en porcentajes ¿no?.
 
 En la web oficial de [**960 Grid System**](http://adapt.960.gs/ "Adaptación de páginas basadas en 960"), se puede ver que los autores definieron un plugin javascript (***adapt.js***) que lo que hace es modificar el tamaño del grid cuando reescalo la pantalla (imitando el comportamiento basado en porcentajes). Este reescalado se basa en apuntar a diferentes hojas de estilo en función del tamaño que se necesita, existiendo concretamente una hoja de estilos para móviles que muestra la web en una sólo columna y N filas.
 
@@ -87,13 +127,13 @@ Digo lo de ¿framework? precisamente porque la hoja de estilos se ofrece como un
 
 Pero ¿Qué es una **media query**?
 
-Una **media query** permite mediante una sintaxis sencilla y clara definir estilos en nuestra hoja de estilos para diferentes resoluciones**** mediante herencia, es decir, definiré los estilos por defecto y luego una serie de media queries que modifiquen los estilos por defecto necesarios para mostrar nuestro sitio a distintas resoluciones de manera que las **media queries** de nivel inferior modifican los estilos de las definidas en niveles superiores y heredan el resto de elementos no redefinidos.
+Una **media query** permite mediante una sintaxis sencilla y clara definir estilos en nuestra hoja de estilos para diferentes resoluciones mediante herencia, es decir, definiré los estilos por defecto y luego una serie de media queries que modifiquen los estilos por defecto necesarios para mostrar nuestro sitio a distintas resoluciones de manera que las **media queries** de nivel inferior modifican los estilos de las definidas en niveles superiores y heredan el resto de elementos no redefinidos.
 
 En la hoja de estilos Less, se definen 4 **media queries** que modifican los estilos por defecto del sitio. Una para Tablets, otra para dispositivos móviles, otra para dispositivos móviles con pantalla ancha y una última para dispositivos con pantalla de tipo Retina (como el iPhone 4).
 
 Por supuesto, podemos añadir todas las **media queries** que queramos, pero con esto creo que sería suficiente como punto de partida.
 
-Las media queries forman parte de **CSS 3**, con lo que por supuesto no tendrán efecto en navegadores antiguos que no soporten la nueva sintaxis. De toda maneras existen plugins que permiten capear con este “defecto” como por ejemplo ***respond.js ***que nos permite activar esta característica en navegadores antiguos.
+Las media queries forman parte de **CSS 3**, con lo que por supuesto no tendrán efecto en navegadores antiguos que no soporten la nueva sintaxis. De toda maneras existen plugins que permiten capear con este “defecto” como por ejemplo ***respond.js*** que nos permite activar esta característica en navegadores antiguos.
 
 En fin, después de hablar de todos estos conceptos, la mejor manera de aclararlo todo es mediante un ejemplo que vamos a ver [en este otro post](../../../Post/GetPostByCode/creando_una_pagina_web_mediante_dise%C3%B1o_adaptativo_%28responsive_design%29 "Creando un página web mediante diseño adaptativo (responsive design)") y que nos llevará a crear una página web [como esta](../../../Links/FlexibleLayout/flexiblelayout.html "Diseño adaptativo") (Modificad el tamaño de la ventana del navegador para ver como la página adapta sus contenidos a diferentes resoluciones), os invito a leerlo !!
 
