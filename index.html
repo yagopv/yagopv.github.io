@@ -32,21 +32,21 @@ layout: default
         </article>
     {% endfor %}
     <!-- Pagination links -->
-    <div class="pagination">
-    {% if paginator.previous_page %}
-        <a href="{{ paginator.previous_page_path }}" class="previous">
-            <svg class="icon icon-angle-down">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-down"></use>
-            </svg>
-        </a>
-    {% endif %}
 
-    {% if paginator.next_page %}
-        <a href="{{ paginator.next_page_path }}" class="next">
-            <svg class="icon icon-angle-down">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-angle-down"></use>
-            </svg>
-        </a>
-    {% endif %}
+    <div class="pagination">
+        <div class="counter"></div>    
+        <div class="counter">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+
+        {% if paginator.previous_page %}
+            <a href="{{ paginator.previous_page_path }}" class="paginate left"><i></i><i></i></a>
+        {% else %}
+            <a data-state="disabled" class="paginate left"></a>
+        {% endif %}
+
+        {% if paginator.next_page %}
+            <a href="{{ paginator.next_page_path }}"" class="paginate right"><i></i><i></i></a>
+        {% else %}
+            <a data-state="disabled" class="paginate right"></a>
+        {% endif %}
     </div>
 </main>
