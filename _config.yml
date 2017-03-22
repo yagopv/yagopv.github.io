@@ -5,14 +5,15 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://yagopv.github.io" # the base hostname & protocol for your site e.g. http://yagopv.github.io
 
 # User settings
+name: Yago Pérez Vázquez
 username: yagopv
-user_description: Web developer
+user_description: Frontend developer
 user_title: Yago Pérez Vázquez
 email: yagoperez@outlook.com
 twitter_username: yperezva
 github_username:  yagopv
-gplus_username:  lorem_ipsum
-disqus_username: lorem_ipsum
+gplus_username:  yawette
+disqus_username: yagopv
 
 # Build settings
 markdown: kramdown

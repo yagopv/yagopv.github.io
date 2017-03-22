@@ -1,10 +1,10 @@
 .pagination {
-    margin-top: 30px;
+    margin-top: 60px;
     position: relative;
 }
 .paginate {
   position: relative;
-  margin: 10px;
+  margin: 0 50px;
   width: 50px;
   height: 50px;
   cursor: pointer;
@@ -18,10 +18,10 @@
   position: absolute;
   top: 40%;
   left: 0;
-  width: 50px;
-  height: 5px;
+  width: 20px;
+  height: 4px;
   border-radius: 2.5px;
-  background: #000;
+  background: #222;
   transition: all 0.15s ease;
 }
 .paginate.left {
@@ -48,20 +48,20 @@
 .paginate.left:active i:last-child {
   transform: translate(1px, 1px) rotate(-25deg);
 }
-.paginate.left[data-state=disabled] i:first-child {
-  transform: translate(-5px, 0) rotate(0deg);
+.paginate.left[data-state=disabled] {
+  background: #000;
+  transform: scale3d(0.7,0.1,1);
+  opacity: .8;
 }
-.paginate.left[data-state=disabled] i:last-child {
-  transform: translate(-5px, 0) rotate(0deg);
+
+.paginate.right[data-state=disabled] {
+  background: #000;
+  transform: scale3d(0.7,0.1,1);
+  opacity:1;
 }
-.paginate.left[data-state=disabled]:hover i:first-child {
-  transform: translate(-5px, 0) rotate(0deg);
-}
-.paginate.left[data-state=disabled]:hover i:last-child {
-  transform: translate(-5px, 0) rotate(0deg);
-}
+
 .paginate.right {
-  left: 58%;
+  left: 60%;
 }
 .paginate.right i {
   transform-origin: 100% 50%;
@@ -107,8 +107,8 @@
   width: 100%;
   top: 50%;
   margin-top: -15px;
-  font-size: 30px;
+  font-size: 20px;
   font-family: Helvetica, sans-serif;
   text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
-  color: #000;
+  color: #222;
 }
