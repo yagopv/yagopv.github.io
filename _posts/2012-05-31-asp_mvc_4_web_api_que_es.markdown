@@ -3,9 +3,10 @@ layout: post
 title: ASP MVC 4 Web API. ¿Qué es?
 date: '2012-05-31 07:30:53'
 tags:
-- rest
+- asp mvc
+categories:
+- .NET
 ---
-
 
 Una de las principales novedades de la nueva versión de ASP MVC 4 es la Web API, mediante la cual podemos crear una auténtica capa de servicios REST de manera muy similar a como veníamos desarrollando los controladores hasta ahora.
 

@@ -2,8 +2,12 @@
 layout: post
 title: El patrón Repositorio con Entity Framework Code First
 date: '2012-08-06 03:50:06'
+tags:
+- asp mvc
+- entity framework
+categories:
+- .NET
 ---
-
 
 En este post vamos a implementar un Repositorio genérico mediante Entity Framework Code First y crearemos Repositorios específicos con operaciones especiales para las entidades.
 

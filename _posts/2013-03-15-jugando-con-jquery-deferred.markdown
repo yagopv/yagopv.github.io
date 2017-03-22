@@ -95,7 +95,7 @@ async.fail(function() {
 });
 ```
 
-Hay otro método de gran utilidad en el api del objeto $.Deferred() y no es otro que ***$.when() ***que permite sincronizar la resolución o rechazo de varias deferred. Es decir, aplicandolo usando ajax:
+Hay otro método de gran utilidad en el api del objeto $.Deferred() y no es otro que ***$.when()*** que permite sincronizar la resolución o rechazo de varias deferred. Es decir, aplicandolo usando ajax:
 
 ```javascript
 $.when($.get("url1"), $.get("url2"), $.get("url3"))  

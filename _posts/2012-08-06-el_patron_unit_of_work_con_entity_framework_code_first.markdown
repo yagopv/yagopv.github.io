@@ -2,6 +2,11 @@
 layout: post
 title: El patrón Unit of Work con Entity Framework Code First
 date: '2012-08-06 03:50:06'
+tags:
+- asp mvc
+- entity framework
+categories:
+- .NET
 ---
 
 

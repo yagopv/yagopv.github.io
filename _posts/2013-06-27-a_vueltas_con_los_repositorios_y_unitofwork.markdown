@@ -2,6 +2,11 @@
 layout: post
 title: A vueltas con los Repositorios y UnitOfWork
 date: '2013-06-27 02:07:00'
+tags:
+- asp mvc
+- entity framework
+categories:
+- .NET
 ---
 
 
@@ -308,7 +313,7 @@ public class AccountController : Controller
 }
 ```
 
-Como podemos ver, inyectando IUnitOfWork ya nos daría acceso a todos los repositorios y a la operación *Save() *para persistir los cambios en el contexto de trabajo. En la implementación que mostré en los post que comento al principio, se inyectarían cada uno de los repositorios necesarios, que a su vez tendrían acceso a la unidad de trabajo definidida en su interior.
+Como podemos ver, inyectando IUnitOfWork ya nos daría acceso a todos los repositorios y a la operación *Save()* para persistir los cambios en el contexto de trabajo. En la implementación que mostré en los post que comento al principio, se inyectarían cada uno de los repositorios necesarios, que a su vez tendrían acceso a la unidad de trabajo definidida en su interior.
 
 
 ## Ya está

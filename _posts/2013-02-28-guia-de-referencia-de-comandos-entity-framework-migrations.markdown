@@ -3,11 +3,10 @@ layout: post
 title: Referencia de comandos para Entity Framework Migrations
 date: '2013-02-28 10:15:28'
 tags:
-- bases-de-datos
-- nuget
-- visual-studio
+- visual studio
+categories:
+- Tools
 ---
-
 
 En este artículo vamos a listar y ver los diferentes comandos que tenemos disponibles para manejar nuestra base de datos usando Entity Framework Migrations.
 
