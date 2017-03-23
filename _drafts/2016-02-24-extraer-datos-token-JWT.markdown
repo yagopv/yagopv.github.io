@@ -1,7 +1,12 @@
 ---
-published: false
+layout: post
+title: Extraer datos de un token JWT
+date: '2016-02-24 13:44:16'
+tags:
+- snippets
+categories:
+- JavaScript
 ---
-## Extraer datos de un token JWT
 
 A veces necesitamos extraer los datos públicos de un token JWT. Podemos hacerlo de forma sencilla con una función como esta
 
