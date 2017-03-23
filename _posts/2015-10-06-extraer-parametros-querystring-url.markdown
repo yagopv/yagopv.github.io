@@ -40,3 +40,5 @@ Esta función generarará un objeto `QueryString` a través del cual podremos ac
 QueryString.param1 === 'parameter1'; //true
 QueryString.param2 === 'parameter2'; //true
 ```
+
+Hasta pronto!!

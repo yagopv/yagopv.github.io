@@ -20,3 +20,5 @@ const parseJWT(token) => {
    return JSON.parse(decodeURIComponent(escape(window.atob(claims))));
 }
 ```
+
+Hasta pronto!!
