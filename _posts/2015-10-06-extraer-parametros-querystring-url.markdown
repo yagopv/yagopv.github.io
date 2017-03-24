@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Extraer datos de un token JWT
-date: '2016-02-24 13:44:16'
+title: Extraer parámetros del querystring de una URL
+date: '2016-08-19 13:44:16'
 tags:
 - snippets
 categories:
