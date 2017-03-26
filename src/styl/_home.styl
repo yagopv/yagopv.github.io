@@ -28,11 +28,14 @@
         +below(cut)
             stack()
         a
-            text-decoration none
+            text-decoration none !important
+            font-weight 600
+            &:hover
+                opacity 0.6
         .date
             color main
         .post-title
-            color black
+            color main
             font-size rem(32px)
             +below(cut)
                 text-align center
