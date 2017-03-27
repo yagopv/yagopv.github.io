@@ -97,6 +97,7 @@ table
 
 .tag-title
     secondaryFont()
+    color main
     font-size rem(36px)
     margin-top rem(60px)
     center(rem(800px))
@@ -119,6 +120,13 @@ table
         &:hover
             color hover
             border-bottom 1px solid hover
+        span
+            &:first-child
+                max-width 30em
+                display inline-block
+                white-space nowrap
+                text-overflow ellipsis
+                overflow hidden
     .entry-date
         float right
         +below(cut)
