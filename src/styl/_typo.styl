@@ -4,26 +4,19 @@ a
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
-  font-weight: 300;
-  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v10/DXI1ORHCpsQm3Vp6mXoaTRampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v13/MTP_ySUJH_bn48VBG8sNShampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v13/cJZKeOuBrn4kERxqtaUH3VtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
 }
 
 @font-face {
-  font-family: 'Open Sans';
+  font-family: 'Quicksand';
   font-style: normal;
-  font-weight: 800;
-  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(https://fonts.gstatic.com/s/opensans/v10/EInbV5DfGHOiMmvb1Xr-hiYtBUPDK3WL7KRKS_3q7OE.woff2) format('woff2');
+  font-weight: 500;
+  src: local('Quicksand Medium'), local('Quicksand-Medium'), url(https://fonts.gstatic.com/s/quicksand/v6/FRGja7LlrG1Mypm0hCq0Dugdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
 }
 
-/* latin */
 @font-face {
   font-family: 'Architects Daughter';
   font-style: normal;
@@ -32,13 +25,18 @@ a
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
 }
 
-mainFont(weight = 800)
-    font-family 'Open Sans', sans-serif
+mainFont(weight = 400)
+    font-family 'Open Sans', Helvetica
     font-weight weight
     font-style normal
 
-secondaryFont(weight = 300)
-    font-family 'Architects Daughter', 'Open Sans', sans-serif
+secondaryFont(weight = 500)
+    font-family 'Quicksand', 'Open Sans', Helvetica
+    font-weight weight
+    font-style normal
+
+alternativeFont(weight = 400)
+    font-family 'Architects Daughter', 'Quicksand', 'Open Sans', Helvetica
     font-weight weight
     font-style normal
 
