@@ -1,3 +1,13 @@
+---
+layout: post
+title: Crear y publicar módulos en npm
+date: '2017-09-08 13:43:16'
+tags:
+- node npm
+categories:
+- Frontend
+---
+
 # Crear y publicar módulos en npm
 
 Para crear un paquete en el registro de npm hay que seguir unos sencillos pasos. 
