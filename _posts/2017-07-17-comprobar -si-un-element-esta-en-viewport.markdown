@@ -20,6 +20,7 @@ function inView(element, fullHeightInView) {
     var docViewBottom = docViewTop + $window.height();
     var elemTop = $element.offset().top;
     var elemBottom;
+
     if (fullHeightInView) {
         elemBottom = elemTop + $element.height();
     } else {
@@ -41,9 +42,11 @@ También es útil saber cual es la posición relativa de dicho elemento en el vi
 function getViewportOffset(element) {
     var $element = $(element),
         $window = $(window);
+
     var scrollLeft = $window.scrollLeft(),
         scrollTop = $window.scrollTop(),
-        offset = $element.offset
+        offset = $element.offset();
+
     return {
         left: offset.left - scrollLeft,
         top: offset.top - scrollTop
