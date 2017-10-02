@@ -19,7 +19,7 @@ function inView(element, fullHeightInView) {
     var docViewTop = $window.scrollTop();
     var docViewBottom = docViewTop + $window.height();
     var elemTop = $element.offset().top;
-    var elemBott
+    var elemBottom;
     if (fullHeightInView) {
         elemBottom = elemTop + $element.height();
     } else {
