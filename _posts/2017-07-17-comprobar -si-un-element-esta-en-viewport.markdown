@@ -40,7 +40,7 @@ También es útil saber cual es la posición relativa de dicho elemento en el vi
 ```javascript
 function getViewportOffset(element) {
     var $element = $(element),
-        $window = $(windo
+        $window = $(window);
     var scrollLeft = $window.scrollLeft(),
         scrollTop = $window.scrollTop(),
         offset = $element.offset
