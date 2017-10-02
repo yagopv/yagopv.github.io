@@ -24,7 +24,8 @@ function inView(element, fullHeightInView) {
         elemBottom = elemTop + $element.height();
     } else {
         elemBottom = elemTop;
-
+    }
+    
     return ((elemBottom >= docViewTop) &&
         (elemTop <= docViewBottom) &&
         (elemBottom <= docViewBottom) &&
